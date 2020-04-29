@@ -12,7 +12,7 @@ export const useGetPageData = () => {
 		try {
 			setIsloading(true);
 			const response = await axios.get(
-				`http://localhost:${process.env.REACT_APP_SERVER_PORT}/searchSinglePage`,
+				`http://localhost:${process.env.serverPort}/searchSinglePage`,
 				{
 					params: {
 						pageUrl: url,

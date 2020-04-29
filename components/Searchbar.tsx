@@ -16,6 +16,7 @@ import AdvancedPanel from './AdvancedPanel';
 import { useClickOutside } from '../framework/hooks/useClickOutside';
 
 export default () => {
+	const [isClientSide, setIsClientSide] = useState(false);
 	const [showAdvanced, setShowAdvanced] = useState(false);
 	const {
 		state: { searchValue, searchType },
@@ -37,43 +38,56 @@ export default () => {
 		});
 	};
 
-	const appTitle = renderResponsive({
-		_: null,
-		sm: (
-			<Text mr={2} fontSize={7} fontWeight='bold'>
-				SHOPPER
-			</Text>
-		),
-	});
+	useEffect(() => {
+		setIsClientSide(true);
+	}, []);
 
-	const inputPlaceholder = renderResponsive({
-		_: 'Shopper',
-		sm: 'Search',
-	});
+	let appTitle: React.ReactNode;
+	let inputPlaceholder: React.ReactNode;
+	let searchButton: React.ReactNode;
 
-	const searchButton = renderResponsive({
-		_: (
-			<Button
-				borderRadius='0 8px 8px  0'
-				border='1px solid grey'
-				type='submit'
-				onClick={handleNewSearch}
-			>
-				{isLoading ? 'Loading...' : <SearchIcon />}
-			</Button>
-		),
-		sm: (
-			<Button
-				borderRadius={2}
-				type='submit'
-				onClick={handleNewSearch}
-				color='primary'
-				variant='contained'
-			>
-				{isLoading ? 'Loading...' : 'Search'}
-			</Button>
-		),
-	});
+	if (isClientSide) {
+		appTitle = renderResponsive({
+			_: null,
+			sm: (
+				<Text mr={2} fontSize={7} fontWeight='bold'>
+					SHOPPER
+				</Text>
+			),
+		});
+
+		inputPlaceholder = renderResponsive({
+			_: 'Shopper',
+			sm: 'Search',
+		});
+
+		searchButton = renderResponsive({
+			_: (
+				<Button
+					borderTopLeftRadius={0}
+					borderTopRightRadius={2}
+					borderBottomRightRadius={2}
+					borderBottomLeftRadius={0}
+					border='1px solid grey'
+					type='submit'
+					onClick={handleNewSearch}
+				>
+					{isLoading ? 'Loading...' : <SearchIcon />}
+				</Button>
+			),
+			sm: (
+				<Button
+					borderRadius={2}
+					type='submit'
+					onClick={handleNewSearch}
+					color='primary'
+					variant='contained'
+				>
+					{isLoading ? 'Loading...' : 'Search'}
+				</Button>
+			),
+		});
+	}
 
 	const advancedPanelRef = useRef<null | HTMLElement>(null);
 	const searchInputRef = useRef(null);
@@ -81,16 +95,17 @@ export default () => {
 		setShowAdvanced(false)
 	);
 
-	const portalRoot =
-		document.querySelector('#advanced-panel-root') || document.body;
+	// const portalRoot =
+	// 	document.querySelector('#advanced-panel-root') || document.body;
 	const advancedPanel =
 		showAdvanced &&
 		renderResponsive({
-			_: ReactDOM.createPortal(
-				<AdvancedPanel ref={advancedPanelRef} />,
-				portalRoot
-			),
-			sm: <AdvancedPanel ref={advancedPanelRef} />,
+			_: <AdvancedPanel ref={advancedPanelRef} />,
+			// _: ReactDOM.createPortal(
+			// 	<AdvancedPanel ref={advancedPanelRef} />,
+			// 	portalRoot
+			// ),
+			// sm: <AdvancedPanel ref={advancedPanelRef} />,
 		});
 
 	return (

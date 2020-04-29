@@ -54,7 +54,7 @@ export const useGetSimilarImages = () => {
 		try {
 			setIsLoading(true);
 			const response = await axios.post(
-				`http://localhost:${process.env.REACT_APP_SERVER_PORT}/similarImages`,
+				`http://localhost:${process.env.serverPort}/similarImages`,
 				null,
 				{
 					params: {

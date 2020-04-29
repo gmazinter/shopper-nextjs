@@ -97,7 +97,7 @@ export const useSearch = () => {
 				countryCodes,
 			};
 			const response = await axios.get(
-				`http://localhost:${process.env.REACT_APP_SERVER_PORT}/search`,
+				`http://localhost:${process.env.serverPort}/search`,
 				{ params }
 			);
 			const items =

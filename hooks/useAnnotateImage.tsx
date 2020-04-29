@@ -18,7 +18,7 @@ export const useAnnotateImage = () => {
 		try {
 			setIsLoading(true);
 			const response = await axios.post(
-				`http://localhost:${process.env.REACT_APP_SERVER_PORT}/relevantimages`,
+				`http://localhost:${process.env.serverPort}/similarimages`,
 				null,
 				{
 					params: {
