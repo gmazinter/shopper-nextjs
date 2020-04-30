@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import MuiOverrides from '../styles/muiOverrides';
 import { AppStateProvider } from '../AppState';
 import Layout from '../components/Layout';
+import '../styles/globalStyles.css';
 
 export default function App({ Component, pageProps }) {
 	useEffect(() => {

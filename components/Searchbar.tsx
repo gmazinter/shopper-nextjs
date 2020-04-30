@@ -46,6 +46,13 @@ export default () => {
 	let inputPlaceholder: React.ReactNode;
 	let searchButton: React.ReactNode;
 
+	let advancedPanel: React.ReactNode;
+	const advancedPanelRef = useRef<null | HTMLElement>(null);
+	const searchInputRef = useRef(null);
+	useClickOutside([searchInputRef, advancedPanelRef], () =>
+		setShowAdvanced(false)
+	);
+
 	if (isClientSide) {
 		appTitle = renderResponsive({
 			_: null,
@@ -87,26 +94,19 @@ export default () => {
 				</Button>
 			),
 		});
+
+		const portalRoot =
+			document.querySelector('#advanced-panel-root') || document.body;
+		advancedPanel =
+			showAdvanced &&
+			renderResponsive({
+				_: ReactDOM.createPortal(
+					<AdvancedPanel ref={advancedPanelRef} />,
+					portalRoot
+				),
+				sm: <AdvancedPanel ref={advancedPanelRef} />,
+			});
 	}
-
-	const advancedPanelRef = useRef<null | HTMLElement>(null);
-	const searchInputRef = useRef(null);
-	useClickOutside([searchInputRef, advancedPanelRef], () =>
-		setShowAdvanced(false)
-	);
-
-	// const portalRoot =
-	// 	document.querySelector('#advanced-panel-root') || document.body;
-	const advancedPanel =
-		showAdvanced &&
-		renderResponsive({
-			_: <AdvancedPanel ref={advancedPanelRef} />,
-			// _: ReactDOM.createPortal(
-			// 	<AdvancedPanel ref={advancedPanelRef} />,
-			// 	portalRoot
-			// ),
-			// sm: <AdvancedPanel ref={advancedPanelRef} />,
-		});
 
 	return (
 		<SearchbarContainer>
