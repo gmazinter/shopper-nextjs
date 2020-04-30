@@ -55,7 +55,10 @@ const SelectMultiple: React.FC<SelectMultipleProps> = ({ className }) => {
 							)
 						)
 						.map(country => (
-							<Chip key={country.alpha2Code} label={country.name} />
+							<Chip
+								key={country.alpha2Code}
+								label={country.name}
+							/>
 						))}
 				</div>
 			)}

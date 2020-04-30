@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAppState } from '../AppState';
 import { Result, Product, Direction } from '../types';
 import { useGetPageData } from './useGetPageData';
+import qs from 'qs';
 
 const pageSize = 10;
 const resultsLimit = 100;
@@ -74,9 +75,9 @@ export const useSearch = () => {
 			return;
 		}
 
-		const countryCodes = selectedCountries.map(
-			(country: any) => country.alpha2Code
-		);
+		const countryCodes = selectedCountries
+			.map((country: any) => `country${country.alpha2Code}`)
+			.join('|');
 		const newPageStart =
 			direction === undefined
 				? 0
@@ -96,10 +97,9 @@ export const useSearch = () => {
 				start: newPageStart,
 				countryCodes,
 			};
-			const response = await axios.get(
-				`http://localhost:${process.env.serverPort}/search`,
-				{ params }
-			);
+			const response = await axios.get(`/api/search`, {
+				params,
+			});
 			const items =
 				searchType === 'image'
 					? await convertImageResultsToWebResults(response.data.items)

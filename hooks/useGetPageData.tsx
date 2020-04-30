@@ -11,15 +11,12 @@ export const useGetPageData = () => {
 	const getPageData = async (url: string) => {
 		try {
 			setIsloading(true);
-			const response = await axios.get(
-				`http://localhost:${process.env.serverPort}/searchSinglePage`,
-				{
-					params: {
-						pageUrl: url,
-						countryCodes: selectedCountries,
-					},
-				}
-			);
+			const response = await axios.get(`/api/searchsinglepage`, {
+				params: {
+					pageUrl: url,
+					countryCodes: selectedCountries,
+				},
+			});
 			setIsloading(false);
 			return response.data.items[0];
 		} catch (e) {
