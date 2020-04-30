@@ -17,15 +17,11 @@ export const useAnnotateImage = () => {
 		}
 		try {
 			setIsLoading(true);
-			const response = await axios.post(
-				`http://localhost:${process.env.serverPort}/similarimages`,
-				null,
-				{
-					params: {
-						imageUri: imageUri,
-					},
-				}
-			);
+			const response = await axios.post(`/api/similarimages`, null, {
+				params: {
+					imageUri: imageUri,
+				},
+			});
 
 			const labels = [
 				...response.data.labelAnnotations,

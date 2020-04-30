@@ -53,15 +53,11 @@ export const useGetSimilarImages = () => {
 		}
 		try {
 			setIsLoading(true);
-			const response = await axios.post(
-				`http://localhost:${process.env.serverPort}/similarImages`,
-				null,
-				{
-					params: {
-						imageUri: imageUri,
-					},
-				}
-			);
+			const response = await axios.post(`/api/similarimages`, null, {
+				params: {
+					imageUri: imageUri,
+				},
+			});
 
 			console.log(response.data.webDetection);
 

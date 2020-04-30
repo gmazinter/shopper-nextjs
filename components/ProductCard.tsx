@@ -62,11 +62,9 @@ const ProductCard = memo(
 
 		const debouncedResizeItem = _.debounce(resizeItem, 200);
 
-		// can delete after sure this is not helpful  in any way
-		// useEffect(() => {
-		// 	console.log('cant remember why this is here');
-		// 	resizeItem();
-		// });
+		useEffect(() => {
+			resizeItem();
+		});
 
 		useEffect(() => {
 			window.addEventListener('resize', debouncedResizeItem);
