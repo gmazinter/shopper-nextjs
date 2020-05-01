@@ -29,4 +29,5 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+next.config.js
 International Shopper-cce579bf5b0b.json
