@@ -1,22 +1,15 @@
 import React, { useRef, useEffect, useState, memo } from 'react';
 import Card from './primitives/Card';
 import Box from './primitives/Box';
-import Flex from './primitives/Flex';
-import Chip from './Chip';
-import InfoTag from './InfoTag';
 import styled from 'styled-components';
 import { Product } from '../types';
-import Image from './primitives/Image';
 import imagesLoaded from 'imagesloaded';
 import { masonrySizes } from '../consts';
 import _ from 'lodash';
 import CardMenu from './CardMenu';
 import { useAnnotateImage } from '../hooks/useAnnotateImage';
 import { useGetSimilarImages } from '../hooks/useGetSimilarImages';
-import { ColorProps, color } from 'styled-system';
-import IconButton from './IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import CardContent from './CardContent';
 
 type ProductCardProps = {
 	handleLabelClick: (label: string) => void;
@@ -27,6 +20,8 @@ type ProductCardProps = {
 	className?: string;
 };
 
+const cardPadding = 2;
+
 const ProductCard = memo(
 	({
 		handleLabelClick,
@@ -34,9 +29,8 @@ const ProductCard = memo(
 		toggleMenu,
 		product,
 		toggleFavorite,
-		className,
 	}: ProductCardProps) => {
-		const { websiteTitle, url, imageUri, infoTags, labels } = product;
+		const { imageUri, price } = product;
 		const {
 			getSimilarImages,
 			isLoading: loadingIdenticalImages,
@@ -79,49 +73,14 @@ const ProductCard = memo(
 		return (
 			<MasonryItem gutter={gutter} span={span}>
 				<ProductCardContainer ref={contentRef}>
-					<Box mb={2}>
-						<Flex mb={2} position='relative'>
-							<FavoriteButton
-								onClick={() => toggleFavorite(product.url)}
-								color='primary'
-							>
-								{product.isFavorite ? (
-									<FavoriteIcon />
-								) : (
-									<FavoriteBorderIcon />
-								)}
-							</FavoriteButton>
-							{infoTags?.map(infoTag => {
-								const { title, value } = infoTag;
-								return <InfoTag title={title} value={value} />;
-							})}
-						</Flex>
-						<Box mb={2}>
-							<a
-								href={url}
-								target='_blank'
-								rel='noreferrer noopener'
-							>
-								{websiteTitle}
-							</a>
-						</Box>
-						<Image width={1} src={imageUri || ''} alt='' />
-						<Flex flexWrap='wrap'>
-							{labels &&
-								labels.map(label => (
-									<LabelChip
-										size='small'
-										id={label}
-										onClick={() => handleLabelClick(label)}
-										mr={2}
-										mb={1}
-										label={label}
-										// icon={_.includes(moreLabels, tag) ? < DoneIcon /> : <RadioButtonUncheckedIcon />}
-									/>
-								))}
-						</Flex>
-					</Box>
+					<CardContent
+						product={product}
+						toggleFavorite={toggleFavorite}
+						handleLabelClick={handleLabelClick}
+					/>
 					<CardMenu
+						cardPadding={cardPadding}
+						price={price}
 						isLoading={isLoading}
 						isOpen={isMenuOpen}
 						toggleMenu={(
@@ -152,20 +111,11 @@ const MasonryItem = styled(Box).attrs<{ gutter: number }>(props => ({
 `;
 
 const ProductCardContainer = styled(Card).attrs({
-	p: 2,
+	p: cardPadding,
 	pb: '54px',
 	borderRadius: 2,
 	boxShadow: 'small',
 })`
 	overflow: hidden;
 	position: relative;
-`;
-
-const LabelChip = styled(Chip)``;
-
-const FavoriteButton = styled(IconButton)`
-	padding: 0;
-	position: absolute;
-	top: 0;
-	right: 0;
 `;

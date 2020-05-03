@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useAppState } from '../AppState';
 import { Result, Product, Direction } from '../types';
 import { useGetPageData } from './useGetPageData';
-import qs from 'qs';
 
 const pageSize = 10;
 const resultsLimit = 100;
@@ -17,7 +16,7 @@ export const mapItemToProduct = (
 	const name = product ? product[productIndex].name : null;
 	const price = offer
 		? {
-				amount: offer[productIndex].price,
+				amount: parseFloat(offer[productIndex].price),
 				currency: offer[productIndex].pricecurrency,
 		  }
 		: null;

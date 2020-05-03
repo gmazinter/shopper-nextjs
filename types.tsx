@@ -28,7 +28,7 @@ export type Product = {
 	imageUri: string | null;
 	name: string | null;
 	price: {
-		amount: string;
+		amount: number;
 		currency: string;
 	} | null;
 	infoTags: InfoTag[];
