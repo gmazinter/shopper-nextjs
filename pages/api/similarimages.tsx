@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	// const keyFilename = './International Shopper-cce579bf5b0b.json';
 	const vision = require('@google-cloud/vision');
-	const keyFilename = './International Shopper-cce579bf5b0b.json';
-	const client = new vision.ImageAnnotatorClient({ keyFilename });
+	const client = new vision.ImageAnnotatorClient();
 
 	const features = [
 		{ type: 'LABEL_DETECTION' },
