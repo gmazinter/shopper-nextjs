@@ -1,3 +1,4 @@
+import ProductList from '../components/ProductList';
 export default function Index() {
-	return <h1>Waka Waka Eh Eh!</h1>;
+	return <ProductList />;
 }
