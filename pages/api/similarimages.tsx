@@ -1,9 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+	const projectId = process.env.GOOGLE_PROJECT_ID;
+	const keyFilename =
+		process.env.CURRENT_ENV === 'development'
+			? process.env.GCLOUD_CREDENTIALS
+			: JSON.parse(atob(process.env.GCLOUD_CREDENTIALS));
 	const vision = require('@google-cloud/vision');
-	const keyFilename = './International Shopper-cce579bf5b0b.json';
-	const client = new vision.ImageAnnotatorClient({ keyFilename });
+	const client = new vision.ImageAnnotatorClient({ projectId, keyFilename });
 
 	const features = [
 		{ type: 'LABEL_DETECTION' },

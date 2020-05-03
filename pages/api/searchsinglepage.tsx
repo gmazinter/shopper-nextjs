@@ -4,10 +4,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const { pageUrl, countryCodes } = req.query;
-		const response = await axios.get(process.env.cseUri, {
+		const response = await axios.get(process.env.CSE_URI, {
 			params: {
-				key: process.env.cseKey,
-				cx: process.env.cseId,
+				key: process.env.CSE_KEY,
+				cx: process.env.CSE_ID,
 				q: pageUrl,
 				cr: countryCodes,
 			},
