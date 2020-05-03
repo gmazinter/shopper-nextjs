@@ -1,36 +1,51 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import _ from 'lodash';
+import { Product } from './types';
 
-const initialAppState = {
+type SearchType = 'image' | 'text';
+
+type AppState = {
+	searchValue: string;
+	searchType: SearchType;
+	pageStart: number;
+	products: Product[] | null;
+	selectedCountries: string[];
+};
+
+const initialAppState: AppState = {
 	searchValue: '',
 	searchType: 'text',
 	pageStart: 0,
 	products: null,
-	productsByImage: null,
 	selectedCountries: [],
-	highlightedImage: null,
-	imageAnnotationResults: null,
 };
 
-const appState = createContext();
+const appState = createContext<{
+	state: AppState;
+	dispatch: React.Dispatch<any>;
+}>({
+	state: initialAppState,
+	dispatch: () => null,
+});
 
-const reducer = (state, action) => {
+const reducer = (state: AppState, action: { type: string; payload: any }) => {
 	switch (action.type) {
 		case 'setSearchValue': {
+			const searchValue: string = action.payload;
 			return {
 				...state,
-				searchValue: action.payload,
+				searchValue,
 			};
 		}
-		case 'setLabels': {
-			return {
-				...state,
-				labels: action.payload.labels,
-			};
-		}
+		// case 'setLabels': {
+		// 	return {
+		// 		...state,
+		// 		labels: action.payload.labels,
+		// 	};
+		// }
 		case 'setProducts': {
 			const oldProducts = !!state.products ? [...state.products] : [];
-			const products = _.uniqBy(
+			const products: Product[] = _.uniqBy(
 				[...oldProducts, ...action.payload.products],
 				'url'
 			);
@@ -48,35 +63,24 @@ const reducer = (state, action) => {
 		case 'setPageStart': {
 			return {
 				...state,
-				pageStart: action.payload.pageStart,
+				pageStart: action.payload.pageStart as number,
 			};
 		}
 		case 'setSelectedCountries': {
+			const selectedCountries: string[] = action.payload;
 			return {
 				...state,
-				selectedCountries: action.payload,
+				selectedCountries,
 			};
 		}
 		case 'toggleFavorite': {
 			const { productId } = action.payload;
-			const newProducts = [...state.products];
-			const newProduct = newProducts.find(p => p.url === productId);
-			newProduct.isFavorite = !newProduct.isFavorite;
-
-			return {
-				...state,
-				products: newProducts,
-			};
-		}
-		case 'toggleLabel': {
-			const { productId, labelId } = action.payload;
-			const indexToUpdate = state.products.findIndex(
+			const newProducts: Product[] = [...state.products];
+			const newProduct: Product = newProducts.find(
 				p => p.url === productId
 			);
-			const newProducts = [...state.products];
-			const newLabels = { ...newProducts[indexToUpdate].labels };
-			newLabels[labelId] = !newLabels[labelId];
-			newProducts[indexToUpdate].labels = newLabels;
+			newProduct.isFavorite = !newProduct.isFavorite;
+
 			return {
 				...state,
 				products: newProducts,
@@ -86,7 +90,7 @@ const reducer = (state, action) => {
 			const indexToUpdate = state.products.findIndex(
 				p => p.url === action.payload.productUrl
 			);
-			const newProducts = [...state.products];
+			const newProducts: Product[] = [...state.products];
 			newProducts[indexToUpdate].labels = action.payload.labels;
 			return {
 				...state,
@@ -94,27 +98,14 @@ const reducer = (state, action) => {
 			};
 		}
 		case 'addLabelToQuery': {
-			const newSearchValue = `${state.searchValue} ${action.payload.label}`;
+			const newSearchValue: string = `${state.searchValue} ${action.payload.label}`;
 			return {
 				...state,
 				searchValue: newSearchValue,
 			};
 		}
-		case 'toggleLabelInQuery': {
-			const { labelId, labelValue } = action.payload;
-			const newLabels = state.labels ? [...state.labels] : [];
-			if (!labelValue) {
-				newLabels.push(labelId);
-			} else {
-				newLabels.splice(newLabels.indexOf(labelId), 1);
-			}
-			return {
-				...state,
-				labels: newLabels,
-			};
-		}
 		case 'toggleSearchType': {
-			const newSearchType =
+			const newSearchType: SearchType =
 				state.searchType === 'text' ? 'image' : 'text';
 			return {
 				...state,

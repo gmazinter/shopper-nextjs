@@ -52,7 +52,7 @@ export const useSearch = () => {
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState<null | {}>(null);
 	const {
-		state: { selectedCountries, moreLabels, pageStart },
+		state: { selectedCountries, pageStart },
 		dispatch,
 	} = useAppState();
 
@@ -91,7 +91,6 @@ export const useSearch = () => {
 			setIsloading(true);
 			const params = {
 				searchValue,
-				moreLabels,
 				searchType,
 				start: newPageStart,
 				countryCodes,

@@ -35,37 +35,26 @@ export default ({
 }: CardMenuProps) => {
 	return (
 		<MenuContainer isOpen={isOpen}>
-			<Flex justifyContent='flex-end' alignItems='center'>
-				{price && (
-					<Box flex={1} ml={-cardPadding}>
-						<Pricetag price={price} />
-					</Box>
+			{price && (
+				<Box flex={1} ml={-cardPadding}>
+					<Pricetag price={price} />
+				</Box>
+			)}
+			<ActionButtons>
+				{isOpen && (
+					<>
+						<CardIconButton onClick={annotateImage} color='primary'>
+							<MoreIcon />
+						</CardIconButton>
+						<CardIconButton onClick={searchByImage} color='primary'>
+							<PhotoCameraIcon />
+						</CardIconButton>
+					</>
 				)}
-				<Button mr={2} color='primary' variant='contained'>
-					select
-				</Button>
-				<ActionButtons>
-					{isOpen && (
-						<>
-							<CardIconButton
-								onClick={annotateImage}
-								color='primary'
-							>
-								<MoreIcon />
-							</CardIconButton>
-							<CardIconButton
-								onClick={searchByImage}
-								color='primary'
-							>
-								<PhotoCameraIcon />
-							</CardIconButton>
-						</>
-					)}
-					<CardIconButton onClick={toggleMenu} color='primary'>
-						{isLoading ? <CircularProgress /> : <MoreVert />}
-					</CardIconButton>
-				</ActionButtons>
-			</Flex>
+				<CardIconButton onClick={toggleMenu} color='primary'>
+					{isLoading ? <CircularProgress /> : <MoreVert />}
+				</CardIconButton>
+			</ActionButtons>
 		</MenuContainer>
 	);
 };
@@ -80,8 +69,7 @@ const MenuContainer = styled(Flex).attrs<{ isOpen: boolean }>(props => ({
 	bg: props.isOpen ? 'rgb(0, 0, 0, 50%)' : 'initial',
 	zIndex: 'content',
 }))<{ isOpen: boolean }>`
-	flex-direction: column;
-	justify-content: flex-end;
+	align-items: flex-end;
 	position: absolute;
 	top: 0;
 	left: 0;
