@@ -2,13 +2,19 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { Base64 } from 'js-base64';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	const projectId = process.env.GOOGLE_PROJECT_ID;
-	const keyFilename =
-		process.env.CURRENT_ENV === 'development'
-			? process.env.GCLOUD_CREDENTIALS
-			: JSON.parse(Base64.decode(process.env.GCLOUD_CREDENTIALS));
 	const vision = require('@google-cloud/vision');
-	const client = new vision.ImageAnnotatorClient({ projectId, keyFilename });
+
+	// const projectId = process.env.GOOGLE_PROJECT_ID;
+	const keyFilename = process.env.CREDENTIALS_PATH;
+	const googleClientConfig =
+		process.env.CURRENT_ENV === 'development'
+			? { keyFilename }
+			: {
+					credentials: JSON.parse(
+						Base64.decode(process.env.GCLOUD_CREDENTIALS)
+					),
+			  };
+	const client = new vision.ImageAnnotatorClient(googleClientConfig);
 
 	const features = [
 		{ type: 'LABEL_DETECTION' },
