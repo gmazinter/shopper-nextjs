@@ -4,7 +4,6 @@ import { Base64 } from 'js-base64';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const vision = require('@google-cloud/vision');
 
-	// const projectId = process.env.GOOGLE_PROJECT_ID;
 	const keyFilename = process.env.CREDENTIALS_PATH;
 	const googleClientConfig =
 		process.env.CURRENT_ENV === 'development'
