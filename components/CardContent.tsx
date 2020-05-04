@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from './primitives/Box';
+import Text from './primitives/Text';
 import Flex from './primitives/Flex';
 import InfoTag from './InfoTag';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -29,12 +30,12 @@ export default ({ product, toggleFavorite, handleLabelClick }) => {
 					return <InfoTag title={title} value={value} />;
 				})}
 			</Flex>
-			<Box mb={2}>
+			<Text mb={2} fontSize={{ _: 3, sm: 4 }}>
 				<a href={url} target='_blank' rel='noreferrer noopener'>
 					{websiteTitle}
 				</a>
-			</Box>
-			<Image width={1} src={imageUri || ''} alt='' />
+			</Text>
+			<Image mb={1} width={1} src={imageUri || ''} alt='' />
 			<SuggestedLabels
 				labels={labels}
 				handleLabelClick={handleLabelClick}
@@ -49,20 +50,21 @@ const SuggestedLabels = ({ labels, handleLabelClick }) => {
 			{labels &&
 				labels.map(label => (
 					<LabelChip
-						size='small'
 						id={label}
 						onClick={() => handleLabelClick(label)}
-						mr={2}
-						mb={1}
 						label={label}
-						// icon={_.includes(moreLabels, tag) ? < DoneIcon /> : <RadioButtonUncheckedIcon />}
 					/>
 				))}
 		</Flex>
 	);
 };
 
-const LabelChip = styled(Chip)``;
+const LabelChip = styled(Chip).attrs({
+	size: 'small',
+	fontSize: { _: 2, sm: 3 },
+	mr: { _: 1, sm: 2 },
+	mb: 1,
+})``;
 
 const FavoriteButton = styled(IconButton)`
 	padding: 0;

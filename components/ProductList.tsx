@@ -94,8 +94,11 @@ export default () => {
 
 const Masonry = styled(Box).attrs({
 	mx: { sm: '-8px' },
+	gridTemplateColumns: {
+		_: 'repeat(auto-fill, minmax(180px, 1fr))',
+		sm: 'repeat(auto-fill, minmax(240px, 1fr))',
+	},
 })`
 	display: grid;
 	grid-auto-rows: ${row}px;
-	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 `;

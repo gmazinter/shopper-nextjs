@@ -1,7 +1,8 @@
 import React from 'react';
-import Box from './primitives/Box';
+import Text from './primitives/Text';
 import { Centered } from './primitives/Flex';
 import styled from 'styled-components';
+import { useResponsive } from '../framework/hooks/useResponsive';
 
 type PricetagProps = {
 	className?;
@@ -13,22 +14,27 @@ type PricetagProps = {
 
 export default ({ price }: PricetagProps) => {
 	const { amount, currency } = price;
+	const { isSmall } = useResponsive();
+	const notchSize = !isSmall ? '18px' : '20px';
 	return (
-		<TagContainer width={100} height={40} bg='#F9E5BE' pr={2}>
-			{`${amount} ${currency}`}
+		<TagContainer notchSize={notchSize}>
+			<Text fontSize={{ _: 3, sm: 4 }}>{`${amount} ${currency}`}</Text>
 		</TagContainer>
 	);
 };
 
-const TagContainer = styled(Centered)`
-	--notchSize: 20px;
-
+const TagContainer = styled(Centered).attrs({
+	width: { _: 80, sm: 100 },
+	height: { _: 36, sm: 40 },
+	bg: '#F9E5BE',
+	pr: 2,
+})<{ notchSize: string }>`
 	clip-path: polygon(
 		0 0,
-		calc(100% - var(--notchSize)) 0,
-		100% var(--notchSize),
-		100% calc(100% - var(--notchSize)),
-		calc(100% - var(--notchSize)) 100%,
+		calc(100% - ${props => props.notchSize}) 0,
+		100% ${props => props.notchSize},
+		100% calc(100% - ${props => props.notchSize}),
+		calc(100% - ${props => props.notchSize}) 100%,
 		0 100%
 	);
 `;

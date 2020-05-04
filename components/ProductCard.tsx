@@ -10,6 +10,7 @@ import CardMenu from './CardMenu';
 import { useAnnotateImage } from '../hooks/useAnnotateImage';
 import { useGetSimilarImages } from '../hooks/useGetSimilarImages';
 import CardContent from './CardContent';
+import { useResponsive } from '../framework/hooks/useResponsive';
 
 type ProductCardProps = {
 	handleLabelClick: (label: string) => void;
@@ -44,7 +45,10 @@ const ProductCard = memo(
 		const isLoading = loadingIdenticalImages || tagsLoading;
 		const contentRef = useRef<any>(null);
 		const [span, setSpan] = useState<null | number>(null);
-		const { gutter, row } = masonrySizes;
+
+		const { renderResponsive } = useResponsive();
+		const gutter = renderResponsive({ _: 10, sm: 16 });
+		const { row } = masonrySizes;
 
 		const resizeItem = () => {
 			const contentHeight = contentRef.current.getBoundingClientRect()
@@ -71,7 +75,7 @@ const ProductCard = memo(
 		}, []);
 
 		return (
-			<MasonryItem gutter={gutter} span={span}>
+			<MasonryItem gutter={gutter as number} span={span}>
 				<ProductCardContainer ref={contentRef}>
 					<CardContent
 						product={product}

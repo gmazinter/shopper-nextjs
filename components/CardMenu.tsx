@@ -43,15 +43,15 @@ export default ({
 			<ActionButtons>
 				{isOpen && (
 					<>
-						<CardIconButton onClick={annotateImage} color='primary'>
+						<CardIconButton onClick={annotateImage}>
 							<MoreIcon />
 						</CardIconButton>
-						<CardIconButton onClick={searchByImage} color='primary'>
+						<CardIconButton onClick={searchByImage}>
 							<PhotoCameraIcon />
 						</CardIconButton>
 					</>
 				)}
-				<CardIconButton onClick={toggleMenu} color='primary'>
+				<CardIconButton onClick={toggleMenu}>
 					{isLoading ? <CircularProgress /> : <MoreVert />}
 				</CardIconButton>
 			</ActionButtons>
@@ -82,10 +82,9 @@ const MenuContainer = styled(Flex).attrs<{ isOpen: boolean }>(props => ({
 `;
 
 const CardIconButton = styled(IconButton).attrs({
-	boxShadow: 'smallSharp',
+	color: 'primary',
 	mt: 2,
 	p: 2,
-})<ColorProps & ShadowProps>`
-	${shadow}
-	background-color: white;
+})`
+	background-color: #f2f2f2;
 `;
