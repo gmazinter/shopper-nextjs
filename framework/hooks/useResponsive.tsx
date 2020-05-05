@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useMediaQuery } from 'beautiful-react-hooks';
+import { useMediaQuery as useMediaQueryHook } from 'beautiful-react-hooks';
 import { useTheme } from './useTheme';
 
 type Elements = {
@@ -13,12 +13,12 @@ type Elements = {
 export const useResponsive = () => {
 	const { theme } = useTheme();
 	const { sm, md, lg, xl } = theme.breakpoints;
-	const isSmall = useMediaQuery(`(min-width: ${sm})`);
-	const isMedium = useMediaQuery(`(min-width: ${md})`);
-	const isLarge = useMediaQuery(`(min-width: ${lg})`);
-	const isExtraLarge = useMediaQuery(`(min-width: ${xl})`);
+	const isSmall = useMediaQueryHook(`(min-width: ${sm})`);
+	const isMedium = useMediaQueryHook(`(min-width: ${md})`);
+	const isLarge = useMediaQueryHook(`(min-width: ${lg})`);
+	const isExtraLarge = useMediaQueryHook(`(min-width: ${xl})`);
 
-	const renderResponsive = (elements: Elements) => {
+	const useMediaQuery = (elements: Elements): React.ReactNode => {
 		const { _, sm, md, lg, xl } = elements;
 		return (
 			(isExtraLarge && xl) ||
@@ -35,6 +35,6 @@ export const useResponsive = () => {
 		isMedium,
 		isLarge,
 		isExtraLarge,
-		renderResponsive,
+		useMediaQuery,
 	};
 };

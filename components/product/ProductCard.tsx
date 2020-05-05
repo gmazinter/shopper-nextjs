@@ -45,8 +45,8 @@ const ProductCard = memo(
 		const contentRef = useRef<any>(null);
 		const [span, setSpan] = useState<null | number>(null);
 
-		const { renderResponsive } = useResponsive();
-		const gutter = renderResponsive({ _: 10, sm: 16 });
+		const { useMediaQuery } = useResponsive();
+		const gutter = useMediaQuery({ _: 10, sm: 16 });
 		const { row } = masonrySizes;
 
 		const resizeItem = () => {

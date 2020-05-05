@@ -17,7 +17,7 @@ export default {
 	fontSizes: [8, 12, 14, 16, 20, 24, 32, 40, 56, 64],
 	space: [0, 4, 8, 16, 32, 64, 128, 256],
 	colors: {
-		primary: 'rgb(220, 0, 78)'
+		primary: 'rgb(220, 0, 78)',
 	},
 
 	breakpoints,
@@ -26,16 +26,16 @@ export default {
 		small: `@media screen and (min-width: ${breakpoints.sm})`,
 		medium: `@media screen and (min-width: ${breakpoints.md})`,
 		large: `@media screen and (min-width: ${breakpoints.lg})`,
-		extraLarge: `@media screen and (min-width: ${breakpoints})`
+		extraLarge: `@media screen and (min-width: ${breakpoints})`,
 	},
 
 	shadows: {
-		small: '0 0 12px -6px grey',
-		smallSharp: '0 0 12px -2px grey',
-		medium: '0 0 20px -2px grey'
+		small: '0 0 10px 2px #dbdbdb',
+		smallSharp: '0 0 12px -2px #dbdbdb',
+		medium: '0 0 20px -2px #dbdbdb',
 		// large:
 	},
 	radii: [0, 4, 8, 16, 32],
 
-	zIndices
+	zIndices,
 };

@@ -4,7 +4,7 @@ import Searchbar from './search/Searchbar';
 
 export default ({ children }) => (
 	<Box>
-		<Box top={0} position='sticky' zIndex={4} id='advanced-panel-root'>
+		<Box top={0} position='sticky' zIndex={4} id='searchbar-wrapper'>
 			<Searchbar />
 		</Box>
 		{children}
