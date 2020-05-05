@@ -15,6 +15,10 @@ export default ({ product, toggleFavorite, handleLabelClick }) => {
 	return (
 		<Box mb={2}>
 			<Flex mb={2} position='relative'>
+				{infoTags?.slice(0, 1).map(infoTag => {
+					const { title, value } = infoTag;
+					return <InfoTag title={title} value={value} mr={4} />;
+				})}
 				<FavoriteButton
 					onClick={() => toggleFavorite(product.url)}
 					color='primary'
@@ -25,7 +29,7 @@ export default ({ product, toggleFavorite, handleLabelClick }) => {
 						<FavoriteBorderIcon />
 					)}
 				</FavoriteButton>
-				{infoTags?.map(infoTag => {
+				{infoTags?.slice(1).map(infoTag => {
 					const { title, value } = infoTag;
 					return <InfoTag title={title} value={value} />;
 				})}
