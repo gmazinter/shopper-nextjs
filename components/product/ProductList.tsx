@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Box from './primitives/Box';
+import { Box } from '../../framework/components/primitives';
 import ProductCard from './ProductCard';
 import Container from '@material-ui/core/Container';
-import { useAppState } from '../AppState';
+import { useAppState } from '../../AppState';
 import styled from 'styled-components';
-import { masonrySizes } from '../consts';
-import { Product } from '../types';
+import { masonrySizes } from '../../consts';
+import { Product } from '../../types';
 import { Waypoint } from 'react-waypoint';
-import { useSearch } from '../hooks/useSearch';
+import { useSearch } from '../../hooks/useSearch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const { row } = masonrySizes;

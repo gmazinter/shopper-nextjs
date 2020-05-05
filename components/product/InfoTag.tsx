@@ -1,8 +1,5 @@
 import React from 'react';
-import Box from './primitives/Box';
-import Text from './primitives/Text';
-import Flex from './primitives/Flex';
-import Card from './primitives/Card';
+import { Card, Text, Flex } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { SpaceProps, space } from 'styled-system';
 

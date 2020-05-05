@@ -1,11 +1,11 @@
 import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Checkbox from '@material-ui/core/Checkbox';
-import TextField from './TextField';
-import { countries as countriesFull } from '../consts';
+import { TextField } from '../customMaterialUi';
+import { countries as countriesFull } from '../../consts';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import { useAppState } from '../AppState';
+import { useAppState } from '../../AppState';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;

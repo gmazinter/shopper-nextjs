@@ -1,8 +1,8 @@
 import React from 'react';
-import Text from './primitives/Text';
-import { Centered } from './primitives/Flex';
+import Text from '../../framework/components/primitives/Text';
+import { Centered } from '../../framework/components/primitives/Flex';
 import styled from 'styled-components';
-import { useResponsive } from '../framework/hooks/useResponsive';
+import { useResponsive } from '../../framework/hooks/useResponsive';
 
 type PricetagProps = {
 	className?;

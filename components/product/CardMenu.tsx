@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Flex from './primitives/Flex';
-import Box from './primitives/Box';
-import Button from './Button';
-import IconButton from './IconButton';
+import { Box, Flex } from '../../framework/components/primitives';
+import { Button, IconButton } from '../customMaterialUi';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import MoreIcon from '@material-ui/icons/More';
 import MoreVert from '@material-ui/icons/MoreVert';

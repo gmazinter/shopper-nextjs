@@ -1,13 +1,9 @@
 import React from 'react';
-import Box from './primitives/Box';
-import Text from './primitives/Text';
-import Flex from './primitives/Flex';
+import { Box, Text, Flex, Image } from '../../framework/components/primitives';
 import InfoTag from './InfoTag';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import IconButton from './IconButton';
-import Chip from './Chip';
-import Image from './primitives/Image';
+import { IconButton, Chip } from '../customMaterialUi';
 import styled from 'styled-components';
 
 export default ({ product, toggleFavorite, handleLabelClick }) => {

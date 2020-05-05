@@ -1,6 +1,6 @@
 import React from 'react';
-import Box from './primitives/Box';
-import Searchbar from './Searchbar';
+import { Box } from '../framework/components/primitives';
+import Searchbar from './search/Searchbar';
 
 export default ({ children }) => (
 	<Box>

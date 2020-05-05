@@ -1,16 +1,15 @@
 import React, { useRef, useEffect, useState, memo } from 'react';
-import Card from './primitives/Card';
-import Box from './primitives/Box';
+import { Box, Card } from '../../framework/components/primitives';
 import styled from 'styled-components';
-import { Product } from '../types';
+import { Product } from '../../types';
 import imagesLoaded from 'imagesloaded';
-import { masonrySizes } from '../consts';
+import { masonrySizes } from '../../consts';
 import _ from 'lodash';
 import CardMenu from './CardMenu';
-import { useAnnotateImage } from '../hooks/useAnnotateImage';
-import { useGetSimilarImages } from '../hooks/useGetSimilarImages';
+import { useAnnotateImage } from '../../hooks/useAnnotateImage';
+import { useGetSimilarImages } from '../../hooks/useGetSimilarImages';
 import CardContent from './CardContent';
-import { useResponsive } from '../framework/hooks/useResponsive';
+import { useResponsive } from '../../framework/hooks/useResponsive';
 
 type ProductCardProps = {
 	handleLabelClick: (label: string) => void;
