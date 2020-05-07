@@ -58,7 +58,12 @@ export default () => {
 					>
 						<Flex>
 							{appTitle}
-							<Box position='relative' mr={{ sm: 2 }} flex={1}>
+							<Box
+								position='relative'
+								mr={{ sm: 2 }}
+								flex={1}
+								id='searchbar-input-wrapper'
+							>
 								<SearchbarInput
 									autoComplete='off'
 									ref={searchInputRef}
