@@ -88,7 +88,12 @@ export default () => {
 									}}
 								/>
 								{showAdvanced && (
-									<AdvancedSearch ref={advancedSearchRef} />
+									<AdvancedSearch
+										closeAdvanced={() => {
+											setShowAdvanced(false);
+										}}
+										ref={advancedSearchRef}
+									/>
 								)}
 							</Box>
 							<SearchButton />

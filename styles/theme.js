@@ -30,7 +30,7 @@ export default {
 	},
 
 	shadows: {
-		small: '0 0 10px 2px #dbdbdb',
+		small: '0 0 8px -4px grey',
 		smallSharp: '0 0 12px -2px #dbdbdb',
 		medium: '0 0 20px -2px #dbdbdb',
 		// large:

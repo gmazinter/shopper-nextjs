@@ -65,7 +65,6 @@ const ActionButtons = styled(Flex)`
 const MenuContainer = styled(Flex).attrs<{ isOpen: boolean }>(props => ({
 	p: 2,
 	bg: props.isOpen ? 'rgb(0, 0, 0, 50%)' : 'initial',
-	zIndex: 'content',
 }))<{ isOpen: boolean }>`
 	align-items: flex-end;
 	position: absolute;

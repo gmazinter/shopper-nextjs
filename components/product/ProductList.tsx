@@ -52,11 +52,11 @@ export default () => {
 	};
 
 	return (
-		<Container fixed disableGutters>
-			<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
-				<Masonry>
-					{products &&
-						products.map((product: Product) => (
+		<Container fixed disableGutters id='product-list'>
+			{products && (
+				<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
+					<Masonry>
+						{products.map((product: Product) => (
 							<ProductCard
 								handleLabelClick={handleLabelClick}
 								isMenuOpen={product.url === activatedCard}
@@ -66,28 +66,29 @@ export default () => {
 								toggleFavorite={toggleFavorite}
 							/>
 						))}
-				</Masonry>
-				{products && (
-					<>
-						<Waypoint
-							onEnter={async () => {
-								const moreProducts = await handleSearch(
-									searchValue,
-									'NEXT',
-									searchType
-								);
-								dispatch({
-									type: 'setProducts',
-									payload: {
-										products: moreProducts,
-									},
-								});
-							}}
-						/>
-						{isLoading && <CircularProgress />}
-					</>
-				)}
-			</Box>
+					</Masonry>
+					{products && (
+						<>
+							<Waypoint
+								onEnter={async () => {
+									const moreProducts = await handleSearch(
+										searchValue,
+										'NEXT',
+										searchType
+									);
+									dispatch({
+										type: 'setProducts',
+										payload: {
+											products: moreProducts,
+										},
+									});
+								}}
+							/>
+							{isLoading && <CircularProgress />}
+						</>
+					)}
+				</Box>
+			)}
 		</Container>
 	);
 };
