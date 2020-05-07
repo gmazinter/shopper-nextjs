@@ -9,7 +9,7 @@ export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
 	const { useMediaQuery } = useResponsive();
 
-	const { handleSearch, isLoading, error } = useSearch();
+	const { searchProducts, isLoading, error } = useSearch();
 	const {
 		state: { searchValue, searchType },
 		dispatch,
@@ -23,7 +23,11 @@ export default () => {
 		e: React.MouseEvent | React.TouchEvent | React.FormEvent
 	) => {
 		dispatch({ type: 'clearProducts' });
-		const products = await handleSearch(searchValue, undefined, searchType);
+		const products = await searchProducts(
+			searchValue,
+			undefined,
+			searchType
+		);
 		dispatch({
 			type: 'setProducts',
 			payload: {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container } from '@material-ui/core';
-import { TextField } from '../customMaterialUi';
+import { TextField, Container } from '../customMaterialUi';
 import { Box, Text, Flex } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { useAppState } from '../../AppState';

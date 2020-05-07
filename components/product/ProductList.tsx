@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box } from '../../framework/components/primitives';
+import { Box, Text } from '../../framework/components/primitives';
+import { Container } from '../customMaterialUi';
 import ProductCard from './ProductCard';
-import Container from '@material-ui/core/Container';
 import { useAppState } from '../../AppState';
 import styled from 'styled-components';
 import { masonrySizes } from '../../consts';
@@ -9,11 +9,12 @@ import { Product } from '../../types';
 import { Waypoint } from 'react-waypoint';
 import { useSearch } from '../../hooks/useSearch';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import NoResults from './NoResults';
 
 const { row } = masonrySizes;
 
 export default () => {
-	const { handleSearch, isLoading, error } = useSearch();
+	const { searchProducts, isLoading, error } = useSearch();
 	const [activatedCard, setActivatedCard] = useState<string | null>(null);
 	const toggleMenu = (cardId?: string) => {
 		if (!cardId || activatedCard === cardId) {
@@ -52,43 +53,52 @@ export default () => {
 	};
 
 	return (
-		<Container fixed disableGutters id='product-list'>
-			{products && (
-				<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
-					<Masonry>
-						{products.map((product: Product) => (
-							<ProductCard
-								handleLabelClick={handleLabelClick}
-								isMenuOpen={product.url === activatedCard}
-								toggleMenu={toggleMenu}
-								key={product.url}
-								product={product}
-								toggleFavorite={toggleFavorite}
-							/>
-						))}
-					</Masonry>
-					{products && (
-						<>
-							<Waypoint
-								onEnter={async () => {
-									const moreProducts = await handleSearch(
-										searchValue,
-										'NEXT',
-										searchType
-									);
-									dispatch({
-										type: 'setProducts',
-										payload: {
-											products: moreProducts,
-										},
-									});
-								}}
-							/>
-							{isLoading && <CircularProgress />}
-						</>
-					)}
-				</Box>
-			)}
+		<Container
+			fixed
+			disableGutters
+			id='product-list'
+			position='relative'
+			flex={1}
+		>
+			{products &&
+				(products.length > 0 ? (
+					<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
+						<Masonry>
+							{products.map((product: Product) => (
+								<ProductCard
+									handleLabelClick={handleLabelClick}
+									isMenuOpen={product.url === activatedCard}
+									toggleMenu={toggleMenu}
+									key={product.url}
+									product={product}
+									toggleFavorite={toggleFavorite}
+								/>
+							))}
+						</Masonry>
+						{products && (
+							<>
+								<Waypoint
+									onEnter={async () => {
+										const moreProducts = await searchProducts(
+											searchValue,
+											'NEXT',
+											searchType
+										);
+										dispatch({
+											type: 'setProducts',
+											payload: {
+												products: moreProducts,
+											},
+										});
+									}}
+								/>
+								{isLoading && <CircularProgress />}
+							</>
+						)}
+					</Box>
+				) : (
+					<NoResults />
+				))}
 		</Container>
 	);
 };

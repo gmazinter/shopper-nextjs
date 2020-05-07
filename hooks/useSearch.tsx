@@ -62,7 +62,7 @@ export const useSearch = () => {
 		error: errorGettingPageData,
 	} = useGetPageData();
 
-	const handleSearch = async (
+	const searchProducts = async (
 		searchValue: string,
 		direction?: Direction,
 		searchType?: 'image' | 'text'
@@ -71,7 +71,7 @@ export const useSearch = () => {
 			(direction === 'NEXT' && pageStart + pageSize >= resultsLimit) ||
 			(direction === 'PREVIOUS' && pageStart === 0)
 		) {
-			return;
+			return [];
 		}
 
 		const countryCodes = selectedCountries
@@ -103,7 +103,7 @@ export const useSearch = () => {
 					? await convertImageResultsToWebResults(response.data.items)
 					: response.data.items;
 			// items.filter((item: Result) => item.pagemap.product?.length === 1);
-			const products = mapItemsToProducts(items);
+			const products = items ? mapItemsToProducts(items) : [];
 			setIsloading(false);
 			return products;
 		} catch (e) {
@@ -123,7 +123,7 @@ export const useSearch = () => {
 	};
 
 	return {
-		handleSearch,
+		searchProducts,
 		isLoading: isLoading || loadingSinglePageData,
 		error: error || errorGettingPageData,
 	};

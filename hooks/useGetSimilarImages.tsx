@@ -38,7 +38,7 @@ export const useGetSimilarImages = () => {
 	} = useGetPageData();
 
 	const {
-		handleSearch,
+		searchProducts,
 		isLoading: searchLoading,
 		error: searchError,
 	} = useSearch();
@@ -77,7 +77,7 @@ export const useGetSimilarImages = () => {
 				_.filter(
 					await Promise.all(
 						similarImages.map(async image => {
-							return await handleSearch(image.url, undefined);
+							return await searchProducts(image.url, undefined);
 						})
 					),
 					result => !!result
