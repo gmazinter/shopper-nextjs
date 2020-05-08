@@ -54,54 +54,52 @@ export default () => {
 	};
 
 	return (
-		<Container
-			fixed
-			disableGutters
-			id='product-list'
-			position='relative'
-			flex={1}
-		>
-			<ErrorModal isOpen={!!error} />
-			{products &&
-				(products.length > 0 ? (
-					<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
-						<Masonry>
-							{products.map((product: Product) => (
-								<ProductCard
-									handleLabelClick={handleLabelClick}
-									isMenuOpen={product.url === activatedCard}
-									toggleMenu={toggleMenu}
-									key={product.url}
-									product={product}
-									toggleFavorite={toggleFavorite}
-								/>
-							))}
-						</Masonry>
-						{products && (
-							<>
-								<Waypoint
-									onEnter={async () => {
-										const moreProducts = await searchProducts(
-											searchValue,
-											'NEXT',
-											searchType
-										);
-										dispatch({
-											type: 'setProducts',
-											payload: {
-												products: moreProducts,
-											},
-										});
-									}}
-								/>
-								{isLoading && <CircularProgress />}
-							</>
-						)}
-					</Box>
-				) : (
-					<NoResults />
-				))}
-		</Container>
+		<Box id='product-list'>
+			<Container fixed disableGutters position='relative' flex={1}>
+				<ErrorModal isOpen={!!error} />
+				{products &&
+					(products.length > 0 ? (
+						<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
+							<Masonry>
+								{products.map((product: Product) => (
+									<ProductCard
+										handleLabelClick={handleLabelClick}
+										isMenuOpen={
+											product.url === activatedCard
+										}
+										toggleMenu={toggleMenu}
+										key={product.url}
+										product={product}
+										toggleFavorite={toggleFavorite}
+									/>
+								))}
+							</Masonry>
+							{products && (
+								<>
+									<Waypoint
+										onEnter={async () => {
+											const moreProducts = await searchProducts(
+												searchValue,
+												'NEXT',
+												searchType
+											);
+											dispatch({
+												type: 'setProducts',
+												payload: {
+													products: moreProducts,
+												},
+											});
+										}}
+									/>
+									{isLoading && <CircularProgress />}
+								</>
+							)}
+						</Box>
+					) : (
+						<NoResults />
+					))}
+			</Container>
+		</Box>
 	);
 };
 
