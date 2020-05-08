@@ -10,6 +10,7 @@ import { Waypoint } from 'react-waypoint';
 import { useSearch } from '../../hooks/useSearch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NoResults from './NoResults';
+import ErrorModal from '../ErrorModal';
 
 const { row } = masonrySizes;
 
@@ -60,6 +61,7 @@ export default () => {
 			position='relative'
 			flex={1}
 		>
+			<ErrorModal isOpen={!!error} />
 			{products &&
 				(products.length > 0 ? (
 					<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>

@@ -50,7 +50,7 @@ const mapItemsToProducts = (items: Result[]) =>
 
 export const useSearch = () => {
 	const [isLoading, setIsloading] = useState(false);
-	const [error, setError] = useState<null | {}>(null);
+	const [error, setError] = useState<null | any>(null);
 	const {
 		state: { selectedCountries, pageStart },
 		dispatch,
@@ -107,7 +107,9 @@ export const useSearch = () => {
 			setIsloading(false);
 			return products;
 		} catch (e) {
+			console.log('at least use serach knows there was an error');
 			setError(e);
+			throw e;
 		}
 	};
 

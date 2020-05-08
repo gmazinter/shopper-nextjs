@@ -22,18 +22,22 @@ export default () => {
 	const handleNewSearch = async (
 		e: React.MouseEvent | React.TouchEvent | React.FormEvent
 	) => {
-		dispatch({ type: 'clearProducts' });
-		const products = await searchProducts(
-			searchValue,
-			undefined,
-			searchType
-		);
-		dispatch({
-			type: 'setProducts',
-			payload: {
-				products,
-			},
-		});
+		try {
+			dispatch({ type: 'clearProducts' });
+			const products = await searchProducts(
+				searchValue,
+				undefined,
+				searchType
+			);
+			dispatch({
+				type: 'setProducts',
+				payload: {
+					products,
+				},
+			});
+		} catch (e) {
+			console.log('an error has occured');
+		}
 	};
 
 	return isClientSide
