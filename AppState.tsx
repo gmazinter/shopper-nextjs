@@ -5,6 +5,7 @@ import { Product } from './types';
 type SearchType = 'image' | 'text';
 
 type AppState = {
+	error: any;
 	searchValue: string;
 	searchType: SearchType;
 	pageStart: number;
@@ -13,6 +14,7 @@ type AppState = {
 };
 
 const initialAppState: AppState = {
+	error: null,
 	searchValue: '',
 	searchType: 'text',
 	pageStart: 0,
@@ -37,12 +39,6 @@ const reducer = (state: AppState, action: { type: string; payload: any }) => {
 				searchValue,
 			};
 		}
-		// case 'setLabels': {
-		// 	return {
-		// 		...state,
-		// 		labels: action.payload.labels,
-		// 	};
-		// }
 		case 'setProducts': {
 			const oldProducts = !!state.products ? [...state.products] : [];
 			const products: Product[] = _.uniqBy(
@@ -110,6 +106,18 @@ const reducer = (state: AppState, action: { type: string; payload: any }) => {
 			return {
 				...state,
 				searchType: newSearchType,
+			};
+		}
+		case 'setError': {
+			return {
+				...state,
+				error: action.payload.error,
+			};
+		}
+		case 'clearError': {
+			return {
+				...state,
+				error: null,
 			};
 		}
 		default:

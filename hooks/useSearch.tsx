@@ -104,12 +104,16 @@ export const useSearch = () => {
 					: response.data.items;
 			// items.filter((item: Result) => item.pagemap.product?.length === 1);
 			const products = items ? mapItemsToProducts(items) : [];
-			setIsloading(false);
-			return products;
+			dispatch({
+				type: 'setProducts',
+				payload: {
+					products,
+				},
+			});
 		} catch (e) {
-			console.log('at least use serach knows there was an error');
 			setError(e);
-			throw e;
+		} finally {
+			setIsloading(false);
 		}
 	};
 

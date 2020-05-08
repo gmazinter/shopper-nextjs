@@ -10,12 +10,20 @@ import { Waypoint } from 'react-waypoint';
 import { useSearch } from '../../hooks/useSearch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import NoResults from './NoResults';
-import ErrorModal from '../ErrorModal';
 
 const { row } = masonrySizes;
 
 export default () => {
+	const {
+		state: { products, searchType, searchValue },
+		dispatch,
+	} = useAppState();
+
 	const { searchProducts, isLoading, error } = useSearch();
+	useEffect(() => {
+		dispatch({ type: 'setError', payload: { error } });
+	}, [error]);
+
 	const [activatedCard, setActivatedCard] = useState<string | null>(null);
 	const toggleMenu = (cardId?: string) => {
 		if (!cardId || activatedCard === cardId) {
@@ -34,11 +42,6 @@ export default () => {
 		return () => window.removeEventListener('click', handleClick);
 	});
 
-	const {
-		state: { products, searchType, searchValue },
-		dispatch,
-	} = useAppState();
-
 	const toggleFavorite = (productId: string) => {
 		dispatch({
 			type: 'toggleFavorite',
@@ -56,7 +59,6 @@ export default () => {
 	return (
 		<Box id='product-list'>
 			<Container fixed disableGutters position='relative' flex={1}>
-				<ErrorModal isOpen={!!error} />
 				{products &&
 					(products.length > 0 ? (
 						<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
@@ -78,17 +80,11 @@ export default () => {
 								<>
 									<Waypoint
 										onEnter={async () => {
-											const moreProducts = await searchProducts(
+											await searchProducts(
 												searchValue,
 												'NEXT',
 												searchType
 											);
-											dispatch({
-												type: 'setProducts',
-												payload: {
-													products: moreProducts,
-												},
-											});
 										}}
 									/>
 									{isLoading && <CircularProgress />}

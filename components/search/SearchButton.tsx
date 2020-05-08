@@ -10,6 +10,10 @@ export default () => {
 	const { useMediaQuery } = useResponsive();
 
 	const { searchProducts, isLoading, error } = useSearch();
+	useEffect(() => {
+		dispatch({ type: 'setError', payload: { error } });
+	}, [error]);
+
 	const {
 		state: { searchValue, searchType },
 		dispatch,
@@ -22,22 +26,8 @@ export default () => {
 	const handleNewSearch = async (
 		e: React.MouseEvent | React.TouchEvent | React.FormEvent
 	) => {
-		try {
-			dispatch({ type: 'clearProducts' });
-			const products = await searchProducts(
-				searchValue,
-				undefined,
-				searchType
-			);
-			dispatch({
-				type: 'setProducts',
-				payload: {
-					products,
-				},
-			});
-		} catch (e) {
-			console.log('an error has occured');
-		}
+		dispatch({ type: 'clearProducts' });
+		await searchProducts(searchValue, undefined, searchType);
 	};
 
 	return isClientSide
