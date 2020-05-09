@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text } from '../../framework/components/primitives';
+import { Box, Text, Flex } from '../../framework/components/primitives';
 import { Container } from '../customMaterialUi';
 import ProductCard from './ProductCard';
 import { useAppState } from '../../AppState';
@@ -20,9 +20,6 @@ export default () => {
 	} = useAppState();
 
 	const { searchProducts, isLoading, error } = useSearch();
-	useEffect(() => {
-		dispatch({ type: 'setError', payload: { error } });
-	}, [error]);
 
 	const [activatedCard, setActivatedCard] = useState<string | null>(null);
 	const toggleMenu = (cardId?: string) => {
@@ -57,7 +54,7 @@ export default () => {
 	};
 
 	return (
-		<Box id='product-list'>
+		<Flex id='product-list' flex={1}>
 			<Container fixed disableGutters position='relative' flex={1}>
 				{products &&
 					(products.length > 0 ? (
@@ -95,7 +92,7 @@ export default () => {
 						<NoResults />
 					))}
 			</Container>
-		</Box>
+		</Flex>
 	);
 };
 
