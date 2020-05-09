@@ -33,11 +33,9 @@ export default ({
 }: CardMenuProps) => {
 	return (
 		<MenuContainer isOpen={isOpen}>
-			{price && (
-				<Box flex={1} ml={-cardPadding}>
-					<Pricetag price={price} />
-				</Box>
-			)}
+			<Box flex={1} ml={-cardPadding}>
+				{!!price?.amount && <Pricetag price={price} />}
+			</Box>
 			<ActionButtons>
 				{isOpen && (
 					<>

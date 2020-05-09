@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useSearchState } from '../states/SearchState';
 import _ from 'lodash';
 import { useProductState } from '../states/ProductState';
 

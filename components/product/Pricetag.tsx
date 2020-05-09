@@ -1,8 +1,8 @@
 import React from 'react';
-import Text from '../../framework/components/primitives/Text';
-import { Centered } from '../../framework/components/primitives/Flex';
+import { Text, Flex, Centered } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { useResponsive } from '../../framework/hooks/useResponsive';
+import { formatAmount, formatCurrency } from '../../formatting';
 
 type PricetagProps = {
 	className?;
@@ -18,7 +18,14 @@ export default ({ price }: PricetagProps) => {
 	const notchSize = !isSmall ? '18px' : '20px';
 	return (
 		<TagContainer notchSize={notchSize}>
-			<Text fontSize={{ _: 3, sm: 4 }}>{`${amount} ${currency}`}</Text>
+			<Flex>
+				<Text mr={1} fontSize={{ _: 3, sm: 4 }}>
+					{formatAmount(amount)}
+				</Text>
+				<Text fontSize={{ _: 3, sm: 4 }}>
+					{formatCurrency(currency)}
+				</Text>
+			</Flex>
 		</TagContainer>
 	);
 };

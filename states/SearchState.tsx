@@ -1,6 +1,5 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import _ from 'lodash';
-import { Product } from '../types';
 
 type SearchType = 'image' | 'text';
 
