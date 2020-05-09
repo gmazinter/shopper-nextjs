@@ -2,14 +2,14 @@ import React from 'react';
 import { Box, Flex } from '../framework/components/primitives';
 import Searchbar from './search/Searchbar';
 import ErrorModal from '../components/ErrorModal';
-import { useAppState } from '../AppState';
+import { useSearchState } from '../states/SearchState';
 import { stringify } from 'querystring';
 
 export default ({ children }) => {
 	const {
 		state: { error },
 		dispatch,
-	} = useAppState();
+	} = useSearchState();
 	return (
 		<Flex
 			flexDirection='column'

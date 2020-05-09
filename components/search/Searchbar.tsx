@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { TextField, Container } from '../customMaterialUi';
 import { Box, Text, Flex } from '../../framework/components/primitives';
 import styled from 'styled-components';
-import { useAppState } from '../../AppState';
+import { useSearchState } from '../../states/SearchState';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import AdvancedSearch from './AdvancedSearch';
 import { useClickOutside } from '../../framework/hooks/useClickOutside';
@@ -15,7 +15,7 @@ export default () => {
 	const {
 		state: { searchValue },
 		dispatch,
-	} = useAppState();
+	} = useSearchState();
 
 	useEffect(() => {
 		setIsClientSide(true);

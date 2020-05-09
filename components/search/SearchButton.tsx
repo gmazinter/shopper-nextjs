@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import { Button } from '../customMaterialUi';
 import { useResponsive } from '../../framework/hooks/useResponsive';
-import { useAppState } from '../../AppState';
+import { useSearchState } from '../../states/SearchState';
 import { useSearch } from '../../hooks/useSearch';
+import { useProductState } from '../../states/ProductState';
 
 export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
@@ -13,8 +14,9 @@ export default () => {
 
 	const {
 		state: { searchValue, searchType },
-		dispatch,
-	} = useAppState();
+		dispatch: searchDispatch,
+	} = useSearchState();
+	const { dispatch: productDispatch } = useProductState();
 
 	useEffect(() => {
 		setIsClientSide(true);
@@ -23,7 +25,7 @@ export default () => {
 	const handleNewSearch = async (
 		e: React.MouseEvent | React.TouchEvent | React.FormEvent
 	) => {
-		dispatch({ type: 'clearProducts' });
+		productDispatch({ type: 'clearProducts' });
 		await searchProducts(searchValue, undefined, searchType);
 	};
 

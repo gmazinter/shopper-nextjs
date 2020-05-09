@@ -3,7 +3,7 @@ import { Box, Text, Flex, Card } from '../../framework/components/primitives';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import TextFields from '@material-ui/icons/TextFields';
 import Switch from 'react-switch';
-import { useAppState } from '../../AppState';
+import { useSearchState } from '../../states/SearchState';
 import CountrySelect from './CountrySelect';
 import Searchbar from './Searchbar';
 import styled from 'styled-components';
@@ -45,7 +45,7 @@ export default React.forwardRef((props: AdvancedSearchProps, ref) => {
 	const {
 		state: { searchType },
 		dispatch,
-	} = useAppState();
+	} = useSearchState();
 
 	const debouncedCloseAdvanced = _.debounce(closeAdvanced, 100);
 

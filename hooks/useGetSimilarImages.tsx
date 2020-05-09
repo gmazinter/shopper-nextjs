@@ -4,7 +4,8 @@ import { useGetPageData } from './useGetPageData';
 import { mapItemToProduct, useSearch } from './useSearch';
 import { Result } from '../types';
 import _ from 'lodash';
-import { useAppState } from '../AppState';
+import { useSearchState } from '../states/SearchState';
+import { useProductState } from '../states/ProductState';
 
 const extractProductFromResult = (page: Result, imageUri: string) => {
 	if (!page.pagemap.product) {
@@ -28,9 +29,13 @@ export const useGetSimilarImages = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<any | null>(null);
 	const {
-		state: { products, pageStart, searchValue },
-		dispatch,
-	} = useAppState();
+		state: { pageStart, searchValue },
+		dispatch: searchDispatch,
+	} = useSearchState();
+	const {
+		state: { products },
+		dispatch: productDispatch,
+	} = useProductState();
 	const {
 		getPageData,
 		isLoading: loadingSinglePageData,
@@ -86,8 +91,8 @@ export const useGetSimilarImages = () => {
 
 			console.log(products);
 
-			dispatch({ type: 'clearProducts' });
-			dispatch({
+			searchDispatch({ type: 'clearProducts' });
+			searchDispatch({
 				type: 'setProducts',
 				payload: { products },
 			});

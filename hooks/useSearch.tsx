@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAppState } from '../AppState';
+import { useSearchState } from '../states/SearchState';
 import { Result, Product, Direction } from '../types';
 import { useGetPageData } from './useGetPageData';
+import { useProductState } from '../states/ProductState';
 
 const pageSize = 10;
 const resultsLimit = 100;
@@ -53,11 +54,11 @@ export const useSearch = () => {
 	const [error, setError] = useState<null | any>(null);
 
 	useEffect(() => {
-		dispatch({ type: 'setError', payload: { error } });
+		searchDispatch({ type: 'setError', payload: { error } });
 	}, [error]);
 
 	useEffect(() => {
-		dispatch({
+		searchDispatch({
 			type: 'toggleLoadingProducts',
 			payload: { isLoading },
 		});
@@ -65,8 +66,10 @@ export const useSearch = () => {
 
 	const {
 		state: { selectedCountries, pageStart },
-		dispatch,
-	} = useAppState();
+		dispatch: searchDispatch,
+	} = useSearchState();
+
+	const { dispatch: productDispatch } = useProductState();
 
 	const {
 		getPageData,
@@ -95,7 +98,7 @@ export const useSearch = () => {
 				: direction === 'NEXT'
 				? pageStart + pageSize
 				: pageStart - pageSize;
-		dispatch({
+		searchDispatch({
 			type: 'setPageStart',
 			payload: { pageStart: newPageStart },
 		});
@@ -116,7 +119,7 @@ export const useSearch = () => {
 					: response.data.items;
 			// items.filter((item: Result) => item.pagemap.product?.length === 1);
 			const products = items ? mapItemsToProducts(items) : [];
-			dispatch({
+			productDispatch({
 				type: 'setProducts',
 				payload: {
 					products,

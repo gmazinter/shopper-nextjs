@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useAppState } from '../AppState';
+import { useSearchState } from '../states/SearchState';
 
 export const useGetPageData = () => {
 	const {
 		state: { selectedCountries },
-	} = useAppState();
+	} = useSearchState();
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState<null | {}>(null);
 	const getPageData = async (url: string) => {

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useAppState } from '../AppState';
+import { useSearchState } from '../states/SearchState';
 import _ from 'lodash';
+import { useProductState } from '../states/ProductState';
 
 export const useAnnotateImage = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<null | {}>(null);
-	const { dispatch } = useAppState();
+	const { dispatch: productDispatch } = useProductState();
 
 	const annotateImage = async (
 		productUrl: string,
@@ -31,7 +32,7 @@ export const useAnnotateImage = () => {
 				productUrl,
 				labels,
 			};
-			dispatch({
+			productDispatch({
 				type: 'setProductLabels',
 				payload,
 			});

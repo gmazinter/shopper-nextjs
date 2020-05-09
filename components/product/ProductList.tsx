@@ -7,7 +7,7 @@ import {
 } from '../../framework/components/primitives';
 import { Container } from '../customMaterialUi';
 import ProductCard from './ProductCard';
-import { useAppState } from '../../AppState';
+import { useSearchState } from '../../states/SearchState';
 import styled from 'styled-components';
 import { masonrySizes } from '../../consts';
 import { Product } from '../../types';
@@ -16,14 +16,19 @@ import { useSearch } from '../../hooks/useSearch';
 import NoResults from './NoResults';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { useProductState } from '../../states/ProductState';
 
 const { row } = masonrySizes;
 
 export default () => {
 	const {
-		state: { products, searchType, searchValue, loadingProducts },
-		dispatch,
-	} = useAppState();
+		state: { searchType, searchValue, loadingProducts },
+		dispatch: searchDispatch,
+	} = useSearchState();
+	const {
+		state: { products },
+		dispatch: productDispatch,
+	} = useProductState();
 
 	const { searchProducts } = useSearch();
 
@@ -46,14 +51,14 @@ export default () => {
 	});
 
 	const toggleFavorite = (productId: string) => {
-		dispatch({
+		productDispatch({
 			type: 'toggleFavorite',
 			payload: { productId },
 		});
 	};
 
 	const handleLabelClick = (label: string) => {
-		dispatch({
+		searchDispatch({
 			type: 'addLabelToQuery',
 			payload: { label },
 		});

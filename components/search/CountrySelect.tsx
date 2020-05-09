@@ -5,7 +5,7 @@ import { TextField } from '../customMaterialUi';
 import { countries as countriesFull } from '../../consts';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import { useAppState } from '../../AppState';
+import { useSearchState } from '../../states/SearchState';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;
@@ -18,7 +18,7 @@ export default () => {
 	const {
 		state: { selectedCountries },
 		dispatch,
-	} = useAppState();
+	} = useSearchState();
 
 	return (
 		<Autocomplete

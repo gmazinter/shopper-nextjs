@@ -1,61 +1,45 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import _ from 'lodash';
-import { Product } from './types';
+import { Product } from '../types';
 
 type SearchType = 'image' | 'text';
 
-type AppState = {
+type SearchState = {
 	error: any;
 	loadingProducts: boolean;
 	searchValue: string;
 	searchType: SearchType;
 	pageStart: number;
-	products: Product[] | null;
 	selectedCountries: string[];
 };
 
-const initialAppState: AppState = {
+const initialSearchState: SearchState = {
 	loadingProducts: false,
 	error: null,
 	searchValue: '',
 	searchType: 'text',
 	pageStart: 0,
-	products: null,
 	selectedCountries: [],
 };
 
-const appState = createContext<{
-	state: AppState;
+const searchState = createContext<{
+	state: SearchState;
 	dispatch: React.Dispatch<any>;
 }>({
-	state: initialAppState,
+	state: initialSearchState,
 	dispatch: () => null,
 });
 
-const reducer = (state: AppState, action: { type: string; payload: any }) => {
+const reducer = (
+	state: SearchState,
+	action: { type: string; payload: any }
+) => {
 	switch (action.type) {
 		case 'setSearchValue': {
 			const searchValue: string = action.payload;
 			return {
 				...state,
 				searchValue,
-			};
-		}
-		case 'setProducts': {
-			const oldProducts = !!state.products ? [...state.products] : [];
-			const products: Product[] = _.uniqBy(
-				[...oldProducts, ...action.payload.products],
-				'url'
-			);
-			return {
-				...state,
-				products,
-			};
-		}
-		case 'clearProducts': {
-			return {
-				...state,
-				products: null,
 			};
 		}
 		case 'setPageStart': {
@@ -69,30 +53,6 @@ const reducer = (state: AppState, action: { type: string; payload: any }) => {
 			return {
 				...state,
 				selectedCountries,
-			};
-		}
-		case 'toggleFavorite': {
-			const { productId } = action.payload;
-			const newProducts: Product[] = [...state.products];
-			const newProduct: Product = newProducts.find(
-				p => p.url === productId
-			);
-			newProduct.isFavorite = !newProduct.isFavorite;
-
-			return {
-				...state,
-				products: newProducts,
-			};
-		}
-		case 'setProductLabels': {
-			const indexToUpdate = state.products.findIndex(
-				p => p.url === action.payload.productUrl
-			);
-			const newProducts: Product[] = [...state.products];
-			newProducts[indexToUpdate].labels = action.payload.labels;
-			return {
-				...state,
-				products: newProducts,
 			};
 		}
 		case 'addLabelToQuery': {
@@ -133,13 +93,13 @@ const reducer = (state: AppState, action: { type: string; payload: any }) => {
 	}
 };
 
-export const AppStateProvider = ({ children }) => {
-	const [state, dispatch] = useReducer(reducer, initialAppState);
+export const SearchStateProvider = ({ children }) => {
+	const [state, dispatch] = useReducer(reducer, initialSearchState);
 	return (
-		<appState.Provider value={{ state, dispatch }}>
+		<searchState.Provider value={{ state, dispatch }}>
 			{children}
-		</appState.Provider>
+		</searchState.Provider>
 	);
 };
 
-export const useAppState = () => useContext(appState);
+export const useSearchState = () => useContext(searchState);
