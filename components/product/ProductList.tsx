@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text, Flex } from '../../framework/components/primitives';
+import {
+	Box,
+	Text,
+	Flex,
+	Centered,
+} from '../../framework/components/primitives';
 import { Container } from '../customMaterialUi';
 import ProductCard from './ProductCard';
 import { useAppState } from '../../AppState';
@@ -8,18 +13,19 @@ import { masonrySizes } from '../../consts';
 import { Product } from '../../types';
 import { Waypoint } from 'react-waypoint';
 import { useSearch } from '../../hooks/useSearch';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import NoResults from './NoResults';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const { row } = masonrySizes;
 
 export default () => {
 	const {
-		state: { products, searchType, searchValue },
+		state: { products, searchType, searchValue, loadingProducts },
 		dispatch,
 	} = useAppState();
 
-	const { searchProducts, isLoading, error } = useSearch();
+	const { searchProducts } = useSearch();
 
 	const [activatedCard, setActivatedCard] = useState<string | null>(null);
 	const toggleMenu = (cardId?: string) => {
@@ -56,8 +62,8 @@ export default () => {
 	return (
 		<Flex id='product-list' flex={1}>
 			<Container fixed disableGutters position='relative' flex={1}>
-				{products &&
-					(products.length > 0 ? (
+				{products ? (
+					products.length > 0 ? (
 						<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
 							<Masonry>
 								{products.map((product: Product) => (
@@ -73,24 +79,31 @@ export default () => {
 									/>
 								))}
 							</Masonry>
-							{products && (
-								<>
-									<Waypoint
-										onEnter={async () => {
-											await searchProducts(
-												searchValue,
-												'NEXT',
-												searchType
-											);
-										}}
-									/>
-									{isLoading && <CircularProgress />}
-								</>
-							)}
+							<Waypoint
+								bottomOffset='20px'
+								onEnter={async () => {
+									await searchProducts(
+										searchValue,
+										'NEXT',
+										searchType
+									);
+								}}
+							>
+								<Box height='20px' position='relative'>
+									{loadingProducts && <LinearProgress />}
+								</Box>
+							</Waypoint>
 						</Box>
 					) : (
 						<NoResults />
-					))}
+					)
+				) : (
+					loadingProducts && (
+						<Centered height='100%' width='100%'>
+							<CircularProgress />
+						</Centered>
+					)
+				)}
 			</Container>
 		</Flex>
 	);

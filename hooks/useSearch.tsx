@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAppState } from '../AppState';
 import { Result, Product, Direction } from '../types';
@@ -51,6 +51,18 @@ const mapItemsToProducts = (items: Result[]) =>
 export const useSearch = () => {
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState<null | any>(null);
+
+	useEffect(() => {
+		dispatch({ type: 'setError', payload: { error } });
+	}, [error]);
+
+	useEffect(() => {
+		dispatch({
+			type: 'toggleLoadingProducts',
+			payload: { isLoading },
+		});
+	}, [isLoading]);
+
 	const {
 		state: { selectedCountries, pageStart },
 		dispatch,

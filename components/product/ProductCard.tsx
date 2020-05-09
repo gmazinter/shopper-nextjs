@@ -10,12 +10,13 @@ import { useAnnotateImage } from '../../hooks/useAnnotateImage';
 import { useGetSimilarImages } from '../../hooks/useGetSimilarImages';
 import CardContent from './CardContent';
 import { useResponsive } from '../../framework/hooks/useResponsive';
+import { Skeleton } from '@material-ui/lab';
 
 type ProductCardProps = {
 	handleLabelClick: (label: string) => void;
 	isMenuOpen: boolean;
 	toggleMenu: (cardId: string) => void;
-	product: Product;
+	product?: Product;
 	toggleFavorite: (productId: string) => void;
 	className?: string;
 };
@@ -122,3 +123,19 @@ const ProductCardContainer = styled(Card).attrs({
 	overflow: hidden;
 	position: relative;
 `;
+
+// export const ProductCardSkeleton = () => {
+// 	const { useMediaQuery } = useResponsive();
+// 	const gutter = useMediaQuery({ _: 10, sm: 16 });
+
+// 	return (
+// 		<MasonryItem gutter={gutter as number} span={6}>
+// 			<ProductCardContainer>
+// 				<Skeleton variant='rect' />
+// 				<Skeleton variant='rect' />
+// 				<Skeleton variant='rect' />
+// 				<Skeleton variant='circle' />
+// 			</ProductCardContainer>
+// 		</MasonryItem>
+// 	);
+// };

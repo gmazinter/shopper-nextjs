@@ -9,10 +9,7 @@ export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
 	const { useMediaQuery } = useResponsive();
 
-	const { searchProducts, isLoading, error } = useSearch();
-	useEffect(() => {
-		dispatch({ type: 'setError', payload: { error } });
-	}, [error]);
+	const { searchProducts } = useSearch();
 
 	const {
 		state: { searchValue, searchType },
@@ -43,7 +40,7 @@ export default () => {
 						type='submit'
 						onClick={handleNewSearch}
 					>
-						{isLoading ? 'Loading...' : <SearchIcon />}
+						<SearchIcon />
 					</Button>
 				),
 				sm: (
@@ -54,7 +51,7 @@ export default () => {
 						color='primary'
 						variant='contained'
 					>
-						{isLoading ? 'Loading...' : 'Search'}
+						Search
 					</Button>
 				),
 		  }) as React.ReactElement)

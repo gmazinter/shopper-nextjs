@@ -6,6 +6,7 @@ type SearchType = 'image' | 'text';
 
 type AppState = {
 	error: any;
+	loadingProducts: boolean;
 	searchValue: string;
 	searchType: SearchType;
 	pageStart: number;
@@ -14,6 +15,7 @@ type AppState = {
 };
 
 const initialAppState: AppState = {
+	loadingProducts: false,
 	error: null,
 	searchValue: '',
 	searchType: 'text',
@@ -118,6 +120,12 @@ const reducer = (state: AppState, action: { type: string; payload: any }) => {
 			return {
 				...state,
 				error: null,
+			};
+		}
+		case 'toggleLoadingProducts': {
+			return {
+				...state,
+				loadingProducts: action.payload.isLoading,
 			};
 		}
 		default:
