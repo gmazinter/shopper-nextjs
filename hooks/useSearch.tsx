@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useSearchState } from '../states/SearchState';
 import { Result, Product, Direction } from '../types';
 import { useGetPageData } from './useGetPageData';
-import { useProductState } from '../states/ProductState';
 
 const pageSize = 10;
 const resultsLimit = 100;
@@ -68,16 +67,9 @@ export const useSearch = () => {
 		state: { selectedCountries, pageStart },
 		dispatch: searchDispatch,
 	} = useSearchState();
+	const { getPageData } = useGetPageData();
 
-	const { dispatch: productDispatch } = useProductState();
-
-	const {
-		getPageData,
-		isLoading: loadingSinglePageData,
-		error: errorGettingPageData,
-	} = useGetPageData();
-
-	const searchProducts = async (
+	const handleSearch = async (
 		searchValue: string,
 		direction?: Direction,
 		searchType?: 'image' | 'text'
@@ -117,14 +109,7 @@ export const useSearch = () => {
 				searchType === 'image'
 					? await convertImageResultsToWebResults(response.data.items)
 					: response.data.items;
-			// items.filter((item: Result) => item.pagemap.product?.length === 1);
-			const products = items ? mapItemsToProducts(items) : [];
-			productDispatch({
-				type: 'setProducts',
-				payload: {
-					products,
-				},
-			});
+			return items ? mapItemsToProducts(items) : [];
 		} catch (e) {
 			setError(e);
 		} finally {
@@ -144,8 +129,8 @@ export const useSearch = () => {
 	};
 
 	return {
-		searchProducts,
-		isLoading: isLoading || loadingSinglePageData,
-		error: error || errorGettingPageData,
+		handleSearch,
+		isLoading,
+		error,
 	};
 };

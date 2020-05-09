@@ -81,9 +81,7 @@ const ProductCard = ({
 						e.stopPropagation();
 						toggleMenu(product.url);
 					}}
-					searchByImage={() =>
-						getSimilarImages(imageUri, product.url)
-					}
+					searchByImage={() => getSimilarImages(imageUri)}
 					annotateImage={() =>
 						annotateImage(product.url, product.imageUri)
 					}

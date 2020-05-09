@@ -4,13 +4,14 @@ import { Button } from '../customMaterialUi';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import { useSearchState } from '../../states/SearchState';
 import { useSearch } from '../../hooks/useSearch';
+import { useGetProducts } from '../../hooks/useGetProducts';
 import { useProductState } from '../../states/ProductState';
 
 export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
 	const { useMediaQuery } = useResponsive();
 
-	const { searchProducts } = useSearch();
+	const { getProducts } = useGetProducts();
 
 	const {
 		state: { searchValue, searchType },
@@ -26,7 +27,7 @@ export default () => {
 		e: React.MouseEvent | React.TouchEvent | React.FormEvent
 	) => {
 		productDispatch({ type: 'clearProducts' });
-		await searchProducts(searchValue, undefined, searchType);
+		await getProducts(searchValue, undefined, searchType);
 	};
 
 	return isClientSide

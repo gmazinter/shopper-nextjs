@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-	Box,
-	Text,
-	Flex,
-	Centered,
-} from '../../framework/components/primitives';
+import { Box, Flex, Centered } from '../../framework/components/primitives';
 import { Container } from '../customMaterialUi';
 import ProductCard from './ProductCard';
 import { useSearchState } from '../../states/SearchState';
@@ -12,7 +7,7 @@ import styled from 'styled-components';
 import { masonrySizes } from '../../consts';
 import { Product } from '../../types';
 import { Waypoint } from 'react-waypoint';
-import { useSearch } from '../../hooks/useSearch';
+import { useGetProducts } from '../../hooks/useGetProducts';
 import NoResults from './NoResults';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -30,7 +25,7 @@ export default () => {
 		dispatch: productDispatch,
 	} = useProductState();
 
-	const { searchProducts } = useSearch();
+	const { getProducts } = useGetProducts();
 
 	const [activatedCard, setActivatedCard] = useState<string | null>(null);
 	const toggleMenu = (cardId?: string) => {
@@ -87,7 +82,7 @@ export default () => {
 							<Waypoint
 								bottomOffset='20px'
 								onEnter={async () => {
-									await searchProducts(
+									await getProducts(
 										searchValue,
 										'NEXT',
 										searchType
