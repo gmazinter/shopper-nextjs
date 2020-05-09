@@ -19,6 +19,7 @@ export default ({ children }) => {
 		>
 			<ErrorModal
 				isOpen={!!error}
+				message={error?.message}
 				closeModal={() => {
 					dispatch({ type: 'clearError' });
 				}}
