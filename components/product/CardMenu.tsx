@@ -42,15 +42,19 @@ export default ({
 				{isOpen && (
 					<>
 						<CardIconButton onClick={annotateImage}>
-							<MoreIcon />
+							<MoreIcon fontSize='small' />
 						</CardIconButton>
 						<CardIconButton onClick={searchByImage}>
-							<PhotoCameraIcon />
+							<PhotoCameraIcon fontSize='small' />
 						</CardIconButton>
 					</>
 				)}
 				<CardIconButton onClick={toggleMenu}>
-					{isLoading ? <CircularProgress /> : <MoreVert />}
+					{isLoading ? (
+						<CircularProgress size={30} />
+					) : (
+						<MoreVert fontSize='small' />
+					)}
 				</CardIconButton>
 			</ActionButtons>
 		</MenuContainer>
