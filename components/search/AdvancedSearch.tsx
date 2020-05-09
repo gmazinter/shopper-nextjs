@@ -1,4 +1,4 @@
-import React, { MutableRefObject } from 'react';
+import React, { MutableRefObject, useEffect } from 'react';
 import { Box, Text, Flex, Card } from '../../framework/components/primitives';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import TextFields from '@material-ui/icons/TextFields';
@@ -10,25 +10,6 @@ import styled from 'styled-components';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-
-// export default ({ ref }) => {
-// 	const { useMediaQuery } = useResponsive();
-// 	const portalRoot = useMediaQuery({
-// 		_: document.querySelector('#searchbar-wrapper'),
-// 		sm: document.querySelector('body'),
-// 	});
-// 	return useMediaQuery({
-// 		_: ReactDOM.createPortal(
-// 			<AdvancedSearchContent showSearchbar={true} ref={ref} />,
-// 			portalRoot as Element
-// 		),
-// 		sm: (
-// 			<AdvancedSearchContainer>
-// 				<AdvancedSearchContent ref={ref} />
-// 			</AdvancedSearchContainer>
-// 		),
-// 	}) as React.ReactElement;
-// };
 
 type AdvancedSearchProps = {
 	closeAdvanced: () => void;
@@ -46,6 +27,17 @@ export default React.forwardRef((props: AdvancedSearchProps, ref) => {
 		state: { searchType },
 		dispatch,
 	} = useSearchState();
+
+	const handleKeypress = (e: KeyboardEvent) => {
+		if (e.keyCode === 27) {
+			closeAdvanced();
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeypress);
+		return () => window.removeEventListener('keydown', handleKeypress);
+	});
 
 	const debouncedCloseAdvanced = _.debounce(closeAdvanced, 100);
 

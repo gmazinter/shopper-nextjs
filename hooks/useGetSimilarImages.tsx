@@ -28,14 +28,7 @@ const extractProductFromResult = (page: Result, imageUri: string) => {
 export const useGetSimilarImages = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<any | null>(null);
-	const {
-		state: { pageStart, searchValue },
-		dispatch: searchDispatch,
-	} = useSearchState();
-	const {
-		state: { products },
-		dispatch: productDispatch,
-	} = useProductState();
+	const { dispatch: productDispatch } = useProductState();
 	const {
 		getPageData,
 		isLoading: loadingSinglePageData,
@@ -91,8 +84,8 @@ export const useGetSimilarImages = () => {
 
 			console.log(products);
 
-			searchDispatch({ type: 'clearProducts' });
-			searchDispatch({
+			productDispatch({ type: 'clearProducts' });
+			productDispatch({
 				type: 'setProducts',
 				payload: { products },
 			});

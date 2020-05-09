@@ -15,7 +15,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const response = await axios.get(process.env.CSE_URI, { params });
 		res.send(response.data);
 	} catch (e) {
-		console.log(e);
 		res.status(500).send(e);
 	}
 };

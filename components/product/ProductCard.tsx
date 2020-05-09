@@ -22,10 +22,6 @@ type ProductCardProps = {
 
 const cardPadding = 2;
 
-const areEqual = (prevProps, nextProps) => {
-	return true;
-};
-
 const ProductCard = ({
 	handleLabelClick,
 	isMenuOpen,
@@ -37,13 +33,8 @@ const ProductCard = ({
 	const {
 		getSimilarImages,
 		isLoading: loadingIdenticalImages,
-		error: identicalImagesError,
 	} = useGetSimilarImages();
-	const {
-		annotateImage,
-		isLoading: tagsLoading,
-		error: annotateError,
-	} = useAnnotateImage();
+	const { annotateImage, isLoading: tagsLoading } = useAnnotateImage();
 	const isLoading = loadingIdenticalImages || tagsLoading;
 	const contentRef = useRef<any>(null);
 	const [span, setSpan] = useState<null | number>(null);
@@ -73,7 +64,6 @@ const ProductCard = ({
 	useEffect(() => {
 		imagesLoaded(contentRef.current, resizeItem);
 	}, []);
-	console.log('rendering product card');
 	return (
 		<MasonryItem gutter={gutter as number} span={span}>
 			<ProductCardContainer ref={contentRef}>
@@ -120,19 +110,3 @@ const ProductCardContainer = styled(Card).attrs({
 	overflow: hidden;
 	position: relative;
 `;
-
-// export const ProductCardSkeleton = () => {
-// 	const { useMediaQuery } = useResponsive();
-// 	const gutter = useMediaQuery({ _: 10, sm: 16 });
-
-// 	return (
-// 		<MasonryItem gutter={gutter as number} span={6}>
-// 			<ProductCardContainer>
-// 				<Skeleton variant='rect' />
-// 				<Skeleton variant='rect' />
-// 				<Skeleton variant='rect' />
-// 				<Skeleton variant='circle' />
-// 			</ProductCardContainer>
-// 		</MasonryItem>
-// 	);
-// };
