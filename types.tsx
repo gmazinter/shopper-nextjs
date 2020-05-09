@@ -22,15 +22,17 @@ export type Result = {
 	displayLink: string;
 };
 
+export type Price = {
+	amount: number;
+	currency: string;
+};
+
 export type Product = {
 	websiteTitle: string;
 	url: string;
 	imageUri: string | null;
 	name: string | null;
-	price: {
-		amount: number;
-		currency: string;
-	} | null;
+	price: Price | null;
 	infoTags: InfoTag[];
 	labels?: string[];
 	isFavorite: boolean;
