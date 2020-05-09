@@ -1,11 +1,10 @@
 import React from 'react';
-import { Flex, Text, Box } from '../framework/components/primitives';
+import { Flex, Text } from '../framework/components/primitives';
 import ReactModal from 'react-modal';
 import { useResponsive } from '../framework/hooks/useResponsive';
 import { useTheme } from '../framework/hooks/useTheme';
 import { IconButton } from './customMaterialUi';
 import CloseIcon from '@material-ui/icons/Close';
-import styled from 'styled-components';
 
 type ModalProps = {
 	isOpen: boolean;
