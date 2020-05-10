@@ -11,12 +11,12 @@ import { useGetSimilarImages } from '../../hooks/useGetSimilarImages';
 import CardContent from './CardContent';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 
-type ProductCardProps = {
+export type ProductCardProps = {
 	handleLabelClick: (label: string) => void;
 	isMenuOpen: boolean;
 	toggleMenu: (cardId: string) => void;
 	product?: Product;
-	toggleFavorite: (productId: string) => void;
+	toggleFavorite: (productId: string, section: string) => void;
 	className?: string;
 };
 

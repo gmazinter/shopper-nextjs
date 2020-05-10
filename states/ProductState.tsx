@@ -24,14 +24,21 @@ const reducer = (
 ) => {
 	switch (action.type) {
 		case 'setProducts': {
-			const oldProducts = !!state.products ? [...state.products] : [];
-			const products: Product[] = _.uniqBy(
-				[...oldProducts, ...action.payload.products],
-				'url'
-			);
+			const { products } = action.payload;
 			return {
 				...state,
 				products,
+			};
+		}
+		case 'addProducts': {
+			const { products, side } = action.payload;
+			const sideMap = { start: 0, end: 1 };
+			const index = sideMap[side];
+			const newProducts = [...(state.products || [])];
+			newProducts.splice(index, 0, ...products);
+			return {
+				...state,
+				products: newProducts,
 			};
 		}
 		case 'clearProducts': {

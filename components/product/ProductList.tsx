@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Centered } from '../../framework/components/primitives';
+import { Box, Centered, Text } from '../../framework/components/primitives';
 import { Container } from '../customMaterialUi';
 import ProductCard from './ProductCard';
 import { useSearchState } from '../../states/SearchState';
@@ -12,6 +12,8 @@ import NoResults from './NoResults';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { useProductState } from '../../states/ProductState';
+import ProductSection from './ProductSection';
+import Divider from '@material-ui/core/Divider';
 
 const { row } = masonrySizes;
 
@@ -45,10 +47,10 @@ export default () => {
 		return () => window.removeEventListener('click', handleClick);
 	});
 
-	const toggleFavorite = (productId: string) => {
+	const toggleFavorite = (productId: string, section: string) => {
 		productDispatch({
 			type: 'toggleFavorite',
-			payload: { productId },
+			payload: { productId, section },
 		});
 	};
 
@@ -59,23 +61,52 @@ export default () => {
 		});
 	};
 
+	const searchResults = products?.filter(
+		product => product.section === 'products' && !product.isFavorite
+	);
+	const similarImagesProducts = products?.filter(
+		product =>
+			product.section === 'similarImagesProducts' && !product.isFavorite
+	);
+	const favoriteProducts = products?.filter(product => product.isFavorite);
+
 	return (
 		<Container fixed disableGutters>
 			{products ? (
 				products.length > 0 ? (
 					<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
-						<Masonry>
-							{products.map((product: Product) => (
-								<ProductCard
-									handleLabelClick={handleLabelClick}
-									isMenuOpen={product.url === activatedCard}
-									toggleMenu={toggleMenu}
-									key={product.url}
-									product={product}
-									toggleFavorite={toggleFavorite}
-								/>
-							))}
-						</Masonry>
+						{favoriteProducts.length > 0 && (
+							<ProductSection
+								products={favoriteProducts}
+								title={'marked as favorite'}
+								activatedCard={activatedCard}
+								handleLabelClick={handleLabelClick}
+								toggleMenu={toggleMenu}
+								toggleFavorite={toggleFavorite}
+							/>
+						)}
+						{similarImagesProducts.length > 0 && (
+							<ProductSection
+								products={similarImagesProducts}
+								title={'similar images search'}
+								activatedCard={activatedCard}
+								handleLabelClick={handleLabelClick}
+								toggleMenu={toggleMenu}
+								toggleFavorite={toggleFavorite}
+							/>
+						)}
+						<ProductSection
+							products={searchResults}
+							showSectionTitle={
+								similarImagesProducts.length > 0 ||
+								favoriteProducts.length > 0
+							}
+							title={'search results'}
+							activatedCard={activatedCard}
+							handleLabelClick={handleLabelClick}
+							toggleMenu={toggleMenu}
+							toggleFavorite={toggleFavorite}
+						/>
 						<Waypoint
 							bottomOffset='20px'
 							onEnter={async () => {
@@ -111,11 +142,12 @@ export default () => {
 	);
 };
 
-const Masonry = styled(Box).attrs({
+export const Masonry = styled(Box).attrs({
 	mx: { sm: '-8px' },
 	gridTemplateColumns: {
 		_: 'repeat(auto-fill, minmax(180px, 1fr))',
-		sm: 'repeat(auto-fill, minmax(240px, 1fr))',
+		sm: 'repeat(auto-fill, minmax(200px, 1fr))',
+		md: 'repeat(auto-fill, minmax(240px, 1fr))',
 	},
 })`
 	display: grid;

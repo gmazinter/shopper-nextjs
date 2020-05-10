@@ -9,6 +9,7 @@ const resultsLimit = 100;
 
 export const mapItemToProduct = (
 	result: Result,
+	section: 'products' | 'similarImagesProducts',
 	productIndex: number
 ): Product => {
 	const { title, formattedUrl, pagemap } = result;
@@ -42,11 +43,14 @@ export const mapItemToProduct = (
 		infoTags,
 		imageUri,
 		isFavorite: false,
+		section,
 	};
 };
 
-const mapItemsToProducts = (items: Result[]) =>
-	items.map((result: Result): Product => mapItemToProduct(result, 0));
+const mapItemsToProducts = (items: Result[], section) =>
+	items.map(
+		(result: Result): Product => mapItemToProduct(result, section, 0)
+	);
 
 export const useSearch = () => {
 	const [isLoading, setIsloading] = useState(false);
@@ -72,7 +76,8 @@ export const useSearch = () => {
 	const handleSearch = async (
 		searchValue: string,
 		direction?: Direction,
-		searchType?: 'image' | 'text'
+		searchType?: 'image' | 'text',
+		section?: 'products' | 'similarImagesProducts'
 	) => {
 		if (
 			(direction === 'NEXT' && pageStart + pageSize >= resultsLimit) ||
@@ -109,7 +114,7 @@ export const useSearch = () => {
 				searchType === 'image'
 					? await convertImageResultsToWebResults(response.data.items)
 					: response.data.items;
-			return items ? mapItemsToProducts(items) : [];
+			return items ? mapItemsToProducts(items, section) : [];
 		} catch (e) {
 			setError(e);
 		} finally {

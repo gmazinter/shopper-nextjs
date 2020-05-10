@@ -4,18 +4,24 @@ import { useProductState } from '../states/ProductState';
 
 export const useGetProducts = () => {
 	const { handleSearch, isLoading, error } = useSearch();
-	const { dispatch: productDispatch } = useProductState();
+	const { state, dispatch: productDispatch } = useProductState();
 
 	const getProducts = async (
 		searchValue: string,
 		direction?: Direction,
 		searchType?: 'image' | 'text'
 	) => {
-		const products = await handleSearch(searchValue, direction, searchType);
+		const products = await handleSearch(
+			searchValue,
+			direction,
+			searchType,
+			'products'
+		);
 		productDispatch({
-			type: 'setProducts',
+			type: 'addProducts',
 			payload: {
 				products,
+				side: 'end',
 			},
 		});
 	};

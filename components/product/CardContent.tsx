@@ -16,7 +16,7 @@ export default ({ product, toggleFavorite, handleLabelClick }) => {
 					return <InfoTag title={title} value={value} mr={4} />;
 				})}
 				<FavoriteButton
-					onClick={() => toggleFavorite(product.url)}
+					onClick={() => toggleFavorite(product.url, product.section)}
 					color='primary'
 				>
 					{product.isFavorite ? (

@@ -36,6 +36,7 @@ export type Product = {
 	infoTags: InfoTag[];
 	labels?: string[];
 	isFavorite: boolean;
+	section: 'products' | 'similarImagesProducts';
 };
 
 export type Direction = 'NEXT' | 'PREVIOUS';

@@ -30,20 +30,27 @@ export const useGetSimilarImages = () => {
 				...fullMatchingImages,
 				...partialMatchingImages,
 			];
-			productDispatch({ type: 'clearProducts' });
 			const products = _.flatten(
 				_.filter(
 					await Promise.all(
 						similarImages.map(async image => {
-							return await handleSearch(image.url);
+							return await handleSearch(
+								image.url,
+								undefined,
+								undefined,
+								'similarImagesProducts'
+							);
 						})
 					),
 					result => !!result
 				)
 			);
 			productDispatch({
-				type: 'setProducts',
-				payload: { products: [...products, ...state.products] },
+				type: 'addProducts',
+				payload: {
+					products,
+					side: 'start',
+				},
 			});
 		} catch (e) {
 			setError(e);
