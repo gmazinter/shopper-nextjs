@@ -3,7 +3,6 @@ import { Box, Flex } from '../framework/components/primitives';
 import Searchbar from './search/Searchbar';
 import ErrorModal from '../components/ErrorModal';
 import { useSearchState } from '../states/SearchState';
-import { stringify } from 'querystring';
 
 export default ({ children }) => {
 	const {
@@ -27,7 +26,7 @@ export default ({ children }) => {
 			<Box top={0} position='sticky' zIndex={4} id='searchbar-wrapper'>
 				<Searchbar />
 			</Box>
-			{children}
+			<Box id='page-content-wrapper'>{children}</Box>
 		</Flex>
 	);
 };

@@ -72,7 +72,7 @@ export default React.forwardRef((props: AdvancedSearchProps, ref) => {
 			)}
 			{ReactDOM.createPortal(
 				<AdvancedSearchOverlay />,
-				document.querySelector('#product-list')
+				document.querySelector('#page-content-wrapper')
 			)}
 		</>
 	);

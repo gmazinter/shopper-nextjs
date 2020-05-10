@@ -1,4 +1,4 @@
-import ProductList from '../components/product/ProductList';
+import Landing from '../components/Landing';
 export default function Index() {
-	return <ProductList />;
+	return <Landing />;
 }
