@@ -3,19 +3,17 @@ import SearchIcon from '@material-ui/icons/Search';
 import { Button } from '../customMaterialUi';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import { useSearchState } from '../../states/SearchState';
-import { useSearch } from '../../hooks/useSearch';
 import { useGetProducts } from '../../hooks/useGetProducts';
 import { useProductState } from '../../states/ProductState';
+import { useRouter } from 'next/router';
 
 export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
 	const { useMediaQuery } = useResponsive();
-
+	const router = useRouter();
 	const { getProducts } = useGetProducts();
-
 	const {
 		state: { searchValue, searchType },
-		dispatch: searchDispatch,
 	} = useSearchState();
 	const { dispatch: productDispatch } = useProductState();
 
@@ -27,6 +25,7 @@ export default () => {
 		e: React.MouseEvent | React.TouchEvent | React.FormEvent
 	) => {
 		productDispatch({ type: 'clearProducts' });
+		router.push('/products', undefined, { shallow: true });
 		await getProducts(searchValue, undefined, searchType);
 	};
 

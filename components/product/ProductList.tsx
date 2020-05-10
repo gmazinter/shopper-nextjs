@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, Centered } from '../../framework/components/primitives';
+import { Box, Centered } from '../../framework/components/primitives';
 import { Container } from '../customMaterialUi';
 import ProductCard from './ProductCard';
 import { useSearchState } from '../../states/SearchState';
@@ -60,52 +60,54 @@ export default () => {
 	};
 
 	return (
-		<Flex id='product-list' flex={1}>
-			<Container fixed disableGutters position='relative' flex={1}>
-				{products ? (
-					products.length > 0 ? (
-						<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
-							<Masonry>
-								{products.map((product: Product) => (
-									<ProductCard
-										handleLabelClick={handleLabelClick}
-										isMenuOpen={
-											product.url === activatedCard
-										}
-										toggleMenu={toggleMenu}
-										key={product.url}
-										product={product}
-										toggleFavorite={toggleFavorite}
-									/>
-								))}
-							</Masonry>
-							<Waypoint
-								bottomOffset='20px'
-								onEnter={async () => {
-									await getProducts(
-										searchValue,
-										'NEXT',
-										searchType
-									);
-								}}
-							>
-								<Box height='20px' position='relative'>
-									{loadingProducts && <LinearProgress />}
-								</Box>
-							</Waypoint>
-						</Box>
-					) : (
-						<NoResults />
-					)
+		<Container fixed disableGutters>
+			{products ? (
+				products.length > 0 ? (
+					<Box maxWidth={1000} py={{ _: 1, sm: 2 }}>
+						<Masonry>
+							{products.map((product: Product) => (
+								<ProductCard
+									handleLabelClick={handleLabelClick}
+									isMenuOpen={product.url === activatedCard}
+									toggleMenu={toggleMenu}
+									key={product.url}
+									product={product}
+									toggleFavorite={toggleFavorite}
+								/>
+							))}
+						</Masonry>
+						<Waypoint
+							bottomOffset='20px'
+							onEnter={async () => {
+								await getProducts(
+									searchValue,
+									'NEXT',
+									searchType
+								);
+							}}
+						>
+							<Box height='20px' position='relative'>
+								{loadingProducts && <LinearProgress />}
+							</Box>
+						</Waypoint>
+					</Box>
 				) : (
-					loadingProducts && (
-						<Centered height='100%' width='100%'>
-							<CircularProgress />
-						</Centered>
-					)
-				)}
-			</Container>
-		</Flex>
+					<NoResults />
+				)
+			) : (
+				loadingProducts && (
+					<Centered
+						position='absolute'
+						top={0}
+						bottom={0}
+						left={0}
+						right={0}
+					>
+						<CircularProgress />
+					</Centered>
+				)
+			)}
+		</Container>
 	);
 };
 

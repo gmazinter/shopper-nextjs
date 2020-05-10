@@ -26,7 +26,9 @@ export default ({ children }) => {
 			<Box top={0} position='sticky' zIndex={4} id='searchbar-wrapper'>
 				<Searchbar />
 			</Box>
-			<Box id='page-content-wrapper'>{children}</Box>
+			<Box id='page-content-wrapper' flex={1} position='relative'>
+				{children}
+			</Box>
 		</Flex>
 	);
 };
