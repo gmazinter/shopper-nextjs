@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useSearch } from './useSearch';
+import { useSearch } from '../../../hooks/useSearch';
 import _ from 'lodash';
-import { useProductState } from '../states/ProductState';
+import { useProductState } from '../../../states/ProductState';
 
 export const useGetSimilarImages = () => {
 	const [isLoading, setIsLoading] = useState(false);

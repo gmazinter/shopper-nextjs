@@ -6,8 +6,8 @@ import imagesLoaded from 'imagesloaded';
 import { masonrySizes } from '../../consts';
 import _ from 'lodash';
 import CardMenu from './CardMenu';
-import { useAnnotateImage } from '../../hooks/useAnnotateImage';
-import { useGetSimilarImages } from '../../hooks/useGetSimilarImages';
+import { useAnnotateImage } from './hooks/useAnnotateImage';
+import { useGetSimilarImages } from './hooks/useGetSimilarImages';
 import CardContent from './CardContent';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 

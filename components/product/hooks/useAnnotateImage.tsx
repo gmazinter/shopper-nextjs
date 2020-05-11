@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import { useProductState } from '../states/ProductState';
-import { useSearchState } from '../states/SearchState';
+import { useProductState } from '../../../states/ProductState';
+import { useSearchState } from '../../../states/SearchState';
 
 export const useAnnotateImage = () => {
 	const [isLoading, setIsLoading] = useState(false);

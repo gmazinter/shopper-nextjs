@@ -22,7 +22,6 @@ export default () => {
 		state: { products },
 		dispatch: productDispatch,
 	} = useProductState();
-
 	const { getProducts } = useGetProducts();
 
 	const [activatedCard, setActivatedCard] = useState<string | null>(null);
@@ -33,6 +32,18 @@ export default () => {
 			setActivatedCard(cardId);
 		}
 	};
+	const toggleFavorite = (productId: string, section: string) => {
+		productDispatch({
+			type: 'toggleFavorite',
+			payload: { productId, section },
+		});
+	};
+	const handleLabelClick = (label: string) => {
+		searchDispatch({
+			type: 'addLabelToQuery',
+			payload: { label },
+		});
+	};
 
 	const handleClick = () => {
 		toggleMenu();
@@ -42,20 +53,6 @@ export default () => {
 		window.addEventListener('click', handleClick);
 		return () => window.removeEventListener('click', handleClick);
 	});
-
-	const toggleFavorite = (productId: string, section: string) => {
-		productDispatch({
-			type: 'toggleFavorite',
-			payload: { productId, section },
-		});
-	};
-
-	const handleLabelClick = (label: string) => {
-		searchDispatch({
-			type: 'addLabelToQuery',
-			payload: { label },
-		});
-	};
 
 	const searchResults = products?.filter(
 		product => product.section === 'products' && !product.isFavorite
