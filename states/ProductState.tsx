@@ -32,10 +32,11 @@ const reducer = (
 		}
 		case 'addProducts': {
 			const { products, side } = action.payload;
-			const sideMap = { start: 0, end: 1 };
-			const index = sideMap[side];
-			const newProducts = [...(state.products || [])];
-			newProducts.splice(index, 0, ...products);
+			const stateProducts = [...(state.products || [])];
+			const newProducts =
+				side === 'end'
+					? [...stateProducts, ...products]
+					: [...products, ...stateProducts];
 			return {
 				...state,
 				products: newProducts,
