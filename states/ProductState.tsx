@@ -1,6 +1,7 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import _ from 'lodash';
 import { Product } from '../types';
+import { O_CREAT } from 'constants';
 
 type ProductState = {
 	products: Product[] | null;
@@ -33,10 +34,20 @@ const reducer = (
 		case 'addProducts': {
 			const { products, side } = action.payload;
 			const stateProducts = [...(state.products || [])];
+			const additionalProducts = _.xorBy(
+				products,
+				_.intersectionBy(stateProducts, products, 'url'),
+				'url'
+			);
+			console.log(
+				`intersection: ${JSON.stringify(
+					_.intersectionBy(stateProducts, products, 'url')
+				)}`
+			);
 			const newProducts =
 				side === 'end'
-					? [...stateProducts, ...products]
-					: [...products, ...stateProducts];
+					? [...stateProducts, ...additionalProducts]
+					: [...additionalProducts, ...stateProducts];
 			return {
 				...state,
 				products: newProducts,
