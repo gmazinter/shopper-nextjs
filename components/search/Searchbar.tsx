@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TextField, Container } from '../customMaterialUi';
+import { TextField } from '../customMaterialUi';
 import { Box, Text, Flex } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { useSearchState } from '../../states/SearchState';
@@ -7,6 +7,7 @@ import { useResponsive } from '../../framework/hooks/useResponsive';
 import AdvancedSearch from './AdvancedSearch';
 import { useClickOutside } from '../../framework/hooks/useClickOutside';
 import SearchButton from './SearchButton';
+import LeftJustifiedContainer from '../layout/LeftJustifiedContainer';
 
 export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
@@ -47,59 +48,57 @@ export default () => {
 
 	return (
 		<SearchbarContainer>
-			<Container fixed disableGutters>
-				<Box maxWidth={1000}>
-					<form
-						onSubmit={e => {
-							e.preventDefault();
-							e.stopPropagation();
-						}}
-					>
-						<Flex>
-							{appTitle}
-							<Box
-								position='relative'
-								mr={{ sm: 2 }}
-								flex={1}
-								id='searchbar-input-wrapper'
-							>
-								<SearchbarInput
-									autoComplete='off'
-									ref={searchInputRef}
-									id='search-input'
-									variant='outlined'
-									placeholder={inputPlaceholder as string}
-									value={searchValue}
-									onChange={e =>
-										dispatch({
-											type: 'setSearchValue',
-											payload: e.target.value,
-										})
-									}
-									onFocus={() => {
+			<LeftJustifiedContainer>
+				<form
+					onSubmit={e => {
+						e.preventDefault();
+						e.stopPropagation();
+					}}
+				>
+					<Flex>
+						{appTitle}
+						<Box
+							position='relative'
+							mr={{ sm: 2 }}
+							flex={1}
+							id='searchbar-input-wrapper'
+						>
+							<SearchbarInput
+								autoComplete='off'
+								ref={searchInputRef}
+								id='search-input'
+								variant='outlined'
+								placeholder={inputPlaceholder as string}
+								value={searchValue}
+								onChange={e =>
+									dispatch({
+										type: 'setSearchValue',
+										payload: e.target.value,
+									})
+								}
+								onFocus={() => {
+									setShowAdvanced(true);
+								}}
+								onClick={event => {
+									const target = event.target as HTMLFormElement;
+									if (!!target.focus) {
 										setShowAdvanced(true);
+									}
+								}}
+							/>
+							{showAdvanced && (
+								<AdvancedSearch
+									closeAdvanced={() => {
+										setShowAdvanced(false);
 									}}
-									onClick={event => {
-										const target = event.target as HTMLFormElement;
-										if (!!target.focus) {
-											setShowAdvanced(true);
-										}
-									}}
+									ref={advancedSearchRef}
 								/>
-								{showAdvanced && (
-									<AdvancedSearch
-										closeAdvanced={() => {
-											setShowAdvanced(false);
-										}}
-										ref={advancedSearchRef}
-									/>
-								)}
-							</Box>
-							<SearchButton />
-						</Flex>
-					</form>
-				</Box>
-			</Container>
+							)}
+						</Box>
+						<SearchButton />
+					</Flex>
+				</form>
+			</LeftJustifiedContainer>
 		</SearchbarContainer>
 	);
 };

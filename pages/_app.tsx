@@ -8,7 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import MuiOverrides from '../styles/muiOverrides';
 import { SearchStateProvider } from '../states/SearchState';
 import { ProductStateProvider } from '../states/ProductState';
-import Layout from '../components/Layout';
+import Layout from '../components/layout/Layout';
 import '../styles/globalStyles.css';
 
 export default function App({ Component, pageProps }) {

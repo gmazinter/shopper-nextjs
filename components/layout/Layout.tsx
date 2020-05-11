@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Flex } from '../framework/components/primitives';
-import Searchbar from './search/Searchbar';
-import ErrorModal from '../components/ErrorModal';
-import { useSearchState } from '../states/SearchState';
+import { Box, Flex } from '../../framework/components/primitives';
+import Searchbar from '../search/Searchbar';
+import ErrorModal from '../ErrorModal';
+import { useSearchState } from '../../states/SearchState';
+import LeftJustifiedContainer from './LeftJustifiedContainer';
 
 export default ({ children }) => {
 	const {
@@ -27,7 +28,7 @@ export default ({ children }) => {
 				<Searchbar />
 			</Box>
 			<Box id='page-content-wrapper' flex={1} position='relative'>
-				{children}
+				<LeftJustifiedContainer>{children}</LeftJustifiedContainer>
 			</Box>
 		</Flex>
 	);
