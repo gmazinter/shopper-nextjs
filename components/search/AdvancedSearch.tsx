@@ -54,7 +54,7 @@ export default React.forwardRef((props: AdvancedSearchProps, ref) => {
 						justifyContent='space-between'
 					>
 						<Text>Search Type</Text>
-						<Switch
+						<StyledSwitch
 							onChange={() => {
 								dispatch({ type: 'toggleSearchType' });
 							}}
@@ -101,4 +101,16 @@ const AdvancedSearchContainer = styled(Card).attrs({
 })`
 	background-color: white;
 	minheight: 200px;
+`;
+
+const StyledSwitch = styled(Switch)`
+	.react-switch-bg > div {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		svg {
+			height: 20px;
+			width: 20px;
+		}
+	}
 `;
