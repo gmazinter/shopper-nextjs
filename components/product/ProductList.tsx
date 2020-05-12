@@ -31,11 +31,9 @@ const { row } = masonrySizes;
 export default () => {
 	const {
 		state: { searchType, searchValue, loadingProducts },
-		dispatch: searchDispatch,
 	} = useSearchState();
 	const {
 		state: { products },
-		dispatch: productDispatch,
 	} = useProductState();
 	const { getProducts } = useGetProducts();
 

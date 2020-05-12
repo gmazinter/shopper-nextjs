@@ -43,11 +43,10 @@ const ProductCard = ({ isMenuOpen, toggleMenu, product }: ProductCardProps) => {
 		setSpan(rowsToSpan);
 	};
 
-	const debouncedResizeItem = _.debounce(resizeItem, 200);
-
-	useEffect(() => {
+	const debouncedResizeItem = _.debounce(() => {
+		// console.log('window change resizeItem');
 		resizeItem();
-	});
+	}, 200);
 
 	useEffect(() => {
 		window.addEventListener('resize', debouncedResizeItem);
@@ -55,6 +54,12 @@ const ProductCard = ({ isMenuOpen, toggleMenu, product }: ProductCardProps) => {
 	});
 
 	useEffect(() => {
+		// console.log('labels change resizeItem');
+		resizeItem();
+	}, [product.labels]);
+
+	useEffect(() => {
+		// console.log('imagesLoaded resizeItem');
 		imagesLoaded(contentRef.current, resizeItem);
 	}, []);
 
