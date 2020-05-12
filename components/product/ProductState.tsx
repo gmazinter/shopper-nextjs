@@ -1,13 +1,15 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import _ from 'lodash';
-import { Product } from '../types';
+import { Product } from '../../types';
 
 type ProductState = {
 	products: Product[] | null;
+	isLoading: boolean;
 };
 
 const initialProductState = {
 	products: null,
+	isLoading: false,
 };
 
 const productState = createContext<{
@@ -23,6 +25,13 @@ const reducer = (
 	action: { type: string; payload: any }
 ) => {
 	switch (action.type) {
+		case 'setIsLoading': {
+			const { isLoading } = action.payload;
+			return {
+				...state,
+				isLoading,
+			};
+		}
 		case 'setProducts': {
 			const { products } = action.payload;
 			return {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { TextField } from '../customMaterialUi';
 import { Box, Text, Flex } from '../../framework/components/primitives';
 import styled from 'styled-components';
-import { useSearchState } from '../../states/SearchState';
+import { useSearchState } from './SearchState';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import AdvancedSearch from './AdvancedSearch';
 import { useClickOutside } from '../../framework/hooks/useClickOutside';

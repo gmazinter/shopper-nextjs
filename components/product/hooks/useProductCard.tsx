@@ -1,5 +1,5 @@
-import { useSearchState } from '../../../states/SearchState';
-import { useProductState } from '../../../states/ProductState';
+import { useSearchState } from '../../search/SearchState';
+import { useProductState } from '../ProductState';
 
 export default () => {
 	const { dispatch: searchDispatch } = useSearchState();

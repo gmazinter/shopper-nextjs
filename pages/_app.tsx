@@ -6,8 +6,8 @@ import {
 import theme from '../styles/theme';
 import { ThemeProvider } from 'styled-components';
 import MuiOverrides from '../styles/muiOverrides';
-import { SearchStateProvider } from '../states/SearchState';
-import { ProductStateProvider } from '../states/ProductState';
+import { SearchStateProvider } from '../components/search/SearchState';
+import { ProductStateProvider } from '../components/product/ProductState';
 import Layout from '../components/layout/Layout';
 import '../styles/globalStyles.css';
 

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSearchState } from '../states/SearchState';
+import { useSearchState } from '../components/search/SearchState';
+import { useProductState } from '../components/product/ProductState';
+import { useAppState } from '../states/AppState';
 import { Result, Product, Direction } from '../types';
 import { useGetPageData } from './useGetPageData';
 
@@ -57,12 +59,12 @@ export const useSearch = () => {
 	const [error, setError] = useState<null | any>(null);
 
 	useEffect(() => {
-		searchDispatch({ type: 'setError', payload: { error } });
+		appDispatch({ type: 'setError', payload: { error } });
 	}, [error]);
 
 	useEffect(() => {
-		searchDispatch({
-			type: 'toggleLoadingProducts',
+		productDispatch({
+			type: 'setIsLoading',
 			payload: { isLoading },
 		});
 	}, [isLoading]);
@@ -71,6 +73,8 @@ export const useSearch = () => {
 		state: { selectedCountries, pageStart },
 		dispatch: searchDispatch,
 	} = useSearchState();
+	const { dispatch: appDispatch } = useAppState();
+	const { dispatch: productDispatch } = useProductState();
 	const { getPageData } = useGetPageData();
 
 	const handleSearch = async (

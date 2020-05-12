@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useSearchState } from '../states/SearchState';
+import { useSearchState } from '../components/search/SearchState';
 
 export const useGetPageData = () => {
 	const {

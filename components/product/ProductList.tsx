@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Centered, Text } from '../../framework/components/primitives';
-import { useSearchState } from '../../states/SearchState';
+import React, { useEffect, useState } from 'react';
+import { Waypoint } from 'react-waypoint';
 import styled from 'styled-components';
 import { masonrySizes } from '../../consts';
-import { Waypoint } from 'react-waypoint';
+import { Box, Centered } from '../../framework/components/primitives';
 import { useGetProducts } from '../../hooks/useGetProducts';
+import { useProductState } from './ProductState';
 import NoResults from './NoResults';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import { useProductState } from '../../states/ProductState';
 import ProductSection from './ProductSection';
+import { CircularProgress, LinearProgress } from '@material-ui/core';
 
 const { row } = masonrySizes;
 
@@ -30,10 +28,7 @@ const { row } = masonrySizes;
 
 export default () => {
 	const {
-		state: { searchType, searchValue, loadingProducts },
-	} = useSearchState();
-	const {
-		state: { products },
+		state: { products, isLoading },
 	} = useProductState();
 	const { getProducts } = useGetProducts();
 
@@ -65,7 +60,7 @@ export default () => {
 	const favoriteProducts = products?.filter(product => product.isFavorite);
 	const showProducts = products && products.length > 0;
 	const showNoResults = products && products.length === 0;
-	const showLoading = !products && loadingProducts;
+	const showLoading = !products && isLoading;
 
 	return (
 		<>
@@ -100,11 +95,11 @@ export default () => {
 					<Waypoint
 						bottomOffset='20px'
 						onEnter={async () => {
-							await getProducts(searchValue, 'NEXT', searchType);
+							await getProducts('NEXT');
 						}}
 					>
 						<Box height='20px' position='relative'>
-							{loadingProducts && <LinearProgress />}
+							{isLoading && <LinearProgress />}
 						</Box>
 					</Waypoint>
 				</Box>

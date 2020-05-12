@@ -3,7 +3,7 @@ import { Box, Text, Flex, Card } from '../../framework/components/primitives';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import TextFields from '@material-ui/icons/TextFields';
 import Switch from 'react-switch';
-import { useSearchState } from '../../states/SearchState';
+import { useSearchState } from './SearchState';
 import CountrySelect from './CountrySelect';
 import Searchbar from './Searchbar';
 import styled from 'styled-components';

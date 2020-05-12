@@ -5,7 +5,7 @@ import { TextField } from '../customMaterialUi';
 import { countries as countriesFull } from '../../consts';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import { useSearchState } from '../../states/SearchState';
+import { useSearchState } from './SearchState';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize='small' />;
 const checkedIcon = <CheckBoxIcon fontSize='small' />;

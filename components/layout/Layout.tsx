@@ -2,14 +2,14 @@ import React from 'react';
 import { Box, Flex } from '../../framework/components/primitives';
 import Searchbar from '../search/Searchbar';
 import ErrorModal from '../ErrorModal';
-import { useSearchState } from '../../states/SearchState';
+import { useAppState } from '../../states/AppState';
 import LeftJustifiedContainer from './LeftJustifiedContainer';
 
 export default ({ children }) => {
 	const {
-		state: { error },
+		state: { error, isLoading },
 		dispatch,
-	} = useSearchState();
+	} = useAppState();
 	return (
 		<Flex
 			flexDirection='column'

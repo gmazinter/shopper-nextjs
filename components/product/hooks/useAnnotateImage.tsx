@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import { useProductState } from '../../../states/ProductState';
-import { useSearchState } from '../../../states/SearchState';
+import { useProductState } from '../ProductState';
+import { useAppState } from '../../../states/AppState';
 
 export const useAnnotateImage = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<null | {}>(null);
-	const { dispatch: searchDispatch } = useSearchState();
+	const { dispatch: appDispatch } = useAppState();
 	const { dispatch: productDispatch } = useProductState();
 	useEffect(() => {
-		searchDispatch({ type: 'setError', payload: { error } });
+		appDispatch({ type: 'setError', payload: { error } });
 	}, [error]);
 
 	const annotateImage = async (

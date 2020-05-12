@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, memo } from 'react';
 import { Box, Card } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { Product } from '../../types';
@@ -22,7 +22,7 @@ export type ProductCardProps = {
 const cardPadding = 2;
 
 const ProductCard = ({ isMenuOpen, toggleMenu, product }: ProductCardProps) => {
-	const { imageUri, price } = product;
+	const { url, imageUri, price, labels } = product;
 	const {
 		getSimilarImages,
 		isLoading: loadingIdenticalImages,
@@ -56,7 +56,7 @@ const ProductCard = ({ isMenuOpen, toggleMenu, product }: ProductCardProps) => {
 	useEffect(() => {
 		// console.log('labels change resizeItem');
 		resizeItem();
-	}, [product.labels]);
+	}, [labels]);
 
 	useEffect(() => {
 		// console.log('imagesLoaded resizeItem');
@@ -82,18 +82,15 @@ const ProductCard = ({ isMenuOpen, toggleMenu, product }: ProductCardProps) => {
 					isOpen={isMenuOpen}
 					toggleMenu={(e: React.MouseEvent | React.TouchEvent) => {
 						e.stopPropagation();
-						toggleMenu(product.url);
+						toggleMenu(url);
 					}}
 					searchByImage={() => getSimilarImages(imageUri)}
-					annotateImage={() =>
-						annotateImage(product.url, product.imageUri)
-					}
+					annotateImage={() => annotateImage(url, imageUri)}
 				/>
 			</ProductCardContainer>
 		</MasonryItem>
 	);
 };
-
 export default ProductCard;
 
 const MasonryItem = styled(Box).attrs<{ gutter: number }>(props => ({

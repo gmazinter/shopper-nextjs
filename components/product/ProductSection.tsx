@@ -1,7 +1,8 @@
 import React from 'react';
 import { Box, Text } from '../../framework/components/primitives';
 import { Masonry } from './ProductList';
-import ProductCard, { ProductCardProps } from './ProductCard';
+import { ProductCardProps } from './ProductCard';
+import ProductCardWrapper from './ProductCardWrapper';
 import { Product } from '../../types';
 import Divider from '@material-ui/core/Divider';
 
@@ -29,7 +30,7 @@ export default ({
 			)}
 			<Masonry>
 				{products.map((product: Product) => (
-					<ProductCard
+					<ProductCardWrapper
 						isMenuOpen={product.url === activatedCard}
 						toggleMenu={toggleMenu}
 						key={product.url}
