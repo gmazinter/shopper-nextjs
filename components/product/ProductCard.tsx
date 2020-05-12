@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, memo } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Box, Card } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { Product } from '../../types';
@@ -10,25 +10,18 @@ import { useAnnotateImage } from './hooks/useAnnotateImage';
 import { useGetSimilarImages } from './hooks/useGetSimilarImages';
 import CardContent from './CardContent';
 import { useResponsive } from '../../framework/hooks/useResponsive';
+import useProductCard from './hooks/useProductCard';
 
 export type ProductCardProps = {
-	handleLabelClick: (label: string) => void;
 	isMenuOpen: boolean;
 	toggleMenu: (cardId: string) => void;
 	product?: Product;
-	toggleFavorite: (productId: string, section: string) => void;
 	className?: string;
 };
 
 const cardPadding = 2;
 
-const ProductCard = ({
-	handleLabelClick,
-	isMenuOpen,
-	toggleMenu,
-	product,
-	toggleFavorite,
-}: ProductCardProps) => {
+const ProductCard = ({ isMenuOpen, toggleMenu, product }: ProductCardProps) => {
 	const { imageUri, price } = product;
 	const {
 		getSimilarImages,
@@ -64,6 +57,11 @@ const ProductCard = ({
 	useEffect(() => {
 		imagesLoaded(contentRef.current, resizeItem);
 	}, []);
+
+	const { toggleFavorite, handleLabelClick } = useProductCard();
+
+	console.log('rendering card');
+
 	return (
 		<MasonryItem gutter={gutter as number} span={span}>
 			<ProductCardContainer ref={contentRef}>

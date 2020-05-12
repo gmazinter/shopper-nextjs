@@ -13,6 +13,21 @@ import ProductSection from './ProductSection';
 
 const { row } = masonrySizes;
 
+// type ProductListProps = {
+// 	searchValue: string;
+// 	searchType: 'text' | 'image';
+// 	loadingProducts: boolean;
+// 	products: Product[];
+// };
+
+// export default memo(
+// 	({
+// 		searchValue,
+// 		searchType,
+// 		loadingProducts,
+// 		products,
+// 	}: ProductListProps) => {
+
 export default () => {
 	const {
 		state: { searchType, searchValue, loadingProducts },
@@ -31,18 +46,6 @@ export default () => {
 		} else {
 			setActivatedCard(cardId);
 		}
-	};
-	const toggleFavorite = (productId: string, section: string) => {
-		productDispatch({
-			type: 'toggleFavorite',
-			payload: { productId, section },
-		});
-	};
-	const handleLabelClick = (label: string) => {
-		searchDispatch({
-			type: 'addLabelToQuery',
-			payload: { label },
-		});
 	};
 
 	const handleClick = () => {
@@ -75,9 +78,7 @@ export default () => {
 							products={favoriteProducts}
 							title={'marked as favorite'}
 							activatedCard={activatedCard}
-							handleLabelClick={handleLabelClick}
 							toggleMenu={toggleMenu}
-							toggleFavorite={toggleFavorite}
 						/>
 					)}
 					{similarImagesProducts.length > 0 && (
@@ -85,9 +86,7 @@ export default () => {
 							products={similarImagesProducts}
 							title={'similar images search'}
 							activatedCard={activatedCard}
-							handleLabelClick={handleLabelClick}
 							toggleMenu={toggleMenu}
-							toggleFavorite={toggleFavorite}
 						/>
 					)}
 					<ProductSection
@@ -98,9 +97,7 @@ export default () => {
 						}
 						title={'search results'}
 						activatedCard={activatedCard}
-						handleLabelClick={handleLabelClick}
 						toggleMenu={toggleMenu}
-						toggleFavorite={toggleFavorite}
 					/>
 					<Waypoint
 						bottomOffset='20px'

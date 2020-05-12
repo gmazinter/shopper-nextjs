@@ -1,7 +1,6 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import _ from 'lodash';
 import { Product } from '../types';
-import { O_CREAT } from 'constants';
 
 type ProductState = {
 	products: Product[] | null;

@@ -16,10 +16,8 @@ export default ({
 	products,
 	showSectionTitle = true,
 	title,
-	handleLabelClick,
 	activatedCard,
 	toggleMenu,
-	toggleFavorite,
 }: ProductSectionProps) => {
 	return (
 		<Box mt={3}>
@@ -32,12 +30,10 @@ export default ({
 			<Masonry>
 				{products.map((product: Product) => (
 					<ProductCard
-						handleLabelClick={handleLabelClick}
 						isMenuOpen={product.url === activatedCard}
 						toggleMenu={toggleMenu}
 						key={product.url}
 						product={product}
-						toggleFavorite={toggleFavorite}
 					/>
 				))}
 			</Masonry>
