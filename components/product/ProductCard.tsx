@@ -7,90 +7,102 @@ import { masonrySizes } from '../../consts';
 import _ from 'lodash';
 import CardMenu from './CardMenu';
 import { useAnnotateImage } from './hooks/useAnnotateImage';
-import { useGetSimilarImages } from './hooks/useGetSimilarImages';
 import CardContent from './CardContent';
 import { useResponsive } from '../../framework/hooks/useResponsive';
-import useProductCard from './hooks/useProductCard';
 
 export type ProductCardProps = {
 	isMenuOpen: boolean;
 	toggleMenu: (cardId: string) => void;
 	product?: Product;
 	className?: string;
+	toggleFavorite: any;
+	handleLabelClick: any;
+	getSimilarImages: (imageUri: string) => void;
+	loadingSimilarImages: boolean;
 };
 
 const cardPadding = 2;
 
-const ProductCard = ({ isMenuOpen, toggleMenu, product }: ProductCardProps) => {
-	const { url, imageUri, price, labels } = product;
-	const {
+const ProductCard = memo(
+	({
+		isMenuOpen,
+		toggleMenu,
+		product,
+		toggleFavorite,
+		handleLabelClick,
 		getSimilarImages,
-		isLoading: loadingIdenticalImages,
-	} = useGetSimilarImages();
-	const { annotateImage, isLoading: tagsLoading } = useAnnotateImage();
-	const isLoading = loadingIdenticalImages || tagsLoading;
-	const contentRef = useRef<any>(null);
-	const [span, setSpan] = useState<null | number>(null);
+		loadingSimilarImages,
+	}: ProductCardProps) => {
+		const { url, imageUri, price, labels } = product;
+		const { annotateImage, isLoading: tagsLoading } = useAnnotateImage();
+		const isLoading = loadingSimilarImages || tagsLoading;
+		const contentRef = useRef<any>(null);
+		const [span, setSpan] = useState<null | number>(null);
 
-	const { useMediaQuery } = useResponsive();
-	const gutter = useMediaQuery({ _: 10, sm: 16 });
-	const { row } = masonrySizes;
+		const { useMediaQuery } = useResponsive();
+		const gutter = useMediaQuery({ _: 10, sm: 16 });
+		const { row } = masonrySizes;
 
-	const resizeItem = () => {
-		const contentHeight = contentRef.current.getBoundingClientRect().height;
-		const rowsToSpan =
-			contentHeight && Math.ceil((contentHeight + gutter) / row);
-		setSpan(rowsToSpan);
-	};
+		const resizeItem = () => {
+			const contentHeight = contentRef.current.getBoundingClientRect()
+				.height;
+			const rowsToSpan =
+				contentHeight && Math.ceil((contentHeight + gutter) / row);
+			setSpan(rowsToSpan);
+		};
 
-	const debouncedResizeItem = _.debounce(() => {
-		// console.log('window change resizeItem');
-		resizeItem();
-	}, 200);
+		const debouncedResizeItem = _.debounce(() => {
+			// console.log('window change resizeItem');
+			resizeItem();
+		}, 200);
 
-	useEffect(() => {
-		window.addEventListener('resize', debouncedResizeItem);
-		return () => window.removeEventListener('resize', debouncedResizeItem);
-	});
+		useEffect(() => {
+			window.addEventListener('resize', debouncedResizeItem);
+			return () =>
+				window.removeEventListener('resize', debouncedResizeItem);
+		});
 
-	useEffect(() => {
-		// console.log('labels change resizeItem');
-		resizeItem();
-	}, [labels]);
+		useEffect(() => {
+			// console.log('labels change resizeItem');
+			resizeItem();
+		}, [labels]);
 
-	useEffect(() => {
-		// console.log('imagesLoaded resizeItem');
-		imagesLoaded(contentRef.current, resizeItem);
-	}, []);
+		useEffect(() => {
+			// console.log('imagesLoaded resizeItem');
+			imagesLoaded(contentRef.current, resizeItem);
+		}, []);
 
-	const { toggleFavorite, handleLabelClick } = useProductCard();
+		console.log('rendering card');
+		return (
+			<MasonryItem gutter={gutter as number} span={span}>
+				<ProductCardContainer ref={contentRef}>
+					<CardContent
+						product={product}
+						toggleFavorite={toggleFavorite}
+						handleLabelClick={handleLabelClick}
+					/>
+					<CardMenu
+						cardPadding={cardPadding}
+						price={price}
+						isLoading={isLoading}
+						isOpen={isMenuOpen}
+						toggleMenu={(
+							e: React.MouseEvent | React.TouchEvent
+						) => {
+							e.stopPropagation();
+							toggleMenu(url);
+						}}
+						searchByImage={() => getSimilarImages(imageUri)}
+						// searchByImage={() => {}}
+						annotateImage={() => annotateImage(url, imageUri)}
+						// annotateImage={() => {}}
+					/>
+				</ProductCardContainer>
+			</MasonryItem>
+		);
+	}
+);
 
-	console.log('rendering card');
-
-	return (
-		<MasonryItem gutter={gutter as number} span={span}>
-			<ProductCardContainer ref={contentRef}>
-				<CardContent
-					product={product}
-					toggleFavorite={toggleFavorite}
-					handleLabelClick={handleLabelClick}
-				/>
-				<CardMenu
-					cardPadding={cardPadding}
-					price={price}
-					isLoading={isLoading}
-					isOpen={isMenuOpen}
-					toggleMenu={(e: React.MouseEvent | React.TouchEvent) => {
-						e.stopPropagation();
-						toggleMenu(url);
-					}}
-					searchByImage={() => getSimilarImages(imageUri)}
-					annotateImage={() => annotateImage(url, imageUri)}
-				/>
-			</ProductCardContainer>
-		</MasonryItem>
-	);
-};
 export default ProductCard;
 
 const MasonryItem = styled(Box).attrs<{ gutter: number }>(props => ({

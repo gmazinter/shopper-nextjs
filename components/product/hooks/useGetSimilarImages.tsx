@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import axios from 'axios';
 import { useSearch } from '../../../hooks/useSearch';
 import _ from 'lodash';
-import { useProductState } from '../ProductState';
+import { useProductDispatch } from '../ProductState';
 
 export const useGetSimilarImages = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<any | null>(null);
-	const { state, dispatch: productDispatch } = useProductState();
+	const productDispatch = useProductDispatch();
 	const { handleSearch } = useSearch();
+
+	const memoizedHandleSearch = useCallback(handleSearch, []);
+
 	const getSimilarImages = async (imageUri: string | null) => {
 		if (!imageUri) {
 			setError('no image to work with');
@@ -34,7 +37,7 @@ export const useGetSimilarImages = () => {
 				_.filter(
 					await Promise.all(
 						similarImages.map(async image => {
-							return await handleSearch(
+							return await memoizedHandleSearch(
 								image.url,
 								undefined,
 								undefined,
@@ -58,9 +61,13 @@ export const useGetSimilarImages = () => {
 			setIsLoading(false);
 		}
 	};
+	// console.log('running useGetSimilarImages again');
+	const memoizedGetSimilarImages = useCallback(getSimilarImages, [
+		memoizedHandleSearch,
+	]);
 
 	return {
-		getSimilarImages,
+		getSimilarImages: memoizedGetSimilarImages,
 		isLoading,
 		error,
 	};

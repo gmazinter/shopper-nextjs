@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSearchState } from '../components/search/SearchState';
-import { useProductState } from '../components/product/ProductState';
+import {
+	useSearchState,
+	useSearchDispatch,
+} from '../components/search/SearchState';
+import { useProductDispatch } from '../components/product/ProductState';
 import { useAppState } from '../states/AppState';
 import { Result, Product, Direction } from '../types';
 import { useGetPageData } from './useGetPageData';
@@ -69,12 +72,10 @@ export const useSearch = () => {
 		});
 	}, [isLoading]);
 
-	const {
-		state: { selectedCountries, pageStart },
-		dispatch: searchDispatch,
-	} = useSearchState();
+	const { selectedCountries, pageStart } = useSearchState();
+	const searchDispatch = useSearchDispatch();
 	const { dispatch: appDispatch } = useAppState();
-	const { dispatch: productDispatch } = useProductState();
+	const productDispatch = useProductDispatch();
 	const { getPageData } = useGetPageData();
 
 	const handleSearch = async (

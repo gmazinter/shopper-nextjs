@@ -1,5 +1,6 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import _ from 'lodash';
+import { Dispatch } from '../../types';
 
 type SearchType = 'image' | 'text';
 
@@ -23,13 +24,10 @@ const initialSearchState: SearchState = {
 	selectedCountries: [],
 };
 
-const searchState = createContext<{
-	state: SearchState;
-	dispatch: React.Dispatch<any>;
-}>({
-	state: initialSearchState,
-	dispatch: () => null,
-});
+const initialSearchDispatch = () => {};
+
+const searchState = createContext<SearchState>(initialSearchState);
+const searchDispatch = createContext<Dispatch>(initialSearchDispatch);
 
 const reducer = (
 	state: SearchState,
@@ -104,10 +102,13 @@ const reducer = (
 export const SearchStateProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialSearchState);
 	return (
-		<searchState.Provider value={{ state, dispatch }}>
-			{children}
+		<searchState.Provider value={state}>
+			<searchDispatch.Provider value={dispatch}>
+				{children}
+			</searchDispatch.Provider>
 		</searchState.Provider>
 	);
 };
 
 export const useSearchState = () => useContext(searchState);
+export const useSearchDispatch = () => useContext(searchDispatch);

@@ -1,14 +1,12 @@
 import { useSearch } from './useSearch';
 import { Direction } from '../types';
-import { useProductState } from '../components/product/ProductState';
+import { useProductDispatch } from '../components/product/ProductState';
 import { useSearchState } from '../components/search/SearchState';
 
 export const useGetProducts = () => {
 	const { handleSearch, isLoading, error } = useSearch();
-	const { dispatch: productDispatch } = useProductState();
-	const {
-		state: {},
-	} = useSearchState();
+	const productDispatch = useProductDispatch();
+	// const {} = useSearchState();
 
 	const getProducts = async (
 		searchValue: string,

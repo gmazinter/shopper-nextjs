@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import { useProductState } from '../ProductState';
+import { useProductDispatch } from '../ProductState';
 import { useAppState } from '../../../states/AppState';
 
 export const useAnnotateImage = () => {
+	const { dispatch: appDispatch } = useAppState();
+	const productDispatch = useProductDispatch();
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<null | {}>(null);
-	const { dispatch: appDispatch } = useAppState();
-	const { dispatch: productDispatch } = useProductState();
 	useEffect(() => {
 		appDispatch({ type: 'setError', payload: { error } });
 	}, [error]);
@@ -40,6 +40,7 @@ export const useAnnotateImage = () => {
 				productUrl,
 				labels,
 			};
+			console.log(payload);
 			productDispatch({
 				type: 'setProductLabels',
 				payload,

@@ -46,3 +46,6 @@ type InfoTag = {
 	value: string;
 	color?: string;
 };
+
+export type Dispatch = ({ type, payload }: DispatchProps) => void;
+export type DispatchProps = { type: string; payload?: {} };

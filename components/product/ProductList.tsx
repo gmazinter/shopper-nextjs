@@ -1,24 +1,22 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Waypoint } from 'react-waypoint';
 import styled from 'styled-components';
 import { masonrySizes } from '../../consts';
 import { Box, Centered } from '../../framework/components/primitives';
 import { useGetProducts } from '../../hooks/useGetProducts';
-import { useProductState } from './ProductState';
+import { useProductState, useProductDispatch } from './ProductState';
 import NoResults from './NoResults';
 import ProductSection from './ProductSection';
 import { CircularProgress, LinearProgress } from '@material-ui/core';
-import { useSearchState } from '../search/SearchState';
+import { useSearchState, useSearchDispatch } from '../search/SearchState';
 
 const { row } = masonrySizes;
 
 export default () => {
-	const {
-		state: { products, isLoading },
-	} = useProductState();
-	const {
-		state: { searchValue, searchType },
-	} = useSearchState();
+	const { products, isLoading } = useProductState();
+	const productDispatch = useProductDispatch();
+	const { searchValue, searchType } = useSearchState();
+	const searchDispatch = useSearchDispatch();
 	const { getProducts } = useGetProducts();
 
 	const [activeCard, setActiveCard] = useState<string | null>(null);
@@ -29,6 +27,24 @@ export default () => {
 			setActiveCard(cardId);
 		}
 	};
+
+	const toggleFavorite = (productId: string, section: string) => {
+		productDispatch({
+			type: 'toggleFavorite',
+			payload: { productId, section },
+		});
+	};
+
+	const handleLabelClick = (label: string) => {
+		searchDispatch({
+			type: 'addLabelToQuery',
+			payload: { label },
+		});
+	};
+
+	const memoizedToggleMenu = useCallback(toggleMenu, []);
+	const memoizedToggleFavorite = useCallback(toggleFavorite, []);
+	const memoizedHandleLabelClick = useCallback(handleLabelClick, []);
 
 	const handleClick = () => {
 		toggleMenu();
@@ -47,6 +63,7 @@ export default () => {
 			product.section === 'similarImagesProducts' && !product.isFavorite
 	);
 	const favoriteProducts = products?.filter(product => product.isFavorite);
+
 	const showProducts = products && products.length > 0;
 	const showNoResults = products && products.length === 0;
 	const showLoading = !products && isLoading;
@@ -59,16 +76,20 @@ export default () => {
 						<ProductSection
 							products={favoriteProducts}
 							title={'marked as favorite'}
-							activatedCard={activeCard}
-							toggleMenu={toggleMenu}
+							activeCard={activeCard}
+							toggleMenu={memoizedToggleMenu}
+							toggleFavorite={memoizedToggleFavorite}
+							handleLabelClick={memoizedHandleLabelClick}
 						/>
 					)}
 					{similarImagesProducts.length > 0 && (
 						<ProductSection
 							products={similarImagesProducts}
 							title={'similar images search'}
-							activatedCard={activeCard}
-							toggleMenu={toggleMenu}
+							activeCard={activeCard}
+							toggleMenu={memoizedToggleMenu}
+							toggleFavorite={memoizedToggleFavorite}
+							handleLabelClick={memoizedHandleLabelClick}
 						/>
 					)}
 					<ProductSection
@@ -78,8 +99,10 @@ export default () => {
 							favoriteProducts.length > 0
 						}
 						title={'search results'}
-						activatedCard={activeCard}
-						toggleMenu={toggleMenu}
+						activeCard={activeCard}
+						toggleMenu={memoizedToggleMenu}
+						toggleFavorite={memoizedToggleFavorite}
+						handleLabelClick={memoizedHandleLabelClick}
 					/>
 					<Waypoint
 						bottomOffset='20px'

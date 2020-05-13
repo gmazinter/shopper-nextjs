@@ -3,7 +3,7 @@ import { Box, Text, Flex, Card } from '../../framework/components/primitives';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import TextFields from '@material-ui/icons/TextFields';
 import Switch from 'react-switch';
-import { useSearchState } from './SearchState';
+import { useSearchState, useSearchDispatch } from './SearchState';
 import CountrySelect from './CountrySelect';
 import Searchbar from './Searchbar';
 import styled from 'styled-components';
@@ -22,11 +22,8 @@ export default React.forwardRef((props: AdvancedSearchProps, ref) => {
 		_: document.querySelector('#layout'),
 		sm: document.querySelector('#searchbar-input-wrapper'),
 	}) as Element;
-
-	const {
-		state: { searchType },
-		dispatch,
-	} = useSearchState();
+	const { searchType } = useSearchState();
+	const dispatch = useSearchDispatch();
 
 	const handleKeypress = (e: KeyboardEvent) => {
 		if (e.keyCode === 27) {

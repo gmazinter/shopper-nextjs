@@ -7,8 +7,8 @@ import AdvancedSearch from './AdvancedSearch';
 import { useClickOutside } from '../../framework/hooks/useClickOutside';
 import SearchButton from './SearchButton';
 import LeftJustifiedContainer from '../layout/LeftJustifiedContainer';
-import { useSearchState } from './SearchState';
-import { useProductState } from '../product/ProductState';
+import { useSearchState, useSearchDispatch } from './SearchState';
+import { useProductDispatch } from '../product/ProductState';
 import { useRouter } from 'next/router';
 import { useGetProducts } from '../../hooks/useGetProducts';
 
@@ -16,11 +16,9 @@ export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
 	const [showAdvanced, setShowAdvanced] = useState(false);
 	const { useMediaQuery } = useResponsive();
-	const {
-		state: { searchValue, inputValue },
-		dispatch: searchDispatch,
-	} = useSearchState();
-	const { dispatch: productDispatch } = useProductState();
+	const { searchValue, inputValue } = useSearchState();
+	const searchDispatch = useSearchDispatch();
+	const productDispatch = useProductDispatch();
 
 	useEffect(() => {
 		setIsClientSide(true);

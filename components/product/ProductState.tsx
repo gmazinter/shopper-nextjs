@@ -1,6 +1,6 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import _ from 'lodash';
-import { Product } from '../../types';
+import { Product, Dispatch } from '../../types';
 
 type ProductState = {
 	products: Product[] | null;
@@ -11,14 +11,10 @@ const initialProductState = {
 	products: null,
 	isLoading: false,
 };
+const initialProductDispatch = () => {};
 
-const productState = createContext<{
-	state: ProductState;
-	dispatch: React.Dispatch<any>;
-}>({
-	state: initialProductState,
-	dispatch: () => null,
-});
+const productState = createContext<ProductState>(initialProductState);
+const productDispatch = createContext<Dispatch>(initialProductDispatch);
 
 const reducer = (
 	state: ProductState,
@@ -100,10 +96,13 @@ const reducer = (
 export const ProductStateProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialProductState);
 	return (
-		<productState.Provider value={{ state, dispatch }}>
-			{children}
+		<productState.Provider value={state}>
+			<productDispatch.Provider value={dispatch}>
+				{children}
+			</productDispatch.Provider>
 		</productState.Provider>
 	);
 };
 
 export const useProductState = () => useContext(productState);
+export const useProductDispatch = () => useContext(productDispatch);

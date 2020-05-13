@@ -1,9 +1,10 @@
-import { useSearchState } from '../../search/SearchState';
-import { useProductState } from '../ProductState';
+import { useCallback } from 'react';
+import { useProductDispatch } from '../ProductState';
+import { useSearchDispatch } from '../../search/SearchState';
 
 export default () => {
-	const { dispatch: searchDispatch } = useSearchState();
-	const { dispatch: productDispatch } = useProductState();
+	const searchDispatch = useSearchDispatch();
+	const productDispatch = useProductDispatch();
 
 	const toggleFavorite = (productId: string, section: string) => {
 		productDispatch({
@@ -11,6 +12,7 @@ export default () => {
 			payload: { productId, section },
 		});
 	};
+
 	const handleLabelClick = (label: string) => {
 		searchDispatch({
 			type: 'addLabelToQuery',
@@ -18,8 +20,13 @@ export default () => {
 		});
 	};
 
+	const memoizedToggleFavorite = useCallback(toggleFavorite, []);
+	const memoizedHandleLabelClick = useCallback(handleLabelClick, []);
+
 	return {
 		toggleFavorite,
 		handleLabelClick,
+		// toggleFavorite: memoizedToggleFavorite,
+		// handleLabelClick: memoizedHandleLabelClick,
 	};
 };

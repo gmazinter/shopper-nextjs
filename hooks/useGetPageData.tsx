@@ -3,9 +3,7 @@ import axios from 'axios';
 import { useSearchState } from '../components/search/SearchState';
 
 export const useGetPageData = () => {
-	const {
-		state: { selectedCountries },
-	} = useSearchState();
+	const { selectedCountries } = useSearchState();
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState<null | {}>(null);
 	const getPageData = async (url: string) => {
