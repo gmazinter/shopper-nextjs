@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { Waypoint } from 'react-waypoint';
 import styled from 'styled-components';
 import { masonrySizes } from '../../consts';
@@ -8,6 +8,7 @@ import { useProductState } from './ProductState';
 import NoResults from './NoResults';
 import ProductSection from './ProductSection';
 import { CircularProgress, LinearProgress } from '@material-ui/core';
+import { useSearchState } from '../search/SearchState';
 
 const { row } = masonrySizes;
 
@@ -15,6 +16,9 @@ export default () => {
 	const {
 		state: { products, isLoading },
 	} = useProductState();
+	const {
+		state: { searchValue, searchType },
+	} = useSearchState();
 	const { getProducts } = useGetProducts();
 
 	const [activatedCard, setActivatedCard] = useState<string | null>(null);
@@ -80,7 +84,7 @@ export default () => {
 					<Waypoint
 						bottomOffset='20px'
 						onEnter={async () => {
-							await getProducts('NEXT');
+							await getProducts(searchValue, 'NEXT', searchType);
 						}}
 					>
 						<Box height='20px' position='relative'>
