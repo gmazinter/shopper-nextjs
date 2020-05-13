@@ -21,12 +21,12 @@ export default () => {
 	} = useSearchState();
 	const { getProducts } = useGetProducts();
 
-	const [activatedCard, setActivatedCard] = useState<string | null>(null);
+	const [activeCard, setActiveCard] = useState<string | null>(null);
 	const toggleMenu = (cardId?: string) => {
-		if (!cardId || activatedCard === cardId) {
-			setActivatedCard(null);
+		if (!cardId || activeCard === cardId) {
+			setActiveCard(null);
 		} else {
-			setActivatedCard(cardId);
+			setActiveCard(cardId);
 		}
 	};
 
@@ -59,7 +59,7 @@ export default () => {
 						<ProductSection
 							products={favoriteProducts}
 							title={'marked as favorite'}
-							activatedCard={activatedCard}
+							activatedCard={activeCard}
 							toggleMenu={toggleMenu}
 						/>
 					)}
@@ -67,7 +67,7 @@ export default () => {
 						<ProductSection
 							products={similarImagesProducts}
 							title={'similar images search'}
-							activatedCard={activatedCard}
+							activatedCard={activeCard}
 							toggleMenu={toggleMenu}
 						/>
 					)}
@@ -78,7 +78,7 @@ export default () => {
 							favoriteProducts.length > 0
 						}
 						title={'search results'}
-						activatedCard={activatedCard}
+						activatedCard={activeCard}
 						toggleMenu={toggleMenu}
 					/>
 					<Waypoint

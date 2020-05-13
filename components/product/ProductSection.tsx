@@ -9,7 +9,7 @@ import Divider from '@material-ui/core/Divider';
 type ProductSectionProps = {
 	products: Product[];
 	showSectionTitle?: boolean;
-	activatedCard: string;
+	activeCard: string;
 	title: string;
 } & Partial<ProductCardProps>;
 
@@ -17,7 +17,7 @@ export default ({
 	products,
 	showSectionTitle = true,
 	title,
-	activatedCard,
+	activeCard,
 	toggleMenu,
 }: ProductSectionProps) => {
 	return (
@@ -31,7 +31,7 @@ export default ({
 			<Masonry>
 				{products.map((product: Product) => (
 					<ProductCardWrapper
-						isMenuOpen={product.url === activatedCard}
+						isMenuOpen={product.url === activeCard}
 						toggleMenu={toggleMenu}
 						key={product.url}
 						product={product}
