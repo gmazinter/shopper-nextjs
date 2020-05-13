@@ -2,12 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { TextField } from '../customMaterialUi';
 import { Box, Text, Flex } from '../../framework/components/primitives';
 import styled from 'styled-components';
-import { useSearchState } from './SearchState';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import AdvancedSearch from './AdvancedSearch';
 import { useClickOutside } from '../../framework/hooks/useClickOutside';
 import SearchButton from './SearchButton';
 import LeftJustifiedContainer from '../layout/LeftJustifiedContainer';
+import { useSearchState } from './SearchState';
+import { useProductState } from '../product/ProductState';
+import { useRouter } from 'next/router';
+import { useGetProducts } from '../../hooks/useGetProducts';
 
 export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
@@ -17,10 +20,13 @@ export default () => {
 		state: { searchValue },
 		dispatch,
 	} = useSearchState();
+	const { dispatch: productDispatch } = useProductState();
 
 	useEffect(() => {
 		setIsClientSide(true);
 	}, []);
+	const router = useRouter();
+	const { getProducts } = useGetProducts();
 
 	const advancedSearchRef = useRef<null | HTMLElement>(null);
 	const searchInputRef = useRef(null);
@@ -46,15 +52,18 @@ export default () => {
 		});
 	}
 
+	const handleNewSearch = async e => {
+		e.preventDefault();
+		e.stopPropagation();
+		productDispatch({ type: 'clearProducts' });
+		router.push('/products', undefined, { shallow: true });
+		await getProducts();
+	};
+
 	return (
 		<SearchbarContainer>
 			<LeftJustifiedContainer>
-				<form
-					onSubmit={e => {
-						e.preventDefault();
-						e.stopPropagation();
-					}}
-				>
+				<form onSubmit={handleNewSearch}>
 					<Flex>
 						{appTitle}
 						<Box
