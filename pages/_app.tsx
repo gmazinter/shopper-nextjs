@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import MuiOverrides from '../styles/muiOverrides';
 import { SearchStateProvider } from '../components/search/SearchState';
 import { ProductStateProvider } from '../components/product/ProductState';
+import { AppStateProvider } from '../states/AppState';
 import Layout from '../components/layout/Layout';
 import '../styles/globalStyles.css';
 
@@ -23,13 +24,15 @@ export default function App({ Component, pageProps }) {
 		<StylesProvider injectFirst>
 			<MuiThemeProvider theme={MuiOverrides}>
 				<ThemeProvider theme={theme}>
-					<SearchStateProvider>
-						<ProductStateProvider>
-							<Layout>
-								<Component {...pageProps} />
-							</Layout>
-						</ProductStateProvider>
-					</SearchStateProvider>
+					<AppStateProvider>
+						<SearchStateProvider>
+							<ProductStateProvider>
+								<Layout>
+									<Component {...pageProps} />
+								</Layout>
+							</ProductStateProvider>
+						</SearchStateProvider>
+					</AppStateProvider>
 				</ThemeProvider>
 			</MuiThemeProvider>
 		</StylesProvider>

@@ -6,6 +6,7 @@ type SearchType = 'image' | 'text';
 type SearchState = {
 	error: any;
 	loadingProducts: boolean;
+	inputValue: string;
 	searchValue: string;
 	searchType: SearchType;
 	pageStart: number;
@@ -15,6 +16,7 @@ type SearchState = {
 const initialSearchState: SearchState = {
 	loadingProducts: false,
 	error: null,
+	inputValue: '',
 	searchValue: '',
 	searchType: 'text',
 	pageStart: 0,
@@ -39,6 +41,13 @@ const reducer = (
 			return {
 				...state,
 				searchValue,
+			};
+		}
+		case 'setInputValue': {
+			const inputValue: string = action.payload;
+			return {
+				...state,
+				inputValue,
 			};
 		}
 		case 'setPageStart': {

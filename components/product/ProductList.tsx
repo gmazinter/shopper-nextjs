@@ -11,21 +11,6 @@ import { CircularProgress, LinearProgress } from '@material-ui/core';
 
 const { row } = masonrySizes;
 
-// type ProductListProps = {
-// 	searchValue: string;
-// 	searchType: 'text' | 'image';
-// 	loadingProducts: boolean;
-// 	products: Product[];
-// };
-
-// export default memo(
-// 	({
-// 		searchValue,
-// 		searchType,
-// 		loadingProducts,
-// 		products,
-// 	}: ProductListProps) => {
-
 export default () => {
 	const {
 		state: { products, isLoading },

@@ -7,10 +7,14 @@ export const useGetProducts = () => {
 	const { handleSearch, isLoading, error } = useSearch();
 	const { dispatch: productDispatch } = useProductState();
 	const {
-		state: { searchType, searchValue },
+		state: {},
 	} = useSearchState();
 
-	const getProducts = async (direction?: Direction) => {
+	const getProducts = async (
+		searchValue: string,
+		direction?: Direction,
+		searchType?: 'image' | 'text'
+	) => {
 		const products = await handleSearch(
 			searchValue,
 			direction,

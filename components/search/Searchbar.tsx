@@ -17,8 +17,8 @@ export default () => {
 	const [showAdvanced, setShowAdvanced] = useState(false);
 	const { useMediaQuery } = useResponsive();
 	const {
-		state: { searchValue },
-		dispatch,
+		state: { searchValue, inputValue },
+		dispatch: searchDispatch,
 	} = useSearchState();
 	const { dispatch: productDispatch } = useProductState();
 
@@ -55,9 +55,10 @@ export default () => {
 	const handleNewSearch = async e => {
 		e.preventDefault();
 		e.stopPropagation();
+		searchDispatch({ type: 'setSearchValue', payload: inputValue });
 		productDispatch({ type: 'clearProducts' });
 		router.push('/products', undefined, { shallow: true });
-		await getProducts();
+		await getProducts(inputValue);
 	};
 
 	return (
@@ -78,10 +79,10 @@ export default () => {
 								id='search-input'
 								variant='outlined'
 								placeholder={inputPlaceholder as string}
-								value={searchValue}
+								value={inputValue}
 								onChange={e =>
-									dispatch({
-										type: 'setSearchValue',
+									searchDispatch({
+										type: 'setInputValue',
 										payload: e.target.value,
 									})
 								}
