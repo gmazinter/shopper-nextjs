@@ -2,31 +2,33 @@ import { useCallback } from 'react';
 import { useProductDispatch } from '../ProductState';
 import { useSearchDispatch } from '../../search/SearchState';
 
-export default () => {
+export const useProductCard = () => {
 	const searchDispatch = useSearchDispatch();
 	const productDispatch = useProductDispatch();
 
-	const toggleFavorite = (productId: string, section: string) => {
-		productDispatch({
-			type: 'toggleFavorite',
-			payload: { productId, section },
-		});
-	};
+	const toggleFavorite = useCallback(
+		(productId: string, section: string) => {
+			productDispatch({
+				type: 'toggleFavorite',
+				payload: { productId, section },
+			});
+		},
+		[productDispatch]
+	);
 
-	const handleLabelClick = (label: string) => {
-		searchDispatch({
-			type: 'addLabelToQuery',
-			payload: { label },
-		});
-	};
-
-	const memoizedToggleFavorite = useCallback(toggleFavorite, []);
-	const memoizedHandleLabelClick = useCallback(handleLabelClick, []);
+	const handleLabelClick = useCallback(
+		(label: string) => {
+			// console.log('handling label click');
+			searchDispatch({
+				type: 'addLabelToQuery',
+				payload: { label },
+			});
+		},
+		[searchDispatch]
+	);
 
 	return {
-		toggleFavorite,
 		handleLabelClick,
-		// toggleFavorite: memoizedToggleFavorite,
-		// handleLabelClick: memoizedHandleLabelClick,
+		toggleFavorite,
 	};
 };

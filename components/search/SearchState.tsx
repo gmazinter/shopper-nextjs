@@ -62,10 +62,10 @@ const reducer = (
 			};
 		}
 		case 'addLabelToQuery': {
-			const newSearchValue: string = `${state.searchValue} ${action.payload.label}`;
+			const inputValue: string = `${state.inputValue} ${action.payload.label}`;
 			return {
 				...state,
-				searchValue: newSearchValue,
+				inputValue,
 			};
 		}
 		case 'toggleSearchType': {

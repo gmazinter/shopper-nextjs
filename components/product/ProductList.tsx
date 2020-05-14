@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { masonrySizes } from '../../consts';
 import { Box, Centered } from '../../framework/components/primitives';
 import { useGetProducts } from '../../hooks/useGetProducts';
-import { useProductState, useProductDispatch } from './ProductState';
+import { useProductState } from './ProductState';
 import NoResults from './NoResults';
 import ProductSection from './ProductSection';
 import { CircularProgress, LinearProgress } from '@material-ui/core';
@@ -14,37 +14,20 @@ const { row } = masonrySizes;
 
 export default () => {
 	const { products, isLoading } = useProductState();
-	const productDispatch = useProductDispatch();
 	const { searchValue, searchType } = useSearchState();
-	const searchDispatch = useSearchDispatch();
 	const { getProducts } = useGetProducts();
 
 	const [activeCard, setActiveCard] = useState<string | null>(null);
-	const toggleMenu = (cardId?: string) => {
-		if (!cardId || activeCard === cardId) {
-			setActiveCard(null);
-		} else {
-			setActiveCard(cardId);
-		}
-	};
-
-	const toggleFavorite = (productId: string, section: string) => {
-		productDispatch({
-			type: 'toggleFavorite',
-			payload: { productId, section },
-		});
-	};
-
-	const handleLabelClick = (label: string) => {
-		searchDispatch({
-			type: 'addLabelToQuery',
-			payload: { label },
-		});
-	};
-
-	const memoizedToggleMenu = useCallback(toggleMenu, []);
-	const memoizedToggleFavorite = useCallback(toggleFavorite, []);
-	const memoizedHandleLabelClick = useCallback(handleLabelClick, []);
+	const toggleMenu = useCallback(
+		(cardId?: string, isCurrentOpen?: boolean) => {
+			if (!cardId || isCurrentOpen) {
+				setActiveCard(null);
+			} else {
+				setActiveCard(cardId);
+			}
+		},
+		[]
+	);
 
 	const handleClick = () => {
 		toggleMenu();
@@ -75,21 +58,17 @@ export default () => {
 					{favoriteProducts.length > 0 && (
 						<ProductSection
 							products={favoriteProducts}
-							title={'marked as favorite'}
+							title={'favorite results'}
 							activeCard={activeCard}
-							toggleMenu={memoizedToggleMenu}
-							toggleFavorite={memoizedToggleFavorite}
-							handleLabelClick={memoizedHandleLabelClick}
+							toggleMenu={toggleMenu}
 						/>
 					)}
 					{similarImagesProducts.length > 0 && (
 						<ProductSection
 							products={similarImagesProducts}
-							title={'similar images search'}
+							title={'similar images results'}
 							activeCard={activeCard}
-							toggleMenu={memoizedToggleMenu}
-							toggleFavorite={memoizedToggleFavorite}
-							handleLabelClick={memoizedHandleLabelClick}
+							toggleMenu={toggleMenu}
 						/>
 					)}
 					<ProductSection
@@ -100,9 +79,7 @@ export default () => {
 						}
 						title={'search results'}
 						activeCard={activeCard}
-						toggleMenu={memoizedToggleMenu}
-						toggleFavorite={memoizedToggleFavorite}
-						handleLabelClick={memoizedHandleLabelClick}
+						toggleMenu={toggleMenu}
 					/>
 					<Waypoint
 						bottomOffset='20px'

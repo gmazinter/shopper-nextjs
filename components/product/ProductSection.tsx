@@ -11,8 +11,6 @@ type ProductSectionProps = {
 	showSectionTitle?: boolean;
 	activeCard: string;
 	title: string;
-	toggleFavorite: any;
-	handleLabelClick: any;
 } & Partial<ProductCardProps>;
 
 export default ({
@@ -21,8 +19,6 @@ export default ({
 	title,
 	activeCard,
 	toggleMenu,
-	toggleFavorite,
-	handleLabelClick,
 }: ProductSectionProps) => {
 	return (
 		<Box mt={3}>
@@ -39,8 +35,6 @@ export default ({
 						toggleMenu={toggleMenu}
 						key={product.url}
 						product={product}
-						toggleFavorite={toggleFavorite}
-						handleLabelClick={handleLabelClick}
 					/>
 				))}
 			</Masonry>

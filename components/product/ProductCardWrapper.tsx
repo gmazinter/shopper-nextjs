@@ -1,20 +1,19 @@
 import { ProductCardProps } from './ProductCard';
 import ProductCard from './ProductCard';
 import { useGetSimilarImages } from './hooks/useGetSimilarImages';
+import { useProductCard } from './hooks/useProductCard';
 
 export default ({
 	isMenuOpen,
 	toggleMenu,
 	product,
-	toggleFavorite,
-	handleLabelClick,
 }: Partial<ProductCardProps>) => {
+	const { toggleFavorite, handleLabelClick } = useProductCard();
 	const { getSimilarImages, isLoading } = useGetSimilarImages();
 	return (
 		<ProductCard
 			isMenuOpen={isMenuOpen}
 			toggleMenu={toggleMenu}
-			key={product.url}
 			product={product}
 			toggleFavorite={toggleFavorite}
 			handleLabelClick={handleLabelClick}

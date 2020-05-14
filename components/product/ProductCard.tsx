@@ -12,7 +12,7 @@ import { useResponsive } from '../../framework/hooks/useResponsive';
 
 export type ProductCardProps = {
 	isMenuOpen: boolean;
-	toggleMenu: (cardId: string) => void;
+	toggleMenu: (cardId: string, isCurrentOpen: boolean) => void;
 	product?: Product;
 	className?: string;
 	toggleFavorite: any;
@@ -52,7 +52,6 @@ const ProductCard = memo(
 		};
 
 		const debouncedResizeItem = _.debounce(() => {
-			// console.log('window change resizeItem');
 			resizeItem();
 		}, 200);
 
@@ -63,12 +62,10 @@ const ProductCard = memo(
 		});
 
 		useEffect(() => {
-			// console.log('labels change resizeItem');
 			resizeItem();
 		}, [labels]);
 
 		useEffect(() => {
-			// console.log('imagesLoaded resizeItem');
 			imagesLoaded(contentRef.current, resizeItem);
 		}, []);
 
@@ -90,12 +87,10 @@ const ProductCard = memo(
 							e: React.MouseEvent | React.TouchEvent
 						) => {
 							e.stopPropagation();
-							toggleMenu(url);
+							toggleMenu(url, isMenuOpen);
 						}}
 						searchByImage={() => getSimilarImages(imageUri)}
-						// searchByImage={() => {}}
 						annotateImage={() => annotateImage(url, imageUri)}
-						// annotateImage={() => {}}
 					/>
 				</ProductCardContainer>
 			</MasonryItem>
