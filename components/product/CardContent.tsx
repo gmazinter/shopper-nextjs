@@ -9,26 +9,27 @@ import styled from 'styled-components';
 export default ({ product, toggleFavorite, handleLabelClick }) => {
 	const { websiteTitle, url, imageUri, infoTags, labels } = product;
 	return (
-		<Box mb={2}>
-			<Flex mb={2} position='relative'>
-				{infoTags?.slice(0, 1).map(infoTag => {
-					const { title, value } = infoTag;
-					return <InfoTag title={title} value={value} mr={4} />;
-				})}
-				<FavoriteButton
-					onClick={() => toggleFavorite(product.url, product.section)}
-					color='primary'
-				>
-					{product.isFavorite ? (
-						<FavoriteIcon />
-					) : (
-						<FavoriteBorderIcon />
-					)}
-				</FavoriteButton>
-				{infoTags?.slice(1).map(infoTag => {
-					const { title, value } = infoTag;
-					return <InfoTag title={title} value={value} />;
-				})}
+		<Box mb={2} position='relative'>
+			<FavoriteButton
+				onClick={() => toggleFavorite(product.url, product.section)}
+				color='primary'
+			>
+				{product.isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+			</FavoriteButton>
+			<Flex mb={2} minHeight='22px' flexWrap='wrap'>
+				{infoTags.length > 0 && (
+					<>
+						<Flex
+							width={{ _: 1, md: 'unset' }}
+							pr={{ _: 4, md: 'unset' }}
+						>
+							<InfoTag tag={infoTags[0]} />
+						</Flex>
+						{infoTags?.slice(1).map(tag => (
+							<InfoTag tag={tag} />
+						))}
+					</>
+				)}
 			</Flex>
 			<Text mb={2} fontSize={{ _: 3, sm: 4 }}>
 				<a href={url} target='_blank' rel='noreferrer noopener'>

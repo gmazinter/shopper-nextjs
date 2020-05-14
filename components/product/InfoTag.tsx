@@ -3,29 +3,21 @@ import { Card, Text, Flex } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { SpaceProps, space } from 'styled-system';
 
-type InfoTagProps = {
-	className?: string;
-	title: string;
-	value: string;
-};
+const InfoTag = ({ tag, className }: { tag: string; className?: string }) => (
+	<Card borderRadius='2px' overflow='hidden' className={className}>
+		<InfoTagText>{tag}</InfoTagText>
+	</Card>
+);
 
-const InfoTagProps = ({ title, value, className }: InfoTagProps) => {
-	return (
-		<Card borderRadius={1} overflow='hidden' className={className}>
-			<Flex>
-				<InfoTagText bg='grey'>{title}</InfoTagText>
-				<InfoTagText bg='lightBlue'>{value}</InfoTagText>
-			</Flex>
-		</Card>
-	);
-};
-
-export default styled(InfoTagProps)<SpaceProps>`
+export default styled(InfoTag)<SpaceProps>`
 	${space}
 `;
 
 const InfoTagText = styled(Text).attrs({
+	mt: '3px',
+	mr: 1,
+	bg: '#b4bbe4',
 	color: 'white',
 	fontSize: { _: 1, sm: 2 },
-	p: 1,
+	p: { _: '2px', md: '3px' },
 })``;

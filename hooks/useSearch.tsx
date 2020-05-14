@@ -6,7 +6,7 @@ import {
 } from '../components/search/SearchState';
 import { useProductDispatch } from '../components/product/ProductState';
 import { useAppState } from '../states/AppState';
-import { Result, Product, Direction } from '../types';
+import { Result, Product, Direction, Availability } from '../types';
 import { useGetPageData } from './useGetPageData';
 
 const pageSize = 10;
@@ -26,19 +26,21 @@ export const mapItemToProduct = (
 				currency: offer[productIndex].pricecurrency,
 		  }
 		: null;
-	const infoTags = [
-		{
-			title: 'availability',
-			value:
-				offer && offer[productIndex].availability
-					? offer[productIndex].availability
-							.toLowerCase()
-							.includes('instock')
-						? 'in stock'
-						: 'out of stock'
-					: 'unknown',
-		},
-	];
+
+	const availability =
+		offer && offer[productIndex].availability
+			? offer[productIndex].availability.toLowerCase().includes('instock')
+				? 'in stock'
+				: 'out of stock'
+			: undefined;
+	const infoTags = [];
+	if (product?.length > 1) {
+		infoTags.push('multiple items');
+	}
+	if (!!availability) {
+		infoTags.push(availability);
+	}
+
 	const imageUri = cse_image ? cse_image[productIndex].src : null;
 	return {
 		websiteTitle: title,

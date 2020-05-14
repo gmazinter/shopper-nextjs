@@ -26,6 +26,7 @@ export type Price = {
 	amount: number;
 	currency: string;
 };
+export type Availability = 'IN_STOCK' | 'OUT_OF_STOCK' | undefined;
 
 export type Product = {
 	websiteTitle: string;
@@ -33,7 +34,7 @@ export type Product = {
 	imageUri: string | null;
 	name: string | null;
 	price: Price | null;
-	infoTags: InfoTag[];
+	infoTags: string[];
 	labels?: string[];
 	isFavorite: boolean;
 	section: 'products' | 'similarImagesProducts';
