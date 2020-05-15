@@ -1,10 +1,12 @@
 import React from 'react';
 import { Box, Text } from '../../framework/components/primitives';
-import { Masonry } from './ProductList';
 import { ProductCardProps } from './ProductCard';
 import ProductCardWrapper from './ProductCardWrapper';
 import { Product } from '../../types';
 import Divider from '@material-ui/core/Divider';
+import styled from 'styled-components';
+import { masonrySizes } from '../../consts';
+const { row } = masonrySizes;
 
 type ProductSectionProps = {
 	products: Product[];
@@ -41,3 +43,15 @@ export default ({
 		</Box>
 	);
 };
+
+const Masonry = styled(Box).attrs({
+	mx: { sm: -2 },
+	gridTemplateColumns: {
+		_: 'repeat(auto-fill, minmax(180px, 1fr))',
+		sm: 'repeat(auto-fill, minmax(200px, 1fr))',
+		md: 'repeat(auto-fill, minmax(240px, 1fr))',
+	},
+})`
+	display: grid;
+	grid-auto-rows: ${row}px;
+`;

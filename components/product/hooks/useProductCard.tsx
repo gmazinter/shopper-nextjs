@@ -18,7 +18,6 @@ export const useProductCard = () => {
 
 	const handleLabelClick = useCallback(
 		(label: string) => {
-			// console.log('handling label click');
 			searchDispatch({
 				type: 'addLabelToQuery',
 				payload: { label },

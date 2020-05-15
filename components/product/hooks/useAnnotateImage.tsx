@@ -40,7 +40,6 @@ export const useAnnotateImage = () => {
 				productUrl,
 				labels,
 			};
-			console.log(payload);
 			productDispatch({
 				type: 'setProductLabels',
 				payload,

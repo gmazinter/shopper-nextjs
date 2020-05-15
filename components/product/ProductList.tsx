@@ -1,16 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Waypoint } from 'react-waypoint';
-import styled from 'styled-components';
-import { masonrySizes } from '../../consts';
 import { Box, Centered } from '../../framework/components/primitives';
 import { useGetProducts } from '../../hooks/useGetProducts';
 import { useProductState } from './ProductState';
 import NoResults from './NoResults';
 import ProductSection from './ProductSection';
 import { CircularProgress, LinearProgress } from '@material-ui/core';
-import { useSearchState, useSearchDispatch } from '../search/SearchState';
-
-const { row } = masonrySizes;
+import { useSearchState } from '../search/SearchState';
 
 export default () => {
 	const { products, isLoading } = useProductState();
@@ -108,15 +104,3 @@ export default () => {
 		</>
 	);
 };
-
-export const Masonry = styled(Box).attrs({
-	mx: { sm: -2 },
-	gridTemplateColumns: {
-		_: 'repeat(auto-fill, minmax(180px, 1fr))',
-		sm: 'repeat(auto-fill, minmax(200px, 1fr))',
-		md: 'repeat(auto-fill, minmax(240px, 1fr))',
-	},
-})`
-	display: grid;
-	grid-auto-rows: ${row}px;
-`;

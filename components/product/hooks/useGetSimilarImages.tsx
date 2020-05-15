@@ -61,7 +61,6 @@ export const useGetSimilarImages = () => {
 			setIsLoading(false);
 		}
 	};
-	// console.log('running useGetSimilarImages again');
 	const memoizedGetSimilarImages = useCallback(getSimilarImages, [
 		memoizedHandleSearch,
 	]);

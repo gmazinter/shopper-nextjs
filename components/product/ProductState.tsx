@@ -43,11 +43,6 @@ const reducer = (
 				_.intersectionBy(stateProducts, products, 'url'),
 				'url'
 			);
-			console.log(
-				`intersection: ${JSON.stringify(
-					_.intersectionBy(stateProducts, products, 'url')
-				)}`
-			);
 			const newProducts =
 				side === 'end'
 					? [...stateProducts, ...additionalProducts]
