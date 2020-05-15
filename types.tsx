@@ -1,7 +1,7 @@
 export type Result = {
 	title: string;
 	snippet: string;
-	formattedUrl: string;
+	link: string;
 	pagemap: {
 		cse_image?: [
 			{

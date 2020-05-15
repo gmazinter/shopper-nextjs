@@ -17,7 +17,7 @@ export const mapItemToProduct = (
 	section: 'products' | 'similarImagesProducts',
 	productIndex: number
 ): Product => {
-	const { title, formattedUrl, pagemap } = result;
+	const { title, link, pagemap } = result;
 	const { offer, product, cse_image } = pagemap;
 	const name = product ? product[productIndex].name : null;
 	const price = offer
@@ -46,7 +46,7 @@ export const mapItemToProduct = (
 		websiteTitle: title,
 		name,
 		price,
-		url: formattedUrl,
+		url: link,
 		infoTags,
 		imageUri,
 		isFavorite: false,
@@ -117,16 +117,23 @@ export const useSearch = () => {
 			const response = await axios.get(`/api/search`, {
 				params,
 			});
-			const items =
+			let items =
 				searchType === 'image'
 					? await convertImageResultsToWebResults(response.data.items)
 					: response.data.items;
+			console.log(items);
+			items = items.filter(item => testLivePage(item.link));
 			return items ? mapItemsToProducts(items, section) : [];
 		} catch (e) {
 			setError(e);
 		} finally {
 			setIsloading(false);
 		}
+	};
+
+	const testLivePage = (url: string) => {
+		// will implement or delete after some testing to results
+		return true;
 	};
 
 	const convertImageResultsToWebResults = async (items: []) => {
