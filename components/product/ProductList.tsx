@@ -110,7 +110,7 @@ export default () => {
 };
 
 export const Masonry = styled(Box).attrs({
-	mx: { sm: '-8px' },
+	mx: { sm: -2 },
 	gridTemplateColumns: {
 		_: 'repeat(auto-fill, minmax(180px, 1fr))',
 		sm: 'repeat(auto-fill, minmax(200px, 1fr))',

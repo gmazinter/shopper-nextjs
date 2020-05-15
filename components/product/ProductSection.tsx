@@ -23,10 +23,10 @@ export default ({
 	return (
 		<Box mt={3}>
 			{showSectionTitle && (
-				<>
+				<Box p={{ _: 2, sm: 'unset' }}>
 					<Text>{title}</Text>
 					<Divider />
-				</>
+				</Box>
 			)}
 			<Masonry>
 				{products.map((product: Product) => (
