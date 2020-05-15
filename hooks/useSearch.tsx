@@ -122,7 +122,7 @@ export const useSearch = () => {
 					? await convertImageResultsToWebResults(response.data.items)
 					: response.data.items;
 			console.log(items);
-			items = items.filter(item => testLivePage(item.link));
+			items = items?.filter(item => testLivePage(item.link));
 			return items ? mapItemsToProducts(items, section) : [];
 		} catch (e) {
 			setError(e);
