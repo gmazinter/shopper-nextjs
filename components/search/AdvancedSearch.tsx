@@ -5,7 +5,6 @@ import TextFields from '@material-ui/icons/TextFields';
 import Switch from 'react-switch';
 import { useSearchState, useSearchDispatch } from './SearchState';
 import CountrySelect from './CountrySelect';
-import Searchbar from './Searchbar';
 import styled from 'styled-components';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import ReactDOM from 'react-dom';

@@ -65,7 +65,10 @@ const LabelChip = styled(Chip).attrs({
 	fontSize: { _: 2, sm: 3 },
 	mr: { _: 1, sm: 2 },
 	mb: 1,
-})``;
+})`
+	text-overflow: ellipsis;
+	overflow: hidden;
+`;
 
 const FavoriteButton = styled(IconButton)`
 	padding: 0;

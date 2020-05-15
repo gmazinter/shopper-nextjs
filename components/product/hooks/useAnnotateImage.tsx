@@ -35,7 +35,9 @@ export const useAnnotateImage = () => {
 			const labels = [
 				...response.data.labelAnnotations,
 				...response.data.webDetection.webEntities,
-			].map((x: { description: string }) => x.description);
+			]
+				.filter(x => !!x.description)
+				.map((x: { description: string }) => x.description);
 			const payload = {
 				productUrl,
 				labels,
