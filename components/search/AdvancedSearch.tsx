@@ -41,7 +41,10 @@ export default React.forwardRef((props: AdvancedSearchProps, ref) => {
 		<>
 			{ReactDOM.createPortal(
 				<AdvancedSearchContainer
-					onTouchMoveCapture={debouncedCloseAdvanced}
+					onTouchMoveCapture={e => {
+						e.stopPropagation();
+						debouncedCloseAdvanced;
+					}}
 					ref={ref as MutableRefObject<HTMLDivElement>}
 				>
 					<Flex
