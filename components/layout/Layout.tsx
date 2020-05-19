@@ -1,15 +1,14 @@
 import React from 'react';
 import { Box, Flex } from '../../framework/components/primitives';
 import Searchbar from '../search/Searchbar';
-import ErrorModal from '../ErrorModal';
-import { useAppState } from '../../states/AppState';
+import ErrorModal from '../modals/ErrorModal';
+import MessageModal from '../modals/MessageModal';
+import { useAppState, useAppDispatch } from '../../states/AppState';
 import LeftJustifiedContainer from './LeftJustifiedContainer';
 
 export default ({ children }) => {
-	const {
-		state: { error, isLoading },
-		dispatch,
-	} = useAppState();
+	const { message, error, isLoading } = useAppState();
+	const dispatch = useAppDispatch();
 	return (
 		<Flex
 			flexDirection='column'
@@ -17,6 +16,13 @@ export default ({ children }) => {
 			position='relative'
 			minHeight='100vh'
 		>
+			<MessageModal
+				isOpen={!!message}
+				message={message}
+				closeModal={() => {
+					dispatch({ type: 'clearMessage' });
+				}}
+			/>
 			<ErrorModal
 				isOpen={!!error}
 				message={error?.message}

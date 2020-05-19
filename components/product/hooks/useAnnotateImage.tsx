@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import { useProductDispatch } from '../ProductState';
-import { useAppState } from '../../../states/AppState';
+import { useAppDispatch } from '../../../states/AppState';
 
 export const useAnnotateImage = () => {
-	const { dispatch: appDispatch } = useAppState();
+	const appDispatch = useAppDispatch();
 	const productDispatch = useProductDispatch();
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<null | {}>(null);

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Centered } from '../framework/components/primitives/Flex';
-import { Text, Flex } from '../framework/components/primitives';
+import { Centered } from '../../framework/components/primitives/Flex';
+import { Text, Flex } from '../../framework/components/primitives';
 import Modal from './Modal';
 import styled from 'styled-components';
 

@@ -3,11 +3,13 @@ import axios from 'axios';
 import { useSearch } from '../../../hooks/useSearch';
 import _ from 'lodash';
 import { useProductDispatch } from '../ProductState';
+import { useAppDispatch } from '../../../states/AppState';
 
 export const useGetSimilarImages = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<any | null>(null);
 	const productDispatch = useProductDispatch();
+	const appDispatch = useAppDispatch();
 	const { handleSearch } = useSearch();
 
 	const memoizedHandleSearch = useCallback(handleSearch, []);
@@ -48,6 +50,12 @@ export const useGetSimilarImages = () => {
 					result => !!result
 				)
 			);
+			if (products.length === 0) {
+				appDispatch({
+					type: 'setMessage',
+					payload: { message: 'no similar images found' },
+				});
+			}
 			productDispatch({
 				type: 'addProducts',
 				payload: {

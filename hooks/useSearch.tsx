@@ -5,7 +5,7 @@ import {
 	useSearchDispatch,
 } from '../components/search/SearchState';
 import { useProductDispatch } from '../components/product/ProductState';
-import { useAppState } from '../states/AppState';
+import { useAppState, useAppDispatch } from '../states/AppState';
 import { Result, Product, Direction, Availability } from '../types';
 import { useGetPageData } from './useGetPageData';
 
@@ -76,7 +76,7 @@ export const useSearch = () => {
 
 	const { selectedCountries, pageStart } = useSearchState();
 	const searchDispatch = useSearchDispatch();
-	const { dispatch: appDispatch } = useAppState();
+	const appDispatch = useAppDispatch();
 	const productDispatch = useProductDispatch();
 	const { getPageData } = useGetPageData();
 
