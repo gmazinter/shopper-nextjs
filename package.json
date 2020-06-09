@@ -19,13 +19,13 @@
 		"@types/jest": "^24.9.1",
 		"@types/js-base64": "^2.3.1",
 		"@types/lodash": "^4.14.149",
-		"@types/node": "^12.12.27",
 		"@types/qs": "^6.9.1",
 		"@types/react": "^16.9.20",
 		"@types/react-dom": "^16.9.5",
 		"@types/react-modal": "^3.10.5",
 		"@types/styled-components": "^5.1.0",
 		"@types/styled-system": "^5.1.9",
+		"@types/unsplash-js": "^6.0.1",
 		"axios": "^0.19.2",
 		"babel-preset-env": "^1.7.0",
 		"beautiful-react-hooks": "^0.23.1",
@@ -44,17 +44,18 @@
 		"react-waypoint": "^9.0.2",
 		"styled-components": "^5.1.0",
 		"styled-system": "^5.1.5",
-		"swr": "^0.1.18"
+		"swr": "^0.1.18",
+		"unsplash-js": "^6.0.0"
 	},
 	"license": "ISC",
 	"devDependencies": {
-		"eslint-config-prettier": "^6.10.1",
-		"eslint-plugin-prettier": "^3.1.2",
-		"prettier": "^2.0.4",
-		"@types/node": "^13.13.4",
+		"@types/node": "^14.0.12",
 		"babel-plugin-styled-components": "^1.10.7",
 		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.10.1",
+		"eslint-plugin-prettier": "^3.1.2",
 		"eslint-plugin-react": "^7.19.0",
+		"prettier": "^2.0.4",
 		"typescript": "^3.8.3"
 	}
 }

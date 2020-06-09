@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, Text, Box } from '../framework/components/primitives';
+import { Card, Text, Box, Image } from '../framework/components/primitives';
 import styled from 'styled-components';
 
-export default () => {
+export default ({ backgroundImage }: { backgroundImage: string }) => {
 	return (
 		<Card
 			my={{ _: 3, sm: 4 }}
@@ -44,6 +44,7 @@ export default () => {
 			<DescriptionText>
 				SHOPPER is powered by Google Custom-Search-Engine.
 			</DescriptionText>
+			<Image src={backgroundImage} />
 		</Card>
 	);
 };
