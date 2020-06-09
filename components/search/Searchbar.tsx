@@ -114,7 +114,6 @@ export default () => {
 const SearchbarContainer = styled(Box).attrs({
 	p: 2,
 	boxShadow: 'small',
-	zIndex: 4,
 	bg: 'white',
 	position: 'relative',
 })``;

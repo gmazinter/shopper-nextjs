@@ -30,7 +30,7 @@ export default ({ children }) => {
 					dispatch({ type: 'clearError' });
 				}}
 			/>
-			<Box top={0} position='sticky' zIndex={4} id='searchbar-wrapper'>
+			<Box top={0} position='sticky' id='searchbar-wrapper' zIndex={8}>
 				<Searchbar />
 			</Box>
 			<Box id='page-content-wrapper' flex={1} position='relative'>

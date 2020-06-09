@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect } from 'react';
+import React, { MutableRefObject, useEffect, ReactElement } from 'react';
 import { Box, Text, Flex, Card } from '../../framework/components/primitives';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import TextFields from '@material-ui/icons/TextFields';
@@ -9,6 +9,9 @@ import styled from 'styled-components';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
+import { ModalProps } from '../modals/Modal';
+import FullScreenModal from '../modals/FullScreenModal';
+import Searchbar from './Searchbar';
 
 type AdvancedSearchProps = {
 	closeAdvanced: () => void;
@@ -17,12 +20,7 @@ type AdvancedSearchProps = {
 export default React.forwardRef((props: AdvancedSearchProps, ref) => {
 	const { closeAdvanced } = props;
 	const { useMediaQuery } = useResponsive();
-	const portalRoot = useMediaQuery({
-		_: document.querySelector('#layout'),
-		sm: document.querySelector('#searchbar-input-wrapper'),
-	}) as Element;
-	const { searchType } = useSearchState();
-	const dispatch = useSearchDispatch();
+	const portalRoot = document.querySelector('#searchbar-input-wrapper');
 
 	const handleKeypress = (e: KeyboardEvent) => {
 		if (e.keyCode === 27) {
@@ -35,43 +33,24 @@ export default React.forwardRef((props: AdvancedSearchProps, ref) => {
 		return () => window.removeEventListener('keydown', handleKeypress);
 	});
 
-	const debouncedCloseAdvanced = _.debounce(closeAdvanced, 100);
+	// const debouncedCloseAdvanced = _.debounce(closeAdvanced, 100);
 
-	return (
-		<>
-			{ReactDOM.createPortal(
-				<AdvancedSearchContainer
-					onTouchMoveCapture={debouncedCloseAdvanced}
+	return useMediaQuery({
+		_: <AdvancedSearchModal ref={ref} closeModal={closeAdvanced} />,
+		sm: (
+			<>
+				<AdvancedSearchDrawer
 					ref={ref as MutableRefObject<HTMLDivElement>}
 				>
-					<Flex
-						maxWidth='200px'
-						mb={4}
-						justifyContent='space-between'
-					>
-						<Text>Search Type</Text>
-						<StyledSwitch
-							onChange={() => {
-								dispatch({ type: 'toggleSearchType' });
-							}}
-							checked={searchType === 'image'}
-							uncheckedIcon={<TextFields fontSize='small' />}
-							checkedIcon={<PhotoCamera fontSize='small' />}
-						/>
-					</Flex>
-					<Box>
-						<Text mb={2}>Select Countries to Search</Text>
-						<CountrySelect />
-					</Box>
-				</AdvancedSearchContainer>,
-				portalRoot
-			)}
-			{ReactDOM.createPortal(
-				<AdvancedSearchOverlay />,
-				document.querySelector('#page-content-wrapper')
-			)}
-		</>
-	);
+					<AdvancedSearchContent />
+				</AdvancedSearchDrawer>
+				{ReactDOM.createPortal(
+					<AdvancedSearchOverlay />,
+					document.querySelector('#page-content-wrapper')
+				)}
+			</>
+		),
+	}) as ReactElement;
 });
 
 const AdvancedSearchOverlay = styled(Box)`
@@ -83,17 +62,16 @@ const AdvancedSearchOverlay = styled(Box)`
 	background-color: #80808080;
 `;
 
-const AdvancedSearchContainer = styled(Card).attrs({
-	p: 4,
-	pt: { _: 6, sm: 4 },
+const AdvancedSearchDrawer = styled(Card).attrs({
+	// pt: 4,
 	boxShadow: 'small',
 	borderBottomLeftRadius: 1,
 	borderBottomRightRadius: 1,
-	position: { _: 'fixed', sm: 'absolute' },
-	top: { _: 0, sm: '100%' },
-	left: { _: 0, sm: '20px' },
-	right: { _: 0, sm: '20px' },
-	bottom: { _: 0, sm: 'initial' },
+	position: 'absolute',
+	top: '100%',
+	left: '20px',
+	right: '20px',
+	bottom: 'initial',
 })`
 	background-color: white;
 	minheight: 200px;
@@ -110,3 +88,37 @@ const StyledSwitch = styled(Switch)`
 		}
 	}
 `;
+
+const AdvancedSearchContent = () => {
+	const { searchType } = useSearchState();
+	const dispatch = useSearchDispatch();
+	return (
+		<Box p={4} pt={{ _: 6, sm: 4 }}>
+			<Flex maxWidth='200px' mb={4} justifyContent='space-between'>
+				<Text>Search Type</Text>
+				<StyledSwitch
+					onChange={() => {
+						dispatch({ type: 'toggleSearchType' });
+					}}
+					checked={searchType === 'image'}
+					uncheckedIcon={<TextFields fontSize='small' />}
+					checkedIcon={<PhotoCamera fontSize='small' />}
+				/>
+			</Flex>
+			<Box>
+				<Text mb={2}>Select Countries to Search</Text>
+				<CountrySelect />
+			</Box>
+		</Box>
+	);
+};
+
+const AdvancedSearchModal = React.forwardRef(
+	({ closeModal }: Partial<ModalProps>, ref) => {
+		return (
+			<FullScreenModal ref={ref} isOpen={true} closeModal={closeModal}>
+				<AdvancedSearchContent />
+			</FullScreenModal>
+		);
+	}
+);

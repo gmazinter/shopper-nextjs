@@ -12,7 +12,7 @@ type MessageModalProps = {
 
 export default ({ isOpen, message, closeModal }: MessageModalProps) => {
 	return (
-		<Modal isOpen={isOpen} closeModal={closeModal}>
+		<Modal isOpen={isOpen} closeModal={closeModal} closeButton={true}>
 			<ClickthroughCentered>
 				<Flex flexDirection='column'>
 					<Text>{message}</Text>

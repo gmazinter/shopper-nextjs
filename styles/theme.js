@@ -11,7 +11,8 @@ zIndices.content = zIndices[1];
 zIndices.important = zIndices[5];
 zIndices.popover = zIndices[6];
 zIndices.modal = zIndices[7];
-zIndices.highest = zIndices[8];
+zIndices.overModal = zIndices[8];
+zIndices.highest = zIndices[9];
 
 export default {
 	fontSizes: [8, 12, 14, 16, 20, 24, 32, 40, 56, 64],

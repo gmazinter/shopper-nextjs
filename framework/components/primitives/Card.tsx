@@ -5,6 +5,8 @@ import { MutableRefObject } from 'react';
 
 export type CardProps = BoxProps & BorderProps;
 
-export default styled(Box)<CardProps>`
+export default styled(Box).attrs<{ ref: any }>(props => ({
+	ref: props.ref,
+}))<CardProps>`
 	${border}
 `;

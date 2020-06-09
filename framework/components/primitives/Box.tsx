@@ -16,6 +16,7 @@ import {
 	ShadowProps,
 	FlexboxProps,
 } from 'styled-system';
+import { MutableRefObject } from 'react';
 
 export type BoxProps = FlexboxProps &
 	GridProps &
@@ -24,9 +25,11 @@ export type BoxProps = FlexboxProps &
 	SpaceProps &
 	LayoutProps &
 	ColorProps &
-	ShadowProps;
+	ShadowProps & { ref?: MutableRefObject<any> };
 
-export default styled.div<BoxProps>`
+export default styled.div.attrs(props => ({
+	ref: props.ref,
+}))<BoxProps>`
     ${grid}
     ${flex}
     ${position}

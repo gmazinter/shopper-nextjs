@@ -12,7 +12,7 @@ type ErrorModalProps = {
 
 export default ({ isOpen, message, closeModal }: ErrorModalProps) => {
 	return (
-		<Modal isOpen={isOpen} closeModal={closeModal}>
+		<Modal isOpen={isOpen} closeModal={closeModal} closeButton={true}>
 			<ClickthroughCentered>
 				<Flex flexDirection='column'>
 					<Text>There seems to be an error...</Text>
