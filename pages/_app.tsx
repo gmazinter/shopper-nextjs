@@ -12,14 +12,14 @@ import { AppStateProvider } from '../states/AppState';
 import Layout from '../components/layout/Layout';
 import '../styles/globalStyles.css';
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps, router }) {
 	useEffect(() => {
 		const jssStyles = document.querySelector('#jss-server-side');
 		if (jssStyles && jssStyles.parentNode) {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
 	}, []);
-
+	const isHomepage = router.pathname === '/';
 	return (
 		<StylesProvider injectFirst>
 			<MuiThemeProvider theme={MuiOverrides}>
@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
 					<AppStateProvider>
 						<SearchStateProvider>
 							<ProductStateProvider>
-								<Layout>
+								<Layout showSearchbar={!isHomepage}>
 									<Component {...pageProps} />
 								</Layout>
 							</ProductStateProvider>
