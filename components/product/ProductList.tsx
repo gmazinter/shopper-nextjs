@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Waypoint } from 'react-waypoint';
-import { Box, Centered } from '../../framework/components/primitives';
+import { Box, Center } from '../../framework/components/primitives';
 import { useGetProducts } from '../../hooks/useGetProducts';
 import { useProductState } from './ProductState';
 import NoResults from './NoResults';
@@ -91,15 +91,9 @@ export default () => {
 			)}
 			{showNoResults && <NoResults />}
 			{showLoading && (
-				<Centered
-					position='absolute'
-					top={0}
-					bottom={0}
-					left={0}
-					right={0}
-				>
+				<Center>
 					<CircularProgress />
-				</Centered>
+				</Center>
 			)}
 		</>
 	);

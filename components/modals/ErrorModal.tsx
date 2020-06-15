@@ -1,5 +1,5 @@
 import React from 'react';
-import { Centered } from '../../framework/components/primitives/Flex';
+import Center from '../../framework/components/primitives/Center';
 import { Text, Flex } from '../../framework/components/primitives';
 import Modal from './Modal';
 import styled from 'styled-components';
@@ -23,7 +23,7 @@ export default ({ isOpen, message, closeModal }: ErrorModalProps) => {
 	);
 };
 
-const ClickthroughCentered = styled(Centered).attrs({
+const ClickthroughCentered = styled(Center).attrs({
 	px: { _: 3, sm: 4 },
 	py: 4,
 })`

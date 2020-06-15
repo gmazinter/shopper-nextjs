@@ -1,4 +1,4 @@
-import Landing from '../components/Landing';
+import Landing from '../components/homepage/Homepage';
 import { GetServerSideProps } from 'next';
 import Unsplash, { toJson } from 'unsplash-js';
 import fetch from 'node-fetch';
@@ -18,6 +18,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
 			query: 'street shopping',
 		})
 		.then(toJson);
-	const photo = data.urls.full;
+	const photo = data.urls.raw;
 	return { props: { photo } };
 };

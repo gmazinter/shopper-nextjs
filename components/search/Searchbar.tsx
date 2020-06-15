@@ -1,36 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { TextField } from '../customMaterialUi';
 import { Box, Text, Flex } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { useResponsive } from '../../framework/hooks/useResponsive';
-import AdvancedSearch from './AdvancedSearch';
-import { useClickOutside } from '../../framework/hooks/useClickOutside';
-import SearchButton from './SearchButton';
 import LeftJustifiedContainer from '../layout/LeftJustifiedContainer';
 import { useSearchState, useSearchDispatch } from './SearchState';
 import { useProductDispatch } from '../product/ProductState';
-import { useRouter } from 'next/router';
-import { useGetProducts } from '../../hooks/useGetProducts';
+
+import SearchControl from './SearchControl';
 
 export default () => {
 	const [isClientSide, setIsClientSide] = useState(false);
-	const [showAdvanced, setShowAdvanced] = useState(false);
 	const { useMediaQuery } = useResponsive();
-	const { searchValue, inputValue } = useSearchState();
-	const searchDispatch = useSearchDispatch();
-	const productDispatch = useProductDispatch();
 
 	useEffect(() => {
 		setIsClientSide(true);
 	}, []);
-	const router = useRouter();
-	const { getProducts } = useGetProducts();
-
-	const advancedSearchRef = useRef<null | HTMLElement>(null);
-	const searchInputRef = useRef(null);
-	useClickOutside([searchInputRef, advancedSearchRef], () =>
-		setShowAdvanced(false)
-	);
 
 	let appTitle: React.ReactNode;
 	let inputPlaceholder: React.ReactNode;
@@ -50,62 +34,11 @@ export default () => {
 		});
 	}
 
-	const handleNewSearch = async e => {
-		e.preventDefault();
-		e.stopPropagation();
-		searchDispatch({ type: 'setSearchValue', payload: inputValue });
-		productDispatch({ type: 'clearProducts' });
-		router.push('/products', undefined, { shallow: true });
-		await getProducts(inputValue);
-	};
-
 	return (
 		<SearchbarContainer>
 			<LeftJustifiedContainer>
-				<form onSubmit={handleNewSearch}>
-					<Flex>
-						{appTitle}
-						<Box
-							position='relative'
-							mr={{ sm: 2 }}
-							flex={1}
-							id='searchbar-input-wrapper'
-						>
-							<SearchbarInput
-								autoComplete='off'
-								ref={searchInputRef}
-								id='search-input'
-								variant='outlined'
-								placeholder={inputPlaceholder as string}
-								value={inputValue}
-								onChange={e =>
-									searchDispatch({
-										type: 'setInputValue',
-										payload: e.target.value,
-									})
-								}
-								onFocus={() => {
-									setShowAdvanced(true);
-								}}
-								onClick={event => {
-									const target = event.target as HTMLFormElement;
-									if (!!target.focus) {
-										setShowAdvanced(true);
-									}
-								}}
-							/>
-							{showAdvanced && (
-								<AdvancedSearch
-									closeAdvanced={() => {
-										setShowAdvanced(false);
-									}}
-									ref={advancedSearchRef}
-								/>
-							)}
-						</Box>
-						<SearchButton />
-					</Flex>
-				</form>
+				<Flex>{appTitle}</Flex>
+				<SearchControl />
 			</LeftJustifiedContainer>
 		</SearchbarContainer>
 	);
@@ -117,24 +50,3 @@ const SearchbarContainer = styled(Box).attrs({
 	bg: 'white',
 	position: 'relative',
 })``;
-
-const SearchbarInput = styled(TextField)`
-	position: relative;
-	z-index: 2;
-	background-color: white;
-	height: 100%;
-	width: 100%;
-	& .MuiInputBase-root {
-		border-radius: 22px 0 0 22px;
-	}
-	& .MuiOutlinedInput-root {
-		& fieldset {
-			/* border-color: red; */
-		}
-	}
-	${props => props.theme.mediaQueries.small} {
-		& .MuiInputBase-root {
-			border-radius: 22px;
-		}
-	}
-`;

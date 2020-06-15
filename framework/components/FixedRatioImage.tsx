@@ -7,11 +7,15 @@ import Image from './primitives/Image';
 
 type FixedRatioImageProps = {
 	src: string;
-	alt: string;
+	alt?: string;
 	className?: string;
 } & BoxProps;
 
-const FixedRatioImage = ({ src, alt, className }: FixedRatioImageProps) => (
+const FixedRatioImage = ({
+	src,
+	alt = '',
+	className,
+}: FixedRatioImageProps) => (
 	<Card className={className}>
 		<FixedRatioWrapper>
 			<ContainedImage src={src} alt={alt}></ContainedImage>

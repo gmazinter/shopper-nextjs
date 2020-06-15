@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Flex, Centered } from '../../framework/components/primitives';
+import { Text, Flex, Center } from '../../framework/components/primitives';
 import styled from 'styled-components';
 import { useResponsive } from '../../framework/hooks/useResponsive';
 import { formatAmount, formatCurrency } from '../../formatting';
@@ -30,7 +30,7 @@ export default ({ price }: PricetagProps) => {
 	);
 };
 
-const TagContainer = styled(Centered).attrs({
+const TagContainer = styled(Center).attrs({
 	width: { _: 80, sm: 100 },
 	height: { _: 36, sm: 40 },
 	bg: '#F9E5BE',

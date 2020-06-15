@@ -15,12 +15,15 @@ export default () => {
 		? (useMediaQuery({
 				_: (
 					<Button
-						ml='-1px'
+						ml={1}
+						color='primary'
+						borderRadius={2}
+						variant='contained'
 						borderTopLeftRadius={0}
-						borderTopRightRadius='22px'
-						borderBottomRightRadius='22px'
-						borderBottomLeftRadius={0}
-						border='1px solid grey'
+						// borderTopRightRadius='22px'
+						// borderBottomRightRadius='22px'
+						// borderBottomLeftRadius={0}
+						// border='1px solid grey'
 						type='submit'
 					>
 						<SearchIcon />
