@@ -18,11 +18,15 @@ type InfoBullet = {
 
 export default ({ bullets }: { bullets: Array<InfoBullet> }) => {
 	return (
-		<>
+		<Flex
+			flexDirection={{ _: 'column', md: 'row' }}
+			justifyContent={{ md: 'space-between' }}
+			mx={{ md: -3 }}
+		>
 			{bullets.map(({ title, text, icon }) => (
 				<InfoCard title={title} text={text} icon={icon} />
 			))}
-		</>
+		</Flex>
 	);
 };
 
@@ -43,9 +47,11 @@ const InfoCard = ({ title, text, icon }) => {
 };
 
 const InfoCardContainer = styled(Card).attrs({
+	flex: { md: 1 },
 	p: 2,
-	mb: 2,
+	mb: { _: 2, md: 'initial' },
+	mx: { md: 3 },
 	backgroundColor: 'white',
-	borderRadius: 3,
-	borderTopLeftRadius: 0,
+	borderRadius: { _: 3, md: 2 },
+	borderTopLeftRadius: { _: 0 },
 })``;

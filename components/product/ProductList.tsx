@@ -7,6 +7,7 @@ import NoResults from './NoResults';
 import ProductSection from './ProductSection';
 import { CircularProgress, LinearProgress } from '@material-ui/core';
 import { useSearchState } from '../search/SearchState';
+import LeftJustifiedContainer from '../layout/LeftJustifiedContainer';
 
 export default () => {
 	const { products, isLoading } = useProductState();
@@ -48,7 +49,7 @@ export default () => {
 	const showLoading = !products && isLoading;
 
 	return (
-		<>
+		<LeftJustifiedContainer>
 			{showProducts && (
 				<Box py={{ _: 1, sm: 2 }}>
 					{favoriteProducts.length > 0 && (
@@ -95,6 +96,6 @@ export default () => {
 					<CircularProgress />
 				</Center>
 			)}
-		</>
+		</LeftJustifiedContainer>
 	);
 };

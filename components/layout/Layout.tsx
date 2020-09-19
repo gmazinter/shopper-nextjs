@@ -4,7 +4,6 @@ import Searchbar from '../search/Searchbar';
 import ErrorModal from '../modals/ErrorModal';
 import MessageModal from '../modals/MessageModal';
 import { useAppState, useAppDispatch } from '../../states/AppState';
-import LeftJustifiedContainer from './LeftJustifiedContainer';
 
 export default ({ children, showSearchbar = true }) => {
 	const { message, error, isLoading } = useAppState();
@@ -41,7 +40,7 @@ export default ({ children, showSearchbar = true }) => {
 				</Box>
 			)}
 			<Box id='page-content-wrapper' flex={1} position='relative'>
-				<LeftJustifiedContainer>{children}</LeftJustifiedContainer>
+				{children}
 			</Box>
 		</Flex>
 	);
