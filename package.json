@@ -26,7 +26,7 @@
 		"@types/react-modal": "^3.10.5",
 		"@types/styled-components": "^5.1.0",
 		"@types/styled-system": "^5.1.9",
-		"axios": "^0.19.2",
+		"axios": "^0.21.1",
 		"babel-preset-env": "^1.7.0",
 		"beautiful-react-hooks": "^0.23.1",
 		"clsx": "^1.1.0",
