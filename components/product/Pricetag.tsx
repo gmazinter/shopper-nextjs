@@ -12,7 +12,7 @@ type PricetagProps = {
 	};
 };
 
-export default ({ price }: PricetagProps) => {
+const Pricetag = ({ price }: PricetagProps) => {
 	const { amount, currency } = price;
 	const { isSmall } = useResponsive();
 	const notchSize = !isSmall ? '18px' : '20px';
@@ -29,6 +29,8 @@ export default ({ price }: PricetagProps) => {
 		</TagContainer>
 	);
 };
+
+export default Pricetag;
 
 const TagContainer = styled(Centered).attrs({
 	width: { _: 80, sm: 100 },

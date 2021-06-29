@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Text, Box } from '../framework/components/primitives';
 import styled from 'styled-components';
 
-export default () => {
+const Landing = () => {
 	return (
 		<Card
 			my={{ _: 3, sm: 4 }}
@@ -47,6 +47,8 @@ export default () => {
 		</Card>
 	);
 };
+
+export default Landing;
 
 const InlineLogo = styled(Text).attrs({
 	fontSize: { _: 6, sm: 5 },

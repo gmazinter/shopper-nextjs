@@ -22,15 +22,17 @@ type CardMenuProps = {
 	searchByImage: () => void;
 };
 
-export default ({
-	cardPadding,
-	price,
-	isLoading,
-	isOpen,
-	toggleMenu,
-	annotateImage,
-	searchByImage,
-}: CardMenuProps) => {
+const CardMenu = (
+    {
+        cardPadding,
+        price,
+        isLoading,
+        isOpen,
+        toggleMenu,
+        annotateImage,
+        searchByImage,
+    }: CardMenuProps
+) => {
 	return (
 		<MenuContainer isOpen={isOpen}>
 			<Box flex={1} ml={-cardPadding}>
@@ -58,6 +60,8 @@ export default ({
 		</MenuContainer>
 	);
 };
+
+export default CardMenu;
 
 const ActionButtons = styled(Flex)`
 	flex-direction: column;

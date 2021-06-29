@@ -5,7 +5,7 @@ import ErrorModal from '../ErrorModal';
 import { useAppState } from '../../states/AppState';
 import LeftJustifiedContainer from './LeftJustifiedContainer';
 
-export default ({ children }) => {
+const Layout = ({ children }) => {
 	const {
 		state: { error, isLoading },
 		dispatch,
@@ -33,3 +33,5 @@ export default ({ children }) => {
 		</Flex>
 	);
 };
+
+export default Layout;

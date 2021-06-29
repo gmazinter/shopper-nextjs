@@ -6,7 +6,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { IconButton, Chip } from '../customMaterialUi';
 import styled from 'styled-components';
 
-export default ({ product, toggleFavorite, handleLabelClick }) => {
+const CardContent = ({ product, toggleFavorite, handleLabelClick }) => {
 	const { websiteTitle, url, imageUri, infoTags, labels } = product;
 	return (
 		<Box mb={2} position='relative'>
@@ -44,6 +44,8 @@ export default ({ product, toggleFavorite, handleLabelClick }) => {
 		</Box>
 	);
 };
+
+export default CardContent;
 
 const SuggestedLabels = ({ labels, handleLabelClick }) => {
 	return (

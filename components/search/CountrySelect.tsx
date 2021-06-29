@@ -14,7 +14,7 @@ const countries = countriesFull.map(country => ({
 	alpha2Code: country.alpha2Code,
 }));
 
-export default () => {
+const CountrySelect = () => {
 	const { selectedCountries } = useSearchState();
 	const dispatch = useSearchDispatch();
 
@@ -55,3 +55,5 @@ export default () => {
 		/>
 	);
 };
+
+export default CountrySelect;
