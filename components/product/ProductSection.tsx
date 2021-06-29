@@ -15,13 +15,15 @@ type ProductSectionProps = {
 	title: string;
 } & Partial<ProductCardProps>;
 
-export default ({
-	products,
-	showSectionTitle = true,
-	title,
-	activeCard,
-	toggleMenu,
-}: ProductSectionProps) => {
+const ProductSection = (
+    {
+        products,
+        showSectionTitle = true,
+        title,
+        activeCard,
+        toggleMenu,
+    }: ProductSectionProps
+) => {
 	return (
 		<Box mt={3}>
 			{showSectionTitle && (
@@ -43,6 +45,8 @@ export default ({
 		</Box>
 	);
 };
+
+export default ProductSection;
 
 const Masonry = styled(Box).attrs({
 	mx: { sm: -2 },

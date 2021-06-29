@@ -8,7 +8,7 @@ import { useProductDispatch } from '../product/ProductState';
 
 import SearchControl from './SearchControl';
 
-export default () => {
+const Searchbar = () => {
 	const [isClientSide, setIsClientSide] = useState(false);
 	const { useMediaQuery } = useResponsive();
 
@@ -43,6 +43,8 @@ export default () => {
 		</SearchbarContainer>
 	);
 };
+
+export default Searchbar;
 
 const SearchbarContainer = styled(Box).attrs({
 	p: 2,

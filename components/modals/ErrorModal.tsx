@@ -10,7 +10,7 @@ type ErrorModalProps = {
 	closeModal: () => void;
 };
 
-export default ({ isOpen, message, closeModal }: ErrorModalProps) => {
+const ErrorModal = ({ isOpen, message, closeModal }: ErrorModalProps) => {
 	return (
 		<Modal isOpen={isOpen} closeModal={closeModal} closeButton={true}>
 			<ClickthroughCentered>
@@ -23,7 +23,13 @@ export default ({ isOpen, message, closeModal }: ErrorModalProps) => {
 	);
 };
 
+<<<<<<< HEAD:components/modals/ErrorModal.tsx
 const ClickthroughCentered = styled(Center).attrs({
+=======
+export default ErrorModal;
+
+const ClickthroughCentered = styled(Centered).attrs({
+>>>>>>> master:components/ErrorModal.tsx
 	px: { _: 3, sm: 4 },
 	py: 4,
 })`

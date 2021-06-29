@@ -3,11 +3,13 @@ import ProductCard from './ProductCard';
 import { useGetSimilarImages } from './hooks/useGetSimilarImages';
 import { useProductCard } from './hooks/useProductCard';
 
-export default ({
-	isMenuOpen,
-	toggleMenu,
-	product,
-}: Partial<ProductCardProps>) => {
+const ProductCardWrapper = (
+    {
+        isMenuOpen,
+        toggleMenu,
+        product,
+    }: Partial<ProductCardProps>
+) => {
 	const { toggleFavorite, handleLabelClick } = useProductCard();
 	const { getSimilarImages, isLoading } = useGetSimilarImages();
 	return (
@@ -22,3 +24,5 @@ export default ({
 		/>
 	);
 };
+
+export default ProductCardWrapper;
