@@ -30,13 +30,9 @@ const Pricetag = ({ price }: PricetagProps) => {
 	);
 };
 
-<<<<<<< HEAD
-const TagContainer = styled(Center).attrs({
-=======
 export default Pricetag;
 
 const TagContainer = styled(Centered).attrs({
->>>>>>> master
 	width: { _: 80, sm: 100 },
 	height: { _: 36, sm: 40 },
 	bg: '#F9E5BE',

@@ -23,13 +23,9 @@ const ErrorModal = ({ isOpen, message, closeModal }: ErrorModalProps) => {
 	);
 };
 
-<<<<<<< HEAD:components/modals/ErrorModal.tsx
-const ClickthroughCentered = styled(Center).attrs({
-=======
 export default ErrorModal;
 
 const ClickthroughCentered = styled(Centered).attrs({
->>>>>>> master:components/ErrorModal.tsx
 	px: { _: 3, sm: 4 },
 	py: 4,
 })`

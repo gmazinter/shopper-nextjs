@@ -5,17 +5,11 @@ import ErrorModal from '../modals/ErrorModal';
 import MessageModal from '../modals/MessageModal';
 import { useAppState, useAppDispatch } from '../../states/AppState';
 
-<<<<<<< HEAD
-export default ({ children, showSearchbar = true }) => {
-	const { message, error, isLoading } = useAppState();
-	const dispatch = useAppDispatch();
-=======
 const Layout = ({ children }) => {
 	const {
 		state: { error, isLoading },
 		dispatch,
 	} = useAppState();
->>>>>>> master
 	return (
 		<Flex
 			flexDirection='column'
